@@ -13,10 +13,16 @@ class GuiController():
 
     def __init__(self, logicController=None):
         self.logicController = logicController
-        self.actualWindow = MainWindow(self)
+        #self.windows = {'mainWindow':MainWindow, 'newJobWindow':NewJobWindow}
 
     def addRegister(self):
         print('Add register order')
 
     def deleteRegister(self):
         print('Delete register order')
+
+    def configureMainWindow(self, _jobsTableHeaders):
+        self.jobsTableHeaders = _jobsTableHeaders
+
+    def start(self):
+        self.actualWindow = MainWindow(self)

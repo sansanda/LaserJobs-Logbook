@@ -16,3 +16,6 @@ class LogicController():
 
     def getGuiController(self):
         return self.guiController
+
+    def start(self):
+        self.guiController.start()
