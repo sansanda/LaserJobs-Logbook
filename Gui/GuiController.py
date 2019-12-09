@@ -15,7 +15,18 @@ class GuiController():
 
     def __init__(self, logicController=None):
         self.logicController = logicController
-        #self.windows = {'mainWindow':MainWindow, 'newJobWindow':NewJobWindow}
+        self.actualWindow = None
+
+    def closeWindow(self,window):
+        if isinstance(window,NewJobWindow):
+            window.root.destroy()
+            self.actualWindow = MainWindow(self)
+        elif isinstance(window,MainWindow):
+            window.root.destroy()
+
+    def showNewJobWindow(self):
+        self.actualWindow.root.destroy()
+        self.actualWindow = NewJobWindow(self)
 
     def addRegister(self):
         print('Add register order')
@@ -33,4 +44,4 @@ class GuiController():
         print('Adding new register')
 
     def start(self):
-        self.actualWindow = NewJobWindow(self)
+        self.actualWindow = MainWindow(self)

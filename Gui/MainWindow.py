@@ -18,10 +18,16 @@ class MainWindow():
 
     def __init__(self, guiController):
         self.guiController = guiController
-        self.root = tkinter.Tk()
+        self.root = tkinter.Tk(className='MainWindow') # we need this for identifying the
+        self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window.')
         self.root.iconbitmap('../icons/laserJobsManager_Icon5.ico')
-        self.root.geometry(str(self.width)+'x'+str(self.height))
+
+        # Gets both half the screen width/height and window width/height
+        positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)
+        positionDown = int(self.root.winfo_screenheight() / 2 - self.height / 2)
+        self.root.geometry(str(self.width) + 'x' + str(self.height) + "+" +str(positionRight) + "+" + str(positionDown))
+
         self.root.resizable(0,0)
         self.create_menu_bar()
         self.create_jobsTable_frame(self.guiController.jobsTableHeaders)
@@ -36,7 +42,7 @@ class MainWindow():
         tool_bar_frame.grid(row=1, column=0, columnspan=6,sticky=W+E+N+S)
         addRegisterIcon = PhotoImage(file='../icons/addRegisterIcon_30x30.gif')
         deleteRegisterIcon = PhotoImage(file='../icons/deleteRegisterIcon_30x30.gif')
-        self.addRegisterButton = Button(tool_bar_frame, image=addRegisterIcon, command= self.guiController.addRegister)
+        self.addRegisterButton = Button(tool_bar_frame, image=addRegisterIcon, command= self.addNewJob)
         self.addRegisterButton.image = addRegisterIcon
         self.addRegisterButton.grid(row=1, column=0,  padx=5,pady=2)
         self.deleteRegisterButton = Button(tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteRegister)
@@ -47,7 +53,7 @@ class MainWindow():
 
         menubar = Menu(self.root)
         self.appMenu = Menu(self.root, tearoff=0)
-        self.appMenu.add_command(label="Exit", command=self.onExit)
+        self.appMenu.add_command(label="Exit", command=self.close)
         menubar.add_cascade(label="App", menu=self.appMenu)
 
         self.jobMenu = Menu(self.root, tearoff=0)
@@ -99,11 +105,12 @@ class MainWindow():
         for value in values:
             self.jobsTableTree.insert("", 'end', text="ID"+str(value[0]), values=value[1:])
 
-    def onExit(self):
+    def close(self):
         print('Exiting...')
+        self.guiController.closeWindow(self)
 
     def addNewJob(self):
-        print('Adding new job...')
+        self.guiController.showNewJobWindow()
 
     def deleteJob(self):
         print('Deleting existing job...')
