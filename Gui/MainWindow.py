@@ -12,8 +12,10 @@ from tkinter import ttk
 
 class MainWindow():
 
+    #pixels
     width = 1200
     height = 600
+
     def __init__(self, guiController):
         self.guiController = guiController
         self.root = tkinter.Tk()
@@ -44,29 +46,35 @@ class MainWindow():
     def create_menu_bar(self):
 
         menubar = Menu(self.root)
-        self.fileMenu = Menu(self.root, tearoff=0)
-        self.fileMenu.add_command(label="Exit", command=self.onExit)
-        menubar.add_cascade(label="File", menu=self.fileMenu)
+        self.appMenu = Menu(self.root, tearoff=0)
+        self.appMenu.add_command(label="Exit", command=self.onExit)
+        menubar.add_cascade(label="App", menu=self.appMenu)
+
+        self.jobMenu = Menu(self.root, tearoff=0)
+        self.jobMenu.add_command(label="New job...", command=self.addNewJob)
+        self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
+        menubar.add_cascade(label="Job", menu=self.jobMenu)
+
         self.root.config(menu=menubar)
 
     def create_jobsTable_frame(self, jobsTableHeaders):
 
-        self.jobsTableTree = ttk.Treeview(self.root, height=25)
+        rowHeight = 20 #pixels
+        nRows = 25
+        style = ttk.Style(self.root)
+        style.configure('Treeview', rowheight=rowHeight) #rowheight in pixels
+
+        self.jobsTableTree = ttk.Treeview(self.root, height=nRows) #height in rows
+
+
+
         self.jobsTableTree.grid(row=0, column=0, columnspan=6, sticky=W + E + N + S)
-
-        ysb = Scrollbar(self.root, orient=VERTICAL, command=self.jobsTableTree.yview)
-        ysb.grid(row=0, column=1, sticky='ns')
-        self.jobsTableTree.configure(yscroll=ysb.set)
-        xsb = Scrollbar(self.root, orient=HORIZONTAL, command=self.jobsTableTree.xview)
-        xsb.grid(row=0, column=0, sticky='we')
-        self.jobsTableTree.configure(xscroll=xsb.set)
-
 
         jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders)
         jobsTableHeaders_Text = tuple(x[1] for x in jobsTableHeaders)
         jobsTableHeaders_WidthInPercent = tuple(x[2] for x in jobsTableHeaders)
 
-        self.jobsTableTree["columns"] =  jobsTableHeaders_Order #creamos las columnas
+        self.jobsTableTree["columns"] = jobsTableHeaders_Order #creamos las columnas
 
         #Configuramos el texto del encabezado de cada columna
         for order, text in zip(jobsTableHeaders_Order, jobsTableHeaders_Text):
@@ -74,13 +82,28 @@ class MainWindow():
 
         #Configuramos la anchura de las columnas
         for order, w in zip(jobsTableHeaders_Order,jobsTableHeaders_WidthInPercent):
-            self.jobsTableTree.column(order, width=int((w/100.0) * self.width), minwidth=int((w/100.0) * self.width), stretch=YES)
+            self.jobsTableTree.column(order, width=int((w/100.0) * self.width), minwidth=int((w/100.0) * self.width), stretch=True)
 
+        #Adding scroll bars
+        ysb = Scrollbar(self.root, orient=VERTICAL, command=self.jobsTableTree.yview)
+        ysb.grid(row=0, column=0, sticky='ns')
+        ysb.place(x=self.width-20,y=20, height=nRows*rowHeight, width=20) #number of rows x rowheight
+        self.jobsTableTree.configure(yscroll=ysb.set)
 
+        xsb = Scrollbar(self.root, orient=HORIZONTAL, command=self.jobsTableTree.xview)
+        xsb.grid(row=0, column=0, sticky='we')
+        xsb.place(x=1, y=nRows*rowHeight, height=20, width=self.width-20)  # number of rows x rowheight
+        self.jobsTableTree.configure(xscroll=xsb.set)
 
     def loadJobsData(self, values):
         for value in values:
             self.jobsTableTree.insert("", 'end', text="ID"+str(value[0]), values=value[1:])
 
     def onExit(self):
-        pass
+        print('Exiting...')
+
+    def addNewJob(self):
+        print('Adding new job...')
+
+    def deleteJob(self):
+        print('Deleting existing job...')

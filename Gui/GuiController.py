@@ -9,6 +9,8 @@ David SAnchez Sanchez
 from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
 
+from Gui.NewJobWindow import NewJobWindow
+
 class GuiController():
 
     def __init__(self, logicController=None):
@@ -24,5 +26,11 @@ class GuiController():
     def configureMainWindow(self, _jobsTableHeaders):
         self.jobsTableHeaders = _jobsTableHeaders
 
+    def cancelAddRegister(self):
+        print('Cancelling add register')
+
+    def addRegister(self):
+        print('Adding new register')
+
     def start(self):
-        self.actualWindow = MainWindow(self)
+        self.actualWindow = NewJobWindow(self)
