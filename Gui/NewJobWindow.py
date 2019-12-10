@@ -33,7 +33,6 @@ class NewJobWindow():
         self.root.resizable(0, 0)
         self.createLabelsAndEntries()
         self.createOKAndCancelButtons()
-        self.root.mainloop()
 
     def createLabelsAndEntries(self):
 
@@ -121,9 +120,9 @@ class NewJobWindow():
         okAndCancelButtons_frame = Frame(self.root)
         okAndCancelButtons_frame.config(width= self.width)
         okAndCancelButtons_frame.grid(row=10, column=0, columnspan=2, sticky=W + E + N + S)
-        self.okButton = Button(okAndCancelButtons_frame, command=self.guiController.addRegister, text='Add Register', width=10)
+        self.okButton = Button(okAndCancelButtons_frame, command=self.guiController.addJob, text='Add Register', width=10)
         self.okButton.grid(row=0, column=0, padx=5, pady=2, sticky=E)
-        self.cancelButton = Button(okAndCancelButtons_frame, command=self.guiController.cancelAddRegister, text='Cancel', width=10)
+        self.cancelButton = Button(okAndCancelButtons_frame, command=self.guiController.cancelAddJob, text='Cancel', width=10)
         self.cancelButton.grid(row=0, column=1, padx=5, pady=2, sticky=E)
 
     def close(self):
@@ -135,3 +134,6 @@ class NewJobWindow():
 
     def ok(self):
         print('Deleting existing job...')
+
+    def show(self):
+        self.root.mainloop()

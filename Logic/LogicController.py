@@ -8,11 +8,12 @@ David SAnchez Sanchez
 """
 class LogicController():
 
-    def __init__(self, guiController=None):
-        self.guiController = guiController
+    def __init__(self):
+        self.guiController = None
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
+        self.guiController.setLogicController(self)
 
     def getGuiController(self):
         return self.guiController

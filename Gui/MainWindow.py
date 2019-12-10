@@ -34,18 +34,16 @@ class MainWindow():
         self.create_tool_bar()
         self.loadJobsData([('0','b','c','d','b','c','d','b','c','d',''),('1','b','c','d'),('2','b','c','d'),('3','b','c','d')])
 
-        self.root.mainloop()
-
     def create_tool_bar(self):
 
         tool_bar_frame = Frame(self.root)
         tool_bar_frame.grid(row=1, column=0, columnspan=6,sticky=W+E+N+S)
         addRegisterIcon = PhotoImage(file='../icons/addRegisterIcon_30x30.gif')
         deleteRegisterIcon = PhotoImage(file='../icons/deleteRegisterIcon_30x30.gif')
-        self.addRegisterButton = Button(tool_bar_frame, image=addRegisterIcon, command= self.addNewJob)
-        self.addRegisterButton.image = addRegisterIcon
-        self.addRegisterButton.grid(row=1, column=0,  padx=5,pady=2)
-        self.deleteRegisterButton = Button(tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteRegister)
+        self.addNewJobButton = Button(tool_bar_frame, image=addRegisterIcon, command= self.guiController.showNewJobWindow)
+        self.addNewJobButton.image = addRegisterIcon
+        self.addNewJobButton.grid(row=1, column=0, padx=5, pady=2)
+        self.deleteRegisterButton = Button(tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteJob)
         self.deleteRegisterButton.image = deleteRegisterIcon
         self.deleteRegisterButton.grid(row=1, column=1, padx=5, pady=2)
 
@@ -57,8 +55,8 @@ class MainWindow():
         menubar.add_cascade(label="App", menu=self.appMenu)
 
         self.jobMenu = Menu(self.root, tearoff=0)
-        self.jobMenu.add_command(label="New job...", command=self.addNewJob)
-        self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
+        self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
+        self.jobMenu.add_command(label="Delete job", command=self.guiController.deleteJob)
         menubar.add_cascade(label="Job", menu=self.jobMenu)
 
         self.root.config(menu=menubar)
@@ -109,8 +107,7 @@ class MainWindow():
         print('Exiting...')
         self.guiController.closeWindow(self)
 
-    def addNewJob(self):
-        self.guiController.showNewJobWindow()
+    def show(self):
+        self.root.mainloop()
 
-    def deleteJob(self):
-        print('Deleting existing job...')
+
