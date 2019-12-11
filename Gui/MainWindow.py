@@ -12,16 +12,18 @@ from tkinter import ttk
 
 class MainWindow():
 
-    #pixels
-    width = 1200
-    height = 600
 
     def __init__(self, guiController):
+
+        self.width = 1200
+        self.height = 600
+        self.state = NORMAL
+
         self.guiController = guiController
         self.root = tkinter.Tk(className='MainWindow') # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window.')
-        self.root.iconbitmap('../icons/laserJobsManager_Icon5.ico')
+        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
 
         # Gets both half the screen width/height and window width/height
         positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)
@@ -34,32 +36,34 @@ class MainWindow():
         self.create_tool_bar()
         self.loadJobsData([('0','b','c','d','b','c','d','b','c','d',''),('1','b','c','d'),('2','b','c','d'),('3','b','c','d')])
 
+        self.changeState(NORMAL)
+
     def create_tool_bar(self):
 
-        tool_bar_frame = Frame(self.root)
-        tool_bar_frame.grid(row=1, column=0, columnspan=6,sticky=W+E+N+S)
-        addRegisterIcon = PhotoImage(file='../icons/addRegisterIcon_30x30.gif')
-        deleteRegisterIcon = PhotoImage(file='../icons/deleteRegisterIcon_30x30.gif')
-        self.addNewJobButton = Button(tool_bar_frame, image=addRegisterIcon, command= self.guiController.showNewJobWindow)
+        self.tool_bar_frame = Frame(self.root)
+        self.tool_bar_frame.grid(row=1, column=0, columnspan=6,sticky=W+E+N+S)
+        addRegisterIcon = PhotoImage(file='../Gui/icons/addRegisterIcon_30x30.gif')
+        deleteRegisterIcon = PhotoImage(file='../Gui/icons/deleteRegisterIcon_30x30.gif')
+        self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon, command= self.guiController.showNewJobWindow)
         self.addNewJobButton.image = addRegisterIcon
         self.addNewJobButton.grid(row=1, column=0, padx=5, pady=2)
-        self.deleteRegisterButton = Button(tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteJob)
+        self.deleteRegisterButton = Button(self.tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteJob)
         self.deleteRegisterButton.image = deleteRegisterIcon
         self.deleteRegisterButton.grid(row=1, column=1, padx=5, pady=2)
 
     def create_menu_bar(self):
 
-        menubar = Menu(self.root)
-        self.appMenu = Menu(self.root, tearoff=0)
-        self.appMenu.add_command(label="Exit", command=self.close)
-        menubar.add_cascade(label="App", menu=self.appMenu)
+        self.menubar = Menu(self.root)
+        self.fileMenu = Menu(self.root, tearoff=0)
+        self.fileMenu.add_command(label="Exit", command=self.close)
+        self.menubar.add_cascade(label="File", menu=self.fileMenu)
 
         self.jobMenu = Menu(self.root, tearoff=0)
         self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
         self.jobMenu.add_command(label="Delete job", command=self.guiController.deleteJob)
-        menubar.add_cascade(label="Job", menu=self.jobMenu)
+        self.menubar.add_cascade(label="Job", menu=self.jobMenu)
 
-        self.root.config(menu=menubar)
+        self.root.config(menu=self.menubar)
 
     def create_jobsTable_frame(self, jobsTableHeaders):
 
@@ -107,7 +111,19 @@ class MainWindow():
         print('Exiting...')
         self.guiController.closeWindow(self)
 
+    def changeState(self, state):
+        self.state = state
+        #change the state of the tool_bar
+        for child in self.tool_bar_frame.winfo_children():
+            child.configure(state=state)
+        #change the state of the menu bar
+        for e in range(self.menubar.index(END)):
+            self.menubar.entryconfig(e+1,state=state)
+
     def show(self):
+        self.changeState(NORMAL)
         self.root.mainloop()
+
+
 
 

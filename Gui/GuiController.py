@@ -22,13 +22,15 @@ class GuiController():
     def closeWindow(self,window):
         if isinstance(window,NewJobWindow):
             window.root.destroy()
-            self.actualWindow = MainWindow(self)
+            self.actualWindow = self.windowsStack.pop()
+            self.actualWindow.changeState('normal')
         elif isinstance(window,MainWindow):
             window.root.destroy()
 
     def showNewJobWindow(self):
-        self.actualWindow = NewJobWindow(self)
+        self.actualWindow.changeState('disable')
         self.windowsStack.append(self.actualWindow)
+        self.actualWindow = NewJobWindow(self)
         self.actualWindow.show()
 
     def deleteJob(self):
@@ -37,11 +39,10 @@ class GuiController():
     def configureMainWindow(self, _jobsTableHeaders):
         self.jobsTableHeaders = _jobsTableHeaders
 
-    def cancelAddJob(self):
-        print('Cancelling add register')
+    def addJob(self, newJobData):
+        print('Adding new job')
+        self.logicController.createNewJob(newJobData)
 
-    def addJob(self):
-        print('Adding new register')
 
     def start(self):
         self.actualWindow = MainWindow(self)

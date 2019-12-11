@@ -18,12 +18,13 @@ class NewJobWindow():
     height = 300
 
     def __init__(self, guiController):
+
         self.guiController = guiController
         self.root = tkinter.Tk()
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
         self.root.title('Laser-Jobs Manager. New Job Window.')
-        self.root.iconbitmap('../icons/laserJobsManager_Icon5.ico')
+        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
 
         # Gets both half the screen width/height and window width/height
         positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)
@@ -31,8 +32,20 @@ class NewJobWindow():
 
         self.root.geometry(str(self.width) + 'x' + str(self.height) + "+" +str(positionRight) + "+" + str(positionDown))
         self.root.resizable(0, 0)
+        self.create_menu_bar()
         self.createLabelsAndEntries()
         self.createOKAndCancelButtons()
+
+        self.changeState(NORMAL)
+
+    def create_menu_bar(self):
+
+        self.menubar = Menu(self.root)
+        self.fileMenu = Menu(self.root, tearoff=0)
+        self.fileMenu.add_command(label="Exit", command=self.close)
+        self.menubar.add_cascade(label="File", menu=self.fileMenu)
+
+        self.root.config(menu=self.menubar)
 
     def createLabelsAndEntries(self):
 
@@ -44,12 +57,13 @@ class NewJobWindow():
         Label(newJobData_frame, text='Date:',anchor=W, width=20).grid(row=1, column=0)
         Label(newJobData_frame, text='Material:',anchor=W, width=20).grid(row=2, column=0)
         Label(newJobData_frame, text='Cut/Raster:',anchor=W, width=20).grid(row=3, column=0)
-        Label(newJobData_frame, text='Power(%):', anchor=W, width=20).grid(row=4, column=0)
-        Label(newJobData_frame, text='DPI:', anchor=W, width=20).grid(row=5, column=0)
-        Label(newJobData_frame, text='Freq(Hz):', anchor=W, width=20).grid(row=6, column=0)
-        Label(newJobData_frame, text='#Passes (Cut/Raster):', anchor=W, width=20).grid(row=7, column=0)
-        Label(newJobData_frame, text='RasterDepth(mm):', anchor=W, width=20).grid(row=8, column=0)
-        Label(newJobData_frame, text='Others:', anchor=W, width=20).grid(row=9, column=0)
+        Label(newJobData_frame, text='Speed(%):', anchor=W, width=20).grid(row=4, column=0)
+        Label(newJobData_frame, text='Power(%):', anchor=W, width=20).grid(row=5, column=0)
+        Label(newJobData_frame, text='DPI:', anchor=W, width=20).grid(row=6, column=0)
+        Label(newJobData_frame, text='Freq(Hz):', anchor=W, width=20).grid(row=7, column=0)
+        Label(newJobData_frame, text='#Passes (Cut/Raster):', anchor=W, width=20).grid(row=8, column=0)
+        Label(newJobData_frame, text='RasterDepth(mm):', anchor=W, width=20).grid(row=9, column=0)
+        Label(newJobData_frame, text='Others:', anchor=W, width=20).grid(row=10, column=0)
 
         #Username entry
         self.username = StringVar(newJobData_frame)
@@ -79,61 +93,90 @@ class NewJobWindow():
         JobTypeMenu.config(width=8, anchor=W)
         JobTypeMenu.grid(row=3, column=1, sticky=W)
 
+        # Speed Entry
+        self.speed = IntVar(newJobData_frame, 90)
+        self.speed_entry = Entry(newJobData_frame, textvariable=self.speed)
+        self.speed_entry.config(width=15)
+        self.speed_entry.grid(row=4, column=1, sticky=W)
+
         #Power Entry
         self.power = IntVar(newJobData_frame,90)
         self.power_entry = Entry(newJobData_frame, textvariable=self.power)
         self.power_entry.config(width=15)
-        self.power_entry.grid(row=4, column=1, sticky=W)
+        self.power_entry.grid(row=5, column=1, sticky=W)
 
         #dpi entry (dots per icnh)
         self.dpi = IntVar(newJobData_frame, 900)
         self.dpi_entry = Entry(newJobData_frame, textvariable=self.dpi)
         self.dpi_entry.config(width=15)
-        self.dpi_entry.grid(row=5, column=1, sticky=W)
+        self.dpi_entry.grid(row=6, column=1, sticky=W)
 
         # Frequency entry (in Hz)
         self.freq = IntVar(newJobData_frame, 5000)
         self.freq_entry = Entry(newJobData_frame, textvariable=self.freq)
         self.freq_entry.config(width=15)
-        self.freq_entry.grid(row=6, column=1, sticky=W)
+        self.freq_entry.grid(row=7, column=1, sticky=W)
 
         # Number of passes entry
         self.nPasses = StringVar(newJobData_frame, '1/0')
         self.nPasses_entry = Entry(newJobData_frame, textvariable=self.nPasses)
         self.nPasses_entry.config(width=15)
-        self.nPasses_entry.grid(row=7, column=1, sticky=W)
+        self.nPasses_entry.grid(row=8, column=1, sticky=W)
 
         # Raster depth entry (in mm)
         self.rasterDepth = IntVar(newJobData_frame, 1)
         self.rasterDepth_entry = Entry(newJobData_frame, textvariable=self.rasterDepth)
         self.rasterDepth_entry.config(width=15)
-        self.rasterDepth_entry.grid(row=8, column=1, sticky=W)
+        self.rasterDepth_entry.grid(row=9, column=1, sticky=W)
 
         # Observations entry
-        self.observations = StringVar(newJobData_frame, 'Enter here useful comments for the future')
-        self.observations_entry = Entry(newJobData_frame, textvariable=self.observations)
-        self.observations_entry.bind('<FocusIn>',lambda event: self.observations_entry.delete(0,END))
-        self.observations_entry.config(width=60)
-        self.observations_entry.grid(row=9, column=1, sticky=W)
+        self.others = StringVar(newJobData_frame, 'Enter here useful comments for the future')
+        self.others_entry = Entry(newJobData_frame, textvariable=self.others)
+        self.others_entry.bind('<FocusIn>', lambda event: self.others_entry.delete(0, END))
+        self.others_entry.config(width=60)
+        self.others_entry.grid(row=10, column=1, sticky=W)
 
     def createOKAndCancelButtons(self):
         okAndCancelButtons_frame = Frame(self.root)
         okAndCancelButtons_frame.config(width= self.width)
         okAndCancelButtons_frame.grid(row=10, column=0, columnspan=2, sticky=W + E + N + S)
-        self.okButton = Button(okAndCancelButtons_frame, command=self.guiController.addJob, text='Add Register', width=10)
+        self.okButton = Button(okAndCancelButtons_frame, command=self.addNewJob, text='Add Register', width=10)
         self.okButton.grid(row=0, column=0, padx=5, pady=2, sticky=E)
-        self.cancelButton = Button(okAndCancelButtons_frame, command=self.guiController.cancelAddJob, text='Cancel', width=10)
+        self.cancelButton = Button(okAndCancelButtons_frame, command= lambda: self.guiController.closeWindow(self), text='Cancel', width=10)
         self.cancelButton.grid(row=0, column=1, padx=5, pady=2, sticky=E)
+
+    def changeState(self, state):
+        self.state = state
+        #change the state of the ok_cancel buttons
+        self.okButton.configure(state=state)
+        self.cancelButton.configure(state=state)
+        #change the state of the menu bar
+        for e in range(self.menubar.index(END)):
+            self.menubar.entryconfig(e+1,state=state)
 
     def close(self):
         print('Exiting...')
-        self.guiController.closeWindow(self.root)
+        self.guiController.closeWindow(self)
 
     def cancel(self):
         print('Adding new job...')
 
-    def ok(self):
-        print('Deleting existing job...')
+    def addNewJob(self):
+        print('Adding job...')
+        newJobdata = {}
+        newJobdata['Username'] = self.username_entry.get()
+        newJobdata['Date'] = self.date_entry.get()
+        newJobdata['Material'] = self.material_entry.get()
+        newJobdata['Cut/Raster'] = self.jobType.get()
+        newJobdata['Speed'] = self.speed_entry.get()
+        newJobdata['Power'] = self.power_entry.get()
+        newJobdata['DPI'] = self.dpi_entry.get()
+        newJobdata['Freq'] = self.freq_entry.get()
+        newJobdata['Passes'] = self.nPasses_entry.get()
+        newJobdata['RasterDepth'] = self.rasterDepth_entry.get()
+        newJobdata['Others'] = self.others_entry.get()
+
+        self.guiController.addJob(newJobdata)
 
     def show(self):
         self.root.mainloop()
