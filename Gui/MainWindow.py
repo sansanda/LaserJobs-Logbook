@@ -13,10 +13,10 @@ from tkinter import ttk
 class MainWindow():
 
 
-    def __init__(self, guiController):
+    def __init__(self, w, h, guiController):
 
-        self.width = 1200
-        self.height = 600
+        self.width = w
+        self.height = h
         self.state = NORMAL
 
         self.guiController = guiController
@@ -33,14 +33,29 @@ class MainWindow():
         self.root.resizable(0,0)
 
         self.create_menu_bar()
+        self.create_filter_bar()
         self.create_jobsTable_frame(self.guiController.jobsTableHeaders)
         self.create_tool_bar()
         self.loadJobsData(self.guiController.logicController.laserJobsBook)
 
+    def create_filter_bar(self):
+
+        self.filter_bar_frame = Frame(self.root)
+        self.filter_bar_frame.grid(row=0, column=0, columnspan=6,sticky=W+E+N+S)
+        Label(self.filter_bar_frame, text='Filter:', anchor=W, width=20, padx=10, pady=10).grid(row=0, column=0)
+        # Username entry
+        self.filterText = StringVar(self.filter_bar_frame)
+        self.filterText.trace("w", lambda name, index, mode, sv=self.filterText: self.filterTreeView(self.filterText))
+
+        self.filter_entry = Entry(self.filter_bar_frame, textvariable=self.filterText)
+        self.filter_entry.config(width=30)
+        self.filter_entry.grid(row=0, column=1, sticky=W)
+
+
     def create_tool_bar(self):
 
         self.tool_bar_frame = Frame(self.root)
-        self.tool_bar_frame.grid(row=1, column=0, columnspan=6,sticky=W+E+N+S)
+        self.tool_bar_frame.grid(row=2, column=0, columnspan=6,sticky=W+E+N+S)
         addRegisterIcon = PhotoImage(file='../Gui/icons/addRegisterIcon_30x30.gif')
         deleteRegisterIcon = PhotoImage(file='../Gui/icons/deleteRegisterIcon_30x30.gif')
         self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon, command= self.guiController.showNewJobWindow)
@@ -73,9 +88,7 @@ class MainWindow():
 
         self.jobsTableTree = ttk.Treeview(self.root, height=nRows) #height in rows
 
-
-
-        self.jobsTableTree.grid(row=0, column=0, columnspan=6, sticky=W + E + N + S)
+        self.jobsTableTree.grid(row=1, column=0, columnspan=6, sticky=W + E + N + S)
 
         jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders)
         jobsTableHeaders_Text = tuple(x[1] for x in jobsTableHeaders)
@@ -122,6 +135,12 @@ class MainWindow():
     def show(self):
         self.enable(True)
         self.root.mainloop()
+
+    def filterTreeView(self, filterText):
+        print(filterText.get())
+        for r in self.jobsTableTree.get_children():
+            print(r)
+
 
 
 

@@ -32,7 +32,7 @@ class GuiController():
     def showNewJobWindow(self):
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
-        self.actualWindow = NewJobWindow(self)
+        self.actualWindow = NewJobWindow(600,300,self)
         self.actualWindow.show()
 
 
@@ -59,7 +59,7 @@ class GuiController():
 
 
     def start(self):
-        self.actualWindow = MainWindow(self)
+        self.actualWindow = MainWindow(1400,650,self)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow.show()
 

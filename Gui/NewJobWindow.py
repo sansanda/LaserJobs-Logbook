@@ -13,11 +13,13 @@ from datetime import date
 
 class NewJobWindow():
 
-    # pixels of the window
-    width = 600
-    height = 300
 
-    def __init__(self, guiController):
+
+    def __init__(self, w, h, guiController):
+
+        # pixels of the window
+        self.width = w
+        self.height = h
 
         self.guiController = guiController
         self.root = tkinter.Tk()
@@ -149,9 +151,6 @@ class NewJobWindow():
     def close(self):
         print('Exiting...')
         self.guiController.closeWindow(self)
-
-    def cancel(self):
-        print('Canceling new job...')
 
     def newJob(self):
         print('Adding job...')
