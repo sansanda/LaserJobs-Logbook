@@ -140,7 +140,7 @@ class NewJobWindow():
         okAndCancelButtons_frame = Frame(self.root)
         okAndCancelButtons_frame.config(width= self.width)
         okAndCancelButtons_frame.grid(row=10, column=0, columnspan=2, sticky=W + E + N + S)
-        self.okButton = Button(okAndCancelButtons_frame, command=self.addNewJob, text='Add Register', width=10)
+        self.okButton = Button(okAndCancelButtons_frame, command=self.newJob, text='Add New Job', width=10)
         self.okButton.grid(row=0, column=0, padx=5, pady=2, sticky=E)
         self.cancelButton = Button(okAndCancelButtons_frame, command= lambda: self.guiController.closeWindow(self), text='Cancel', width=10)
         self.cancelButton.grid(row=0, column=1, padx=5, pady=2, sticky=E)
@@ -159,15 +159,15 @@ class NewJobWindow():
         self.guiController.closeWindow(self)
 
     def cancel(self):
-        print('Adding new job...')
+        print('Canceling new job...')
 
-    def addNewJob(self):
+    def newJob(self):
         print('Adding job...')
         newJobdata = {}
         newJobdata['Username'] = self.username_entry.get()
         newJobdata['Date'] = self.date_entry.get()
         newJobdata['Material'] = self.material_entry.get()
-        newJobdata['Cut/Raster'] = self.jobType.get()
+        newJobdata['Cut_Raster'] = self.jobType.get()
         newJobdata['Speed'] = self.speed_entry.get()
         newJobdata['Power'] = self.power_entry.get()
         newJobdata['DPI'] = self.dpi_entry.get()
@@ -176,7 +176,7 @@ class NewJobWindow():
         newJobdata['RasterDepth'] = self.rasterDepth_entry.get()
         newJobdata['Others'] = self.others_entry.get()
 
-        self.guiController.addJob(newJobdata)
+        self.guiController.newJob(newJobdata)
 
     def show(self):
         self.root.mainloop()

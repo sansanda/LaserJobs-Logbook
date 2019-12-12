@@ -33,15 +33,27 @@ class GuiController():
         self.actualWindow = NewJobWindow(self)
         self.actualWindow.show()
 
-    def deleteJob(self):
-        print('Delete register order')
+
 
     def configureMainWindow(self, _jobsTableHeaders):
         self.jobsTableHeaders = _jobsTableHeaders
 
-    def addJob(self, newJobData):
-        print('Adding new job')
-        self.logicController.createNewJob(newJobData)
+
+    def newJob(self,newJobData):
+        print('Adding new job ...')
+        self.logicController.newJob(newJobData)
+
+    def getJob(self, jobId):
+        print('Getting job ...')
+        return self.logicController.getJob(jobId)
+
+    def updateJob(self,updatedJobData):
+        print('Updating job ...')
+        self.logicController.updateJob(updatedJobData)
+
+    def deleteJob(self,jobId):
+        print('Deleting job ...')
+        self.logicController.deleteJob(jobId)
 
 
     def start(self):

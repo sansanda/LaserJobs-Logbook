@@ -34,7 +34,7 @@ class MainWindow():
         self.create_menu_bar()
         self.create_jobsTable_frame(self.guiController.jobsTableHeaders)
         self.create_tool_bar()
-        self.loadJobsData([('0','b','c','d','b','c','d','b','c','d',''),('1','b','c','d'),('2','b','c','d'),('3','b','c','d')])
+        self.loadJobsData(self.guiController.logicController.laserJobsBook)
 
         self.changeState(NORMAL)
 
@@ -103,9 +103,15 @@ class MainWindow():
         xsb.place(x=1, y=nRows*rowHeight, height=20, width=self.width-20)  # number of rows x rowheight
         self.jobsTableTree.configure(xscroll=xsb.set)
 
+    #values is a list of dictionaries
+    #each value is a dictionary
+
     def loadJobsData(self, values):
-        for value in values:
-            self.jobsTableTree.insert("", 'end', text="ID"+str(value[0]), values=value[1:])
+        for index,rowAsDict in enumerate(values):
+            rowAsList = []
+            for columnKey, columnValue in rowAsDict.items():
+                rowAsList.append(columnValue)
+            self.jobsTableTree.insert("", 'end', text="ID" + str(index), values=rowAsList[0:])
 
     def close(self):
         print('Exiting...')

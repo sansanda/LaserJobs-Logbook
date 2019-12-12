@@ -6,15 +6,20 @@ David SAnchez Sanchez
 
 
 """
-import xlrd
 
 from Logic.LaserJobs_Book import LaserJobs_Book
+from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcel
+from Data.Excel_Utilities.ExcelUtils import updateExcel
+
 
 class LogicController():
 
     def __init__(self,sourceURL):
         self.guiController = None
         self.laserJobsBook = LaserJobs_Book()
+        self.sourceURL = sourceURL
+        self.loadJobsFromExcel(self.laserJobsBook, self.sourceURL)
+
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
@@ -23,25 +28,27 @@ class LogicController():
     def getGuiController(self):
         return self.guiController
 
+    def loadJobsFromExcel(self, laserJobsBook, sourceURL):
+        loadJobsFromExcel(laserJobsBook,sourceURL)
 
-    def loadJobsFromExcel(self, sourceURL):
+    def updateExcel(self, updatedJobData, sourceURL):
+        updateExcel(updatedJobData,sourceURL)
 
-        workbook = xlrd.open_workbook(sourceURL, on_demand=True)
-        worksheet = workbook.sheet_by_index(0)
-        columns_row = []  # The row where we stock the name of the column
+    def newJob(self,newJobData):
+        # TODO implements newJob
+        self.laserJobsBook.newJob(newJobData)
 
-        for col in range(worksheet.ncols):
-            columns_row.append(worksheet.cell_value(0, col))
+    def getJob(self, jobId):
+        # TODO implement getJob
+        return self.laserJobsBook.getJob(jobId)
 
-        # tronsform the workbook to a list of dictionnary
-        for row in range(1, worksheet.nrows):
-            elm = {}
-            for col in range(worksheet.ncols - 1):
-                elm[columns_row[col+1]] = str(worksheet.cell_value(row, col+1))
-            self.laserJobsBook.append(elm)
+    def updateJob(self,updatedJobData):
+        # TODO implement updateJob
+        self.laserJobsBook.updateJob(updatedJobData)
 
-    def createNewJob(self,newJobdata):
-        self.laserJobsBook.createNewJob(newJobdata)
+    def deleteJob(self,jobId):
+        #TODO implement deleteJob
+        self.laserJobsBook.deleteJob(jobId)
 
     def start(self):
         self.guiController.start()
