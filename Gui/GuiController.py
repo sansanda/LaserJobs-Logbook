@@ -23,12 +23,14 @@ class GuiController():
         if isinstance(window,NewJobWindow):
             window.root.destroy()
             self.actualWindow = self.windowsStack.pop()
-            self.actualWindow.changeState('normal')
+            self.actualWindow.enable(True)
         elif isinstance(window,MainWindow):
+            #destroy all windows
             window.root.destroy()
 
+
     def showNewJobWindow(self):
-        self.actualWindow.changeState('disable')
+        self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow = NewJobWindow(self)
         self.actualWindow.show()

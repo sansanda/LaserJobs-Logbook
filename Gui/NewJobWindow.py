@@ -36,8 +36,6 @@ class NewJobWindow():
         self.createLabelsAndEntries()
         self.createOKAndCancelButtons()
 
-        self.changeState(NORMAL)
-
     def create_menu_bar(self):
 
         self.menubar = Menu(self.root)
@@ -145,14 +143,8 @@ class NewJobWindow():
         self.cancelButton = Button(okAndCancelButtons_frame, command= lambda: self.guiController.closeWindow(self), text='Cancel', width=10)
         self.cancelButton.grid(row=0, column=1, padx=5, pady=2, sticky=E)
 
-    def changeState(self, state):
-        self.state = state
-        #change the state of the ok_cancel buttons
-        self.okButton.configure(state=state)
-        self.cancelButton.configure(state=state)
-        #change the state of the menu bar
-        for e in range(self.menubar.index(END)):
-            self.menubar.entryconfig(e+1,state=state)
+    def enable(self, enable):
+        self.root.attributes('-disabled', not enable)
 
     def close(self):
         print('Exiting...')
@@ -179,4 +171,5 @@ class NewJobWindow():
         self.guiController.newJob(newJobdata)
 
     def show(self):
+        self.enable(True)
         self.root.mainloop()

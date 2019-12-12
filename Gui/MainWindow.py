@@ -31,12 +31,11 @@ class MainWindow():
         self.root.geometry(str(self.width) + 'x' + str(self.height) + "+" +str(positionRight) + "+" + str(positionDown))
 
         self.root.resizable(0,0)
+
         self.create_menu_bar()
         self.create_jobsTable_frame(self.guiController.jobsTableHeaders)
         self.create_tool_bar()
         self.loadJobsData(self.guiController.logicController.laserJobsBook)
-
-        self.changeState(NORMAL)
 
     def create_tool_bar(self):
 
@@ -103,31 +102,25 @@ class MainWindow():
         xsb.place(x=1, y=nRows*rowHeight, height=20, width=self.width-20)  # number of rows x rowheight
         self.jobsTableTree.configure(xscroll=xsb.set)
 
-    #values is a list of dictionaries
-    #each value is a dictionary
+    # values is a list of dictionaries
+    # each value is a dictionary
 
     def loadJobsData(self, values):
         for index,rowAsDict in enumerate(values):
             rowAsList = []
             for columnKey, columnValue in rowAsDict.items():
                 rowAsList.append(columnValue)
-            self.jobsTableTree.insert("", 'end', text="ID" + str(index), values=rowAsList[0:])
+            self.jobsTableTree.insert("", 'end', text= str(index), values=rowAsList[0:])
 
     def close(self):
         print('Exiting...')
         self.guiController.closeWindow(self)
 
-    def changeState(self, state):
-        self.state = state
-        #change the state of the tool_bar
-        for child in self.tool_bar_frame.winfo_children():
-            child.configure(state=state)
-        #change the state of the menu bar
-        for e in range(self.menubar.index(END)):
-            self.menubar.entryconfig(e+1,state=state)
+    def enable(self, enable):
+        self.root.attributes('-disabled', not enable)
 
     def show(self):
-        self.changeState(NORMAL)
+        self.enable(True)
         self.root.mainloop()
 
 
