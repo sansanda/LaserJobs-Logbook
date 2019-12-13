@@ -24,8 +24,7 @@ def main():
 
     lc.setGuiController(gc)
     lc.start()
-    jd = {'jobId':'1'}
-    lc.newJob(jd)
+
 
 if __name__ == "__main__":
     main()

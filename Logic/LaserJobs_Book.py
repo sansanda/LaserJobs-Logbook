@@ -21,7 +21,6 @@ class LaserJobs_Book(list):
         if not self.existJob(jobId):
             newjobData['jobId'] = jobId
             self.append(newjobData)
-            #TODO: Notificate that the book has changed
         else:
             raise (jobId + ' already exists!!!!')
 
@@ -39,7 +38,7 @@ class LaserJobs_Book(list):
             self.append(updatedJobData)
             # TODO: Notificate that the book has changed
         else:
-            raise (jobId + ' does not exists!!!!')
+            raise (updatedJobData['jobId'] + ' does not exists!!!!')
 
     #delete job indicated by jobId
     def deleteJob(self,jobId):
@@ -53,7 +52,7 @@ class LaserJobs_Book(list):
     def existJob(self, jobId):
         exists = True
         try:
-            self[jobId]
+            print(self[jobId])
         except IndexError:
             exists = False
         return exists

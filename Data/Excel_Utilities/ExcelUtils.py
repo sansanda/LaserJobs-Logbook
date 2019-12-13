@@ -26,6 +26,7 @@ def updateExcel(updatedJobData, sourceURL):  #updatedJobData is a dictionary
     w_sheet = wb.get_sheet(0)  # the sheet to write to within the writable copy
 
     jobIdToFind_RowIndex = getRowIndexByJobId(r_sheet, updatedJobData['jobId'])   #0 is the column index of the jobId
+
     columnNames = readColumnNames(r_sheet)
     for columnName_Index,columnName in enumerate(columnNames):
         w_sheet.write(jobIdToFind_RowIndex, columnName_Index, updatedJobData[columnName])

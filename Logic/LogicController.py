@@ -33,20 +33,16 @@ class LogicController(Publisher):
     def loadJobsFromExcel(self, laserJobsBook, sourceURL):
         loadJobsFromExcel(laserJobsBook,sourceURL)
 
-    def updateExcel(self, updatedJobData, sourceURL):
-        updateExcel(updatedJobData,sourceURL)
+    def updateExcel(self, updatedJobData):
+        updateExcel(updatedJobData,self.sourceURL)
 
     def newJob(self,newJobData):
-        # TODO implements newJob
         try:
             self.laserJobsBook.newJob(newJobData)
+            self.updateExcel(newJobData)
+            self.notify(newJobData)
         except Exception as inst:
-            print(type(inst))  # the exception instance
-            print(inst.args)  # arguments stored in .args
-            print(inst)  # __str__ allows args to be printed directly,
-            x, y = inst.args  # unpack args
-            print('x =', x)
-            print('y =', y)
+            raise(inst)
 
 
 
