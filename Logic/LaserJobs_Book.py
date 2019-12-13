@@ -21,7 +21,6 @@ class LaserJobs_Book(list):
         if not self.existJob(jobId):
             newjobData['jobId'] = jobId
             self.append(newjobData)
-            print(newjobData)
             #TODO: Notificate that the book has changed
         else:
             raise (jobId + ' already exists!!!!')

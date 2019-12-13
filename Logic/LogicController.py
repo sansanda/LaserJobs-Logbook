@@ -10,11 +10,13 @@ David SAnchez Sanchez
 from Logic.LaserJobs_Book import LaserJobs_Book
 from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcel
 from Data.Excel_Utilities.ExcelUtils import updateExcel
+from Logic.DesignPatterns.ObserverPattern import Publisher
 
 
-class LogicController():
+class LogicController(Publisher):
 
     def __init__(self,sourceURL):
+        Publisher.__init__(self)
         self.guiController = None
         self.laserJobsBook = LaserJobs_Book()
         self.sourceURL = sourceURL
@@ -36,7 +38,18 @@ class LogicController():
 
     def newJob(self,newJobData):
         # TODO implements newJob
-        self.laserJobsBook.newJob(newJobData)
+        try:
+            self.laserJobsBook.newJob(newJobData)
+        except Exception as inst:
+            print(type(inst))  # the exception instance
+            print(inst.args)  # arguments stored in .args
+            print(inst)  # __str__ allows args to be printed directly,
+            x, y = inst.args  # unpack args
+            print('x =', x)
+            print('y =', y)
+
+
+
 
     def getJob(self, jobId):
         # TODO implement getJob
