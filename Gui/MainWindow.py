@@ -137,6 +137,11 @@ class MainWindow():
         self.root.mainloop()
 
     def filterTreeView(self, filterText):
+        #TODO: implements filtering of the tree view (at level of LaserJobs_Book)
+        # The idea is to use two data structures one for the filter matching jobs and the other for the not filter matching jobs
+
+
+
         print(filterText.get())
         for r in self.jobsTableTree.get_children():
             print(r)
