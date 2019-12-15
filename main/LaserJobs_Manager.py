@@ -1,14 +1,17 @@
 from Gui.GuiController import GuiController
 from Logic.LogicController import LogicController
-
+from Gui.MainWindow import MainWindow
 
 def main():
-    laserJobsURL = '..\Data\laserJobs_inxls.xls'
-    lc = LogicController(laserJobsURL)
+    laserJobsPath = '..\\Data\\'
+    laserJobsFileName = 'laserJobs_inxls.xls'
+    lc = LogicController(laserJobsPath, laserJobsFileName)
     gc = GuiController()
+
+
     # ('#0','jobID',0.1) #0 es el id de la columna, 'jobID' es el texto del encabezado de dicha columna,
     # 10 es el procentaje de ancho de la columna (del total de MainWindow)
-    gc.configureMainWindow((('#0', 'jobID', 5),
+    headers = (             ('#0', 'jobID', 5),
                             ('#1', 'Username', 10),
                             ('#2', 'Date', 10),
                             ('#3', 'Material', 10),
@@ -20,9 +23,15 @@ def main():
                             ('#9', '#Passes', 5),
                             ('#10', 'RasterDepth', 10),
                             ('#11', 'Others', 25))
-                           )
+    mw = MainWindow(1400, 650)
+    mw.setGuiController(gc)
+    mw.populate(headers)
+    gc.setActualWindow(mw)
 
     lc.setGuiController(gc)
+    #add a observer
+    lc.addObserver(gc.actualWindow)
+    lc.loadJobsFromExcel()
     lc.start()
 
 

@@ -15,13 +15,12 @@ from Logic.DesignPatterns.ObserverPattern import Publisher
 
 class LogicController(Publisher):
 
-    def __init__(self,sourceURL):
+    def __init__(self, laserJobsPath, laserJobsFileName):
         Publisher.__init__(self)
         self.guiController = None
         self.laserJobsBook = LaserJobs_Book()
-        self.sourceURL = sourceURL
-        self.loadJobsFromExcel(self.laserJobsBook, self.sourceURL)
-
+        self.laserJobsPath = laserJobsPath
+        self.laserJobsFileName = laserJobsFileName
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
@@ -30,22 +29,20 @@ class LogicController(Publisher):
     def getGuiController(self):
         return self.guiController
 
-    def loadJobsFromExcel(self, laserJobsBook, sourceURL):
-        loadJobsFromExcel(laserJobsBook,sourceURL)
+    def loadJobsFromExcel(self):
+        loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
+        self.notify(self.laserJobsBook)
 
     def updateExcel(self, updatedJobData):
-        updateExcel(updatedJobData,self.sourceURL)
+        updateExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
 
     def newJob(self,newJobData):
         try:
             self.laserJobsBook.newJob(newJobData)
             self.updateExcel(newJobData)
-            self.notify(newJobData)
+            self.notify(self.laserJobsBook)
         except Exception as inst:
             raise(inst)
-
-
-
 
     def getJob(self, jobId):
         # TODO implement getJob

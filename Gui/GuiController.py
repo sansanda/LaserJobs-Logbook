@@ -19,6 +19,10 @@ class GuiController():
     def setLogicController(self, logicController):
         self.logicController = logicController
 
+    def setActualWindow(self, window):
+        self.actualWindow = window
+        self.windowsStack.append(self.actualWindow)
+
     def closeWindow(self,window):
         if isinstance(window,NewJobWindow):
             window.root.destroy()
@@ -28,18 +32,11 @@ class GuiController():
             #destroy all windows
             window.root.destroy()
 
-
     def showNewJobWindow(self):
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow = NewJobWindow(600,300,self)
         self.actualWindow.show()
-
-
-
-    def configureMainWindow(self, _jobsTableHeaders):
-        self.jobsTableHeaders = _jobsTableHeaders
-
 
     def newJob(self,newJobData):
         print('Adding new job ...')
@@ -59,7 +56,5 @@ class GuiController():
 
 
     def start(self):
-        self.actualWindow = MainWindow(1400,650,self)
-        self.windowsStack.append(self.actualWindow)
         self.actualWindow.show()
 

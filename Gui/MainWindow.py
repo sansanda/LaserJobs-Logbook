@@ -13,13 +13,12 @@ from tkinter import ttk
 class MainWindow():
 
 
-    def __init__(self, w, h, guiController):
+    def __init__(self, w, h):
 
         self.width = w
         self.height = h
         self.state = NORMAL
 
-        self.guiController = guiController
         self.root = tkinter.Tk(className='MainWindow') # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window.')
@@ -32,11 +31,14 @@ class MainWindow():
 
         self.root.resizable(0,0)
 
+    def setGuiController(self,guiController):
+        self.guiController = guiController
+
+    def populate(self,jobsTableHeaders):
         self.create_menu_bar()
         self.create_filter_bar()
-        self.create_jobsTable_frame(self.guiController.jobsTableHeaders)
+        self.create_jobsTable_frame(jobsTableHeaders)
         self.create_tool_bar()
-        self.loadJobsData(self.guiController.logicController.laserJobsBook)
 
     def create_filter_bar(self):
 
@@ -115,6 +117,7 @@ class MainWindow():
         xsb.place(x=1, y=nRows*rowHeight, height=20, width=self.width-20)  # number of rows x rowheight
         self.jobsTableTree.configure(xscroll=xsb.set)
 
+
     # values is a list of dictionaries
     # each value is a dictionary
 
@@ -124,6 +127,14 @@ class MainWindow():
             for columnKey, columnValue in rowAsDict.items():
                 rowAsList.append(columnValue)
             self.jobsTableTree.insert("", 'end', text= str(index), values=rowAsList[0:])
+
+    #part of the Observer design pattern implementation
+    #The object
+    def notify(self, values):
+        #first clear the treeview
+        self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+        #after reload the data
+        self.loadJobsData(values)
 
     def close(self):
         print('Exiting...')

@@ -15,7 +15,7 @@ class Publisher:
             print(f'Failed to remove: {observer}')
 
     def notify(self):
-        [o.notify(self) for o in self.observers]
+        [o.notifyObservers(self) for o in self.observers]
 
 
 class DefaultFormatter(Publisher):
