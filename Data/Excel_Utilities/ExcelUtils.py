@@ -3,7 +3,7 @@ import os
 from xlrd import open_workbook
 from xlutils.copy import copy
 from xlutils.save import save
-
+import openpyxl
 
 def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
     #workbook = xlrd.open_workbook(sourceURL, on_demand=True)
@@ -21,17 +21,30 @@ def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
             elm[columns_row[col + 1]] = str(worksheet.cell_value(row, col + 1))
         laserJobsBook.append(elm)
 
-def updateExcel(jobData, laserJobsPath, laserJobsFileName):  #updatedJobData is a dictionary
+def insertRowInExcel(jobData, laserJobsPath, laserJobsFileName):  #updatedJobData is a dictionary
 
     workbook = open_workbook(os.path.join(laserJobsPath, laserJobsFileName))
     sheet = workbook.sheet_by_index(0)  # read only copy to introspect the file
     writable_workbook = copy(workbook)  # a writable copy (I can't read values out of this, only write to it)
     writable_sheet = writable_workbook.get_sheet(0)  # the sheet to write to within the writable copy
 
-    jobIdToFind_RowIndex = getRowIndexByJobId(sheet, jobData['jobId'])  # 0 is the column index of the jobId
-    insertRowAtWorkbook(sheet,writable_sheet,jobIdToFind_RowIndex,jobData)
+    jobIdToFind_RowIndex = _getRowIndexByJobId(sheet, jobData['jobId'])  # 0 is the column index of the jobId
+    _insertRowAtSheet(sheet, writable_sheet, jobIdToFind_RowIndex, jobData)
     writable_workbook.save(os.path.join(laserJobsPath, laserJobsFileName))
     print(os.path.join(laserJobsPath, laserJobsFileName))
+
+def deleteRowInExcel(jobData, laserJobsPath, laserJobsFileName):  #updatedJobData is a dictionary
+
+    workbook = open_workbook(os.path.join(laserJobsPath, laserJobsFileName))
+    sheet = workbook.sheet_by_index(0)  # read only copy to introspect the file
+    writable_workbook = copy(workbook)  # a writable copy (I can't read values out of this, only write to it)
+    writable_sheet = writable_workbook.get_sheet(0)  # the sheet to write to within the writable copy
+
+    jobIdToFind_RowIndex = _getRowIndexByJobId(sheet, jobData['jobId'])  # 0 is the column index of the jobId
+    _deleteRowAtSheet(sheet, writable_sheet, jobIdToFind_RowIndex, jobData)
+    writable_workbook.save(os.path.join(laserJobsPath, laserJobsFileName))
+    print(os.path.join(laserJobsPath, laserJobsFileName))
+
 
 #Auxiliar functions
 
@@ -43,7 +56,7 @@ def readColumnNames(sheet):
     return columnNames
 
 
-def getRowIndexByJobId(sheet, jobIdToFind):
+def _getRowIndexByJobId(sheet, jobIdToFind):
     '''Looks for the index of the row whoose column named jobId contains jobIdToFind
 
     :param sheet: The excel sheet readed
@@ -64,7 +77,7 @@ def getRowIndexByJobId(sheet, jobIdToFind):
     return jobIdToFind_RowIndex
 
 
-def insertRowAtWorkbook(sheet,writable_sheet,rowToInsert_Index, jobData):
+def _insertRowAtSheet(sheet, writable_sheet, rowToInsert_Index, jobData):
 
     columnNames = readColumnNames(sheet)
 
@@ -73,3 +86,9 @@ def insertRowAtWorkbook(sheet,writable_sheet,rowToInsert_Index, jobData):
     for columnName_Index, columnName in enumerate(columnNames):
         writable_sheet.write(rowToInsert_Index, columnName_Index, jobData[columnName])
 
+def _deleteRowAtSheet(sheet, writable_sheet, rowToDelete_Index, jobData):
+    #TODO: Implements the deleteRowAtSheet function in ExcelUtils
+    # perhaps using the openpyxl library.
+    # if we use the openpyxl library the try to convert the other functions for using that new library and forget the xlwt
+
+    writable_sheet.delete_rows(rowToDelete_Index, amount=1)

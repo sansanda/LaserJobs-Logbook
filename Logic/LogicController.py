@@ -9,7 +9,8 @@ David SAnchez Sanchez
 
 from Logic.LaserJobs_Book import LaserJobs_Book
 from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcel
-from Data.Excel_Utilities.ExcelUtils import updateExcel
+from Data.Excel_Utilities.ExcelUtils import insertRowInExcel
+from Data.Excel_Utilities.ExcelUtils import deleteRowInExcel
 from Logic.DesignPatterns.ObserverPattern import Publisher
 
 
@@ -33,8 +34,11 @@ class LogicController(Publisher):
         loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
         self.notify(self.laserJobsBook)
 
-    def updateExcel(self, updatedJobData):
-        updateExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+    def updateExcel(self, updatedJobData, deleteJob=False):
+        if deleteJob==False:
+            insertRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+        elif deleteJob==True:
+            deleteRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
 
     def newJob(self,newJobData):
         try:
@@ -52,9 +56,13 @@ class LogicController(Publisher):
         # TODO implement updateJob
         self.laserJobsBook.updateJob(updatedJobData)
 
+
     def deleteJob(self,jobId):
         #TODO implement deleteJob
+        jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
+        self.updateExcel(jobData,deleteJob=True)
         self.laserJobsBook.deleteJob(jobId)
+        self.notify(self.laserJobsBook)
 
     def start(self):
         self.guiController.start()

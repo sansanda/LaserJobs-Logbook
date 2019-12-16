@@ -39,6 +39,7 @@ class MainWindow():
         self.create_filter_bar()
         self.create_jobsTable_frame(jobsTableHeaders)
         self.create_tool_bar()
+        self.create_contextual_menu()
 
     def create_filter_bar(self):
 
@@ -54,6 +55,10 @@ class MainWindow():
         self.filter_entry.grid(row=0, column=1, sticky=W)
 
 
+    def create_contextual_menu(self):
+        #TODO: Create contextual menu. Edit and delete job
+        pass
+
     def create_tool_bar(self):
 
         self.tool_bar_frame = Frame(self.root)
@@ -63,9 +68,9 @@ class MainWindow():
         self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon, command= self.guiController.showNewJobWindow)
         self.addNewJobButton.image = addRegisterIcon
         self.addNewJobButton.grid(row=1, column=0, padx=5, pady=2)
-        self.deleteRegisterButton = Button(self.tool_bar_frame, image=deleteRegisterIcon, command=self.guiController.deleteJob)
-        self.deleteRegisterButton.image = deleteRegisterIcon
-        self.deleteRegisterButton.grid(row=1, column=1, padx=5, pady=2)
+        self.deleteJobButton = Button(self.tool_bar_frame, image=deleteRegisterIcon, command=self.deleteJob)
+        self.deleteJobButton.image = deleteRegisterIcon
+        self.deleteJobButton.grid(row=1, column=1, padx=5, pady=2)
 
     def create_menu_bar(self):
 
@@ -76,7 +81,7 @@ class MainWindow():
 
         self.jobMenu = Menu(self.root, tearoff=0)
         self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
-        self.jobMenu.add_command(label="Delete job", command=self.guiController.deleteJob)
+        self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
         self.menubar.add_cascade(label="Job", menu=self.jobMenu)
 
         self.root.config(menu=self.menubar)
@@ -86,10 +91,10 @@ class MainWindow():
         rowHeight = 20 #pixels
         nRows = 25
         style = ttk.Style(self.root)
-        style.configure('Treeview', rowheight=rowHeight) #rowheight in pixels
 
-        self.jobsTableTree = ttk.Treeview(self.root, height=nRows) #height in rows
-
+        style.configure('Treeview', rowheight=rowHeight)                #rowheight in pixels
+        self.jobsTableTree = ttk.Treeview(self.root, height=nRows)      #height in rows
+        self.jobsTableTree.configure(selectmode="browse")               #configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=1, column=0, columnspan=6, sticky=W + E + N + S)
 
         jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders)
@@ -128,13 +133,10 @@ class MainWindow():
                 rowAsList.append(columnValue)
             self.jobsTableTree.insert("", 'end', text= str(index), values=rowAsList[0:])
 
-    #part of the Observer design pattern implementation
-    #The object
-    def notify(self, values):
-        #first clear the treeview
-        self.jobsTableTree.delete(*self.jobsTableTree.get_children())
-        #after reload the data
-        self.loadJobsData(values)
+    def deleteJob(self):
+        selectedJob = self.jobsTableTree.selection()
+        selectedJob_jobId = self.jobsTableTree.item(selectedJob,'text')
+        self.guiController.deleteJob(selectedJob_jobId)
 
     def close(self):
         print('Exiting...')
@@ -151,12 +153,17 @@ class MainWindow():
         #TODO: implements filtering of the tree view (at level of LaserJobs_Book)
         # The idea is to use two data structures one for the filter matching jobs and the other for the not filter matching jobs
 
-
-
         print(filterText.get())
         for r in self.jobsTableTree.get_children():
             print(r)
 
+    #part of the Observer design pattern implementation
+    #The object
+    def notify(self, values):
+        #first clear the treeview
+        self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+        #after reload the data
+        self.loadJobsData(values)
 
 
 

@@ -7,15 +7,15 @@ David SAnchez Sanchez
 
 """
 
-class LaserJobs_Book(list):
 
+class LaserJobs_Book(list):
 
     def __init__(self):
         list.__init__(self)
 
-    #Job CRUD
+    # Job CRUD
 
-    #newjobData as dictionary without Id
+    # newjobData as dictionary without Id
     def newJob(self, newjobData):
         jobId = len(self)
         if not self.existJob(jobId):
@@ -24,25 +24,31 @@ class LaserJobs_Book(list):
         else:
             raise (jobId + ' already exists!!!!')
 
-    #return jobData as dictionary with Id
+    # return jobData as dictionary with Id
+    # the job data in the list is store as a dictionary without jobId.
+    # So we have to insert it before returning the data
     def getJob(self, jobId):
-        if self.existJob(jobId):
-            return self[jobId]
+        jobIdAsInt = int(jobId)
+        if self.existJob(jobIdAsInt):
+            jobData = self[jobIdAsInt]
+            jobData['jobId'] = jobId
+            return jobData
         else:
             raise (jobId + ' does not exists!!!!')
 
-    #updatedJobData as dictionary without Id
-    def updateJob(self,updatedJobData):
+    # updatedJobData as dictionary without Id
+    def updateJob(self, updatedJobData):
         if self.existJob(updatedJobData['jobId']):
             self.deleteJob(updatedJobData['jobId'])
             self.append(updatedJobData)
         else:
             raise (updatedJobData['jobId'] + ' does not exists!!!!')
 
-    #delete job indicated by jobId
-    def deleteJob(self,jobId):
-        if self.existJob(jobId):
-            self.remove(self[jobId])
+    # delete job indicated by jobId
+    def deleteJob(self, jobId):
+        jobIdAsInt = int(jobId)
+        if self.existJob(jobIdAsInt):
+            self.remove(self[jobIdAsInt])
         else:
             raise (jobId + ' does not exists!!!!')
 
