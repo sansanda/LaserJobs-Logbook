@@ -9,10 +9,14 @@ David SAnchez Sanchez
 
 from Logic.LaserJobs_Book import LaserJobs_Book
 from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcel
+from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcelByOpenpyxl
 from Data.Excel_Utilities.ExcelUtils import insertRowInExcel
+from Data.Excel_Utilities.ExcelUtils import insertRowInExcelByOpenpyxl
 from Data.Excel_Utilities.ExcelUtils import deleteRowInExcel
-from Logic.DesignPatterns.ObserverPattern import Publisher
+from Data.Excel_Utilities.ExcelUtils import deleteRowInExcelByOpenpyxl
 
+from Logic.DesignPatterns.ObserverPattern import Publisher
+from tkinter import messagebox
 
 class LogicController(Publisher):
 
@@ -31,22 +35,28 @@ class LogicController(Publisher):
         return self.guiController
 
     def loadJobsFromExcel(self):
-        loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
+        loadJobsFromExcelByOpenpyxl(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
         self.notify(self.laserJobsBook)
 
     def updateExcel(self, updatedJobData, deleteJob=False):
         if deleteJob==False:
-            insertRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            insertRowInExcelByOpenpyxl(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
         elif deleteJob==True:
-            deleteRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            deleteRowInExcelByOpenpyxl(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
 
     def newJob(self,newJobData):
         try:
-            self.laserJobsBook.newJob(newJobData)
+            jobId = self.laserJobsBook.getFirstFreeId()
+            newJobData['jobId'] = jobId
             self.updateExcel(newJobData)
+            self.laserJobsBook.newJob(newJobData)
             self.notify(self.laserJobsBook)
+        except PermissionError as pe:
+            messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
+
         except Exception as inst:
             raise(inst)
+
 
     def getJob(self, jobId):
         # TODO implement getJob
@@ -58,11 +68,19 @@ class LogicController(Publisher):
 
 
     def deleteJob(self,jobId):
-        #TODO implement deleteJob
-        jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
-        self.updateExcel(jobData,deleteJob=True)
-        self.laserJobsBook.deleteJob(jobId)
-        self.notify(self.laserJobsBook)
+
+        try:
+            #TODO implement deleteJob
+            jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
+            self.updateExcel(jobData,deleteJob=True)
+            self.laserJobsBook.deleteJob(jobId)
+            self.notify(self.laserJobsBook)
+
+        except PermissionError as pe:
+            messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
+
+        except Exception as inst:
+            raise (inst)
 
     def start(self):
         self.guiController.start()

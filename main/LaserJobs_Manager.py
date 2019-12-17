@@ -4,7 +4,7 @@ from Gui.MainWindow import MainWindow
 
 def main():
     laserJobsPath = '..\\Data\\'
-    laserJobsFileName = 'laserJobs_inxls.xls'
+    laserJobsFileName = 'laserJobs_inxls.xlsx'
     lc = LogicController(laserJobsPath, laserJobsFileName)
     gc = GuiController()
 

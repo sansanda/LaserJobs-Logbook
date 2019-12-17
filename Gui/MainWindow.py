@@ -127,11 +127,11 @@ class MainWindow():
     # each value is a dictionary
 
     def loadJobsData(self, values):
-        for index,rowAsDict in enumerate(values):
+        for rowAsDict in values:
             rowAsList = []
             for columnKey, columnValue in rowAsDict.items():
                 rowAsList.append(columnValue)
-            self.jobsTableTree.insert("", 'end', text= str(index), values=rowAsList[0:])
+            self.jobsTableTree.insert("", 'end', text= str(rowAsList[0]), values=rowAsList[1:])
 
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()

@@ -16,13 +16,11 @@ class LaserJobs_Book(list):
     # Job CRUD
 
     # newjobData as dictionary without Id
-    def newJob(self, newjobData):
-        jobId = len(self)
-        if not self.existJob(jobId):
-            newjobData['jobId'] = jobId
-            self.append(newjobData)
+    def newJob(self, newJobData):
+        if not self.existJob(newJobData['jobId']):
+            self.append(newJobData)
         else:
-            raise (jobId + ' already exists!!!!')
+            raise (newJobData['jobId'] + ' already exists!!!!')
 
     # return jobData as dictionary with Id
     # the job data in the list is store as a dictionary without jobId.
@@ -51,6 +49,9 @@ class LaserJobs_Book(list):
             self.remove(self[jobIdAsInt])
         else:
             raise (jobId + ' does not exists!!!!')
+
+    def getFirstFreeId(self):
+        return len(self)
 
     def deleteAllJobs(self):
         self.clear()
