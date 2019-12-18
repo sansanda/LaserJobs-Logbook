@@ -2,24 +2,22 @@
 
 Creating a Logic Controller to control the logic part of the Laser Job Manager
 
-David SAnchez Sanchez
+David Sanchez Sanchez
 
 
 """
 
 from Logic.LaserJobs_Book import LaserJobs_Book
-from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcel
-from Data.Excel_Utilities.ExcelUtils import loadJobsFromExcelByOpenpyxl
-from Data.Excel_Utilities.ExcelUtils import insertRowInExcel
-from Data.Excel_Utilities.ExcelUtils import insertRowInExcelByOpenpyxl
-from Data.Excel_Utilities.ExcelUtils import deleteRowInExcel
-from Data.Excel_Utilities.ExcelUtils import deleteRowInExcelByOpenpyxl
+from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import loadJobsFromExcel
+from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import insertRowInExcel
+from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import deleteRowInExcel
 
 from Logic.DesignPatterns.ObserverPattern import Publisher
 from tkinter import messagebox
 
 class LogicController(Publisher):
 
+    #TODO: Refocus at main window after close a secondary window
     def __init__(self, laserJobsPath, laserJobsFileName):
         Publisher.__init__(self)
         self.guiController = None
@@ -35,14 +33,14 @@ class LogicController(Publisher):
         return self.guiController
 
     def loadJobsFromExcel(self):
-        loadJobsFromExcelByOpenpyxl(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
+        loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
         self.notify(self.laserJobsBook)
 
     def updateExcel(self, updatedJobData, deleteJob=False):
         if deleteJob==False:
-            insertRowInExcelByOpenpyxl(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            insertRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
         elif deleteJob==True:
-            deleteRowInExcelByOpenpyxl(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            deleteRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
 
     def newJob(self,newJobData):
         try:

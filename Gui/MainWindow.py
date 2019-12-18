@@ -9,6 +9,7 @@ David SAnchez Sanchez
 import tkinter
 from tkinter import *
 from tkinter import ttk
+from Logic.LaserJobs_Book import LaserJobs_Book
 
 class MainWindow():
 
@@ -123,18 +124,17 @@ class MainWindow():
         self.jobsTableTree.configure(xscroll=xsb.set)
 
 
-    # values is a list of dictionaries
-    # each value is a dictionary
+    # jobs is a list of dictionaries
+    # each job is a dictionary
 
-    def loadJobsData(self, values):
-        for rowAsDict in values:
-            rowAsList = []
-            for columnKey, columnValue in rowAsDict.items():
-                rowAsList.append(columnValue)
-            self.jobsTableTree.insert("", 'end', text= str(rowAsList[0]), values=rowAsList[1:])
+    def loadJobsData(self, jobs):
+        for jobData in jobs:
+            jobDataAsList = LaserJobs_Book.getJobDataAsList(jobData)
+            self.jobsTableTree.insert("", 'end', text= str(jobDataAsList[0]), values=jobDataAsList[1:])
 
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
+
         selectedJob_jobId = self.jobsTableTree.item(selectedJob,'text')
         self.guiController.deleteJob(selectedJob_jobId)
 
