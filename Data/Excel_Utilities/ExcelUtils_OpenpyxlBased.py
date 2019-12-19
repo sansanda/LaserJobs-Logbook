@@ -14,7 +14,6 @@ def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
         columnValues = readRowValues(worksheet, row_index+1, 1, None)  # read the other rows
         elm = dict(zip(columnsName, columnValues))
         laserJobsBook.append(elm)
-    laserJobsBook.sort(key=lambda k: k['jobId'])
 
 def insertRowInExcel(jobData, laserJobsPath, laserJobsFileName):  # updatedJobData is a dictionary
 
@@ -22,9 +21,9 @@ def insertRowInExcel(jobData, laserJobsPath, laserJobsFileName):  # updatedJobDa
     worksheet = workbook.get_sheet_by_name('LaserJobs')
 
     jobIdToFind_RowIndex = _getRowIndexByJobId(worksheet,jobData['jobId'])  # 0 is the column index of the jobId
-    _insertRowAtSheet(worksheet, jobIdToFind_RowIndex, jobData)
-    workbook.save(os.path.join(laserJobsPath, laserJobsFileName))
 
+    _insertRowAtSheet(worksheet, jobData['jobId']+1, jobData) #because excel is 1 based and row is occupied by the headers
+    workbook.save(os.path.join(laserJobsPath, laserJobsFileName))
 
 def deleteRowInExcel(jobData, laserJobsPath, laserJobsFileName):  # updatedJobData is a dictionary
 
@@ -69,15 +68,11 @@ def _getRowIndexByJobId(worksheet, jobIdToFind):
     return jobIdToFind_RowIndex
 
 
-def _insertRowAtSheet(worksheet, rowToInsert_Index, jobData):
+def _insertRowAtSheet(worksheet, rowToInsert, jobData):
     columnNames = readRowValues(worksheet, 1, 1, None)
-
-    if rowToInsert_Index == -1:  # Then the row job is new. We will insert at the end of the worksheet
-        rowToInsert_Index = worksheet.max_row + 1
-
+    worksheet.insert_rows(idx=rowToInsert)
     for columnName_Index, columnName in enumerate(columnNames):
-        worksheet.cell(row=rowToInsert_Index, column=columnName_Index+1).value = jobData[columnName]
-
+        worksheet.cell(row=rowToInsert, column=columnName_Index+1).value = jobData[columnName]
 
 def _deleteRowAtSheet(worksheet, rowToDelete_Index):
     # TODO: Implements the deleteRowAtSheet function in ExcelUtils

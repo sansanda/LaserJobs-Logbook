@@ -33,7 +33,6 @@ class LaserJobs_Book(list):
     def newJob(self, newJobData):
         if self.existJob(int(newJobData['jobId'])) == -1:
             self.append(newJobData)
-            self.sort(key=lambda k: k['jobId'])
         else:
             raise Exception('The job dat with Id=' + str(newJobData['jobId']) + ' already exists!!!!')
 
@@ -62,7 +61,7 @@ class LaserJobs_Book(list):
 
     #jobList Ids are 1 based.
     def getFirstFreeId(self):
-        lastJobId = 1
+        lastJobId = 0
         for jobIndex,job in enumerate(self):
             actualJobId = int(job[LaserJobs_Book.jobAtributes['jobId']])
             if (actualJobId-lastJobId)>1:
@@ -71,7 +70,8 @@ class LaserJobs_Book(list):
             else:
                 lastJobId = actualJobId
 
-        return (len(self)+1) #+1 because list is zero referenced
+        #empty book case
+        return (len(self)+1) #+1 because list is zero referenced.
 
     def deleteAllJobs(self):
         self.clear()

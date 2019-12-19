@@ -1,7 +1,7 @@
 import openpyxl
 
 try:
-    book = openpyxl.load_workbook('laserJobs_inxls.xlsx')
+    book = openpyxl.load_workbook('laserJobs.xlsx')
     worksheet = book['LaserJobs']
 
     for row in worksheet.iter_rows(min_row=1, min_col=1):
@@ -10,7 +10,7 @@ try:
         print()
 
     worksheet.delete_rows(5,1)
-    book.save('laserJobs_inxls.xlsx')
+    book.save('laserJobs.xlsx')
 
 
 except Exception as e:

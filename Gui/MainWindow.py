@@ -8,7 +8,7 @@ David SAnchez Sanchez
 """
 import tkinter
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from Logic.LaserJobs_Book import LaserJobs_Book
 
 class MainWindow():
@@ -41,6 +41,7 @@ class MainWindow():
         self.create_jobsTable_frame(jobsTableHeaders)
         self.create_tool_bar()
         self.create_contextual_menu()
+        self.create_Command_Shortcuts()
 
     def create_filter_bar(self):
 
@@ -58,7 +59,18 @@ class MainWindow():
 
     def create_contextual_menu(self):
         #TODO: Create contextual menu. Edit and delete job
-        pass
+        self.popup_menu = Menu(self.root, tearoff=0)
+        self.popup_menu.add_command(label="Delete job",command=self.deleteJob)
+        self.popup_menu.add_command(label="Edit job...",command=self.editJob)
+
+        self.root.bind("<Button-3>", self.showPopupMenu)  # Button-2 on Aqua
+
+    def showPopupMenu(self, event):
+        try:
+            self.popup_menu.tk_popup(event.x_root, event.y_root, 0)
+        finally:
+            self.popup_menu.grab_release()
+
 
     def create_tool_bar(self):
 
@@ -73,6 +85,11 @@ class MainWindow():
         self.deleteJobButton.image = deleteRegisterIcon
         self.deleteJobButton.grid(row=1, column=1, padx=5, pady=2)
 
+    def create_Command_Shortcuts(self):
+        #create command shortcuts
+        self.root.bind('<Delete>', lambda e: self.deleteJob())
+        self.root.bind('<Insert>', lambda e: self.guiController.showNewJobWindow())
+
     def create_menu_bar(self):
 
         self.menubar = Menu(self.root)
@@ -83,6 +100,7 @@ class MainWindow():
         self.jobMenu = Menu(self.root, tearoff=0)
         self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
         self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
+        self.jobMenu.add_command(label="Edit job...", command=self.editJob)
         self.menubar.add_cascade(label="Job", menu=self.jobMenu)
 
         self.root.config(menu=self.menubar)
@@ -123,7 +141,6 @@ class MainWindow():
         xsb.place(x=1, y=nRows*rowHeight, height=20, width=self.width-20)  # number of rows x rowheight
         self.jobsTableTree.configure(xscroll=xsb.set)
 
-
     # jobs is a list of dictionaries
     # each job is a dictionary
 
@@ -134,9 +151,20 @@ class MainWindow():
 
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
+        if len(selectedJob)==0:
+            messagebox.showerror("No job have been selected!!!!!", "Please, first select the job you want to delete!!!!!")
+        else:
+            selectedJob_jobId = self.jobsTableTree.item(selectedJob,'text')
+            self.guiController.deleteJob(selectedJob_jobId)
 
-        selectedJob_jobId = self.jobsTableTree.item(selectedJob,'text')
-        self.guiController.deleteJob(selectedJob_jobId)
+    def editJob(self):
+        selectedJob = self.jobsTableTree.selection()
+        if len(selectedJob) == 0:
+            messagebox.showerror("No job have been selected!!!!!",
+                                 "Please, first select the job you want to delete!!!!!")
+        else:
+            selectedJob_jobId = self.jobsTableTree.item(selectedJob, 'text')
+            self.guiController.editJob(selectedJob_jobId)
 
     def close(self):
         print('Exiting...')

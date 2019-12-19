@@ -28,6 +28,8 @@ class GuiController():
             window.root.destroy()
             self.actualWindow = self.windowsStack.pop()
             self.actualWindow.enable(True)
+            self.actualWindow.root.focus_force()
+
         elif isinstance(window,MainWindow):
             #destroy all windows
             window.root.destroy()
@@ -35,7 +37,7 @@ class GuiController():
     def showNewJobWindow(self):
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
-        self.actualWindow = NewJobWindow(600,300,self)
+        self.actualWindow = NewJobWindow(600,300,self,None)
         self.actualWindow.show()
 
     def newJob(self,newJobData):
@@ -53,6 +55,10 @@ class GuiController():
     def deleteJob(self,jobId):
         print('Deleting job ...')
         self.logicController.deleteJob(jobId)
+
+    def editJob(self,jobId):
+        print('Editing job ...')
+        self.logicController.editJob(jobId)
 
 
     def start(self):

@@ -13,9 +13,7 @@ from datetime import date
 
 class NewJobWindow():
 
-
-
-    def __init__(self, w, h, guiController):
+    def __init__(self, w, h, guiController, jobData):
 
         # pixels of the window
         self.width = w
@@ -34,9 +32,19 @@ class NewJobWindow():
 
         self.root.geometry(str(self.width) + 'x' + str(self.height) + "+" +str(positionRight) + "+" + str(positionDown))
         self.root.resizable(0, 0)
+        self.populate()
+
+    def populate(self):
         self.create_menu_bar()
         self.createLabelsAndEntries()
         self.createOKAndCancelButtons()
+        self.create_Command_Shortcuts()
+
+    def create_Command_Shortcuts(self):
+        #create command shortcuts
+        self.root.bind('<Escape>', lambda e: self.guiController.closeWindow(self))
+        self.root.bind('<Insert>', lambda e: self.newJob())
+
 
     def create_menu_bar(self):
 
@@ -171,4 +179,5 @@ class NewJobWindow():
 
     def show(self):
         self.enable(True)
+        self.root.focus_force()
         self.root.mainloop()

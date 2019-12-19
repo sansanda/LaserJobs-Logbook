@@ -48,6 +48,7 @@ class LogicController(Publisher):
             newJobData['jobId'] = jobId
             self.updateExcel(newJobData)
             self.laserJobsBook.newJob(newJobData)
+            self.laserJobsBook.sort(key=lambda k: k['jobId'])
             self.notify(self.laserJobsBook)
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -55,15 +56,9 @@ class LogicController(Publisher):
         except Exception as inst:
             raise(inst)
 
-
-    def getJob(self, jobId):
-        # TODO implement getJob
-        return self.laserJobsBook.getJob(jobId)
-
-    def updateJob(self,updatedJobData):
-        # TODO implement updateJob
-        self.laserJobsBook.updateJob(updatedJobData)
-
+    def editJob(self,jobId):
+        print('Editing job...')
+        pass
 
     def deleteJob(self,jobId):
 
@@ -79,6 +74,17 @@ class LogicController(Publisher):
 
         except Exception as inst:
             raise (inst)
+
+    def getJob(self, jobId):
+        # TODO implement getJob
+        return self.laserJobsBook.getJob(jobId)
+
+    def updateJob(self,updatedJobData):
+        # TODO implement updateJob
+        self.laserJobsBook.updateJob(updatedJobData)
+
+
+
 
     def start(self):
         self.guiController.start()
