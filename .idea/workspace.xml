@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6b174aa-296f-44c8-b5f4-ab69864c786b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/laserJobs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Data/laserJobs.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +10,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="David &lt;dsanchezsanc@uoc.edu&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1VGOU9qEuf90kTXDRTMlQRAFkXo" />
@@ -79,37 +80,60 @@
       <option name="presentableId" value="Default" />
       <updated>1576875979406</updated>
     </task>
+    <task id="LOCAL-00001" summary="Implemented:&#10;&#10;basic sorting &#10;adapt size of main window to computer screen size&#10;&#10;v1.0">
+      <created>1577045511228</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1577045511229</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implemented:&#10;&#10;basic sorting &#10;adapt size of main window to computer screen size&#10;&#10;v1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented:&#10;&#10;basic sorting &#10;adapt size of main window to computer screen size&#10;&#10;v1.0" />
   </component>
   <component name="WindowStateProjectService">
     <state x="397" y="19" key="#LaserJobs_Manager" timestamp="1576876315892">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="397" y="19" key="#LaserJobs_Manager/0.0.1280.800@0.0.1280.800" timestamp="1576876315892" />
-    <state x="310" y="1" key="CommitChangelistDialog2" timestamp="1577045306067">
+    <state x="310" y="1" key="CommitChangelistDialog2" timestamp="1577045508511">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="310" y="1" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577045306067" />
+    <state x="310" y="1" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577045508511" />
     <state x="423" y="159" key="FileChooserDialogImpl" timestamp="1576876166545">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="423" y="159" key="FileChooserDialogImpl/0.0.1280.800@0.0.1280.800" timestamp="1576876166545" />
-    <state width="629" height="199" key="GridCell.Tab.0.bottom" timestamp="1577045308680">
+    <state width="629" height="199" key="GridCell.Tab.0.bottom" timestamp="1577045549211">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="199" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577045308680" />
-    <state width="629" height="199" key="GridCell.Tab.0.center" timestamp="1577045308679">
+    <state width="629" height="199" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577045549211" />
+    <state width="629" height="199" key="GridCell.Tab.0.center" timestamp="1577045549211">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="199" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577045308679" />
-    <state width="629" height="199" key="GridCell.Tab.0.left" timestamp="1577045308679">
+    <state width="629" height="199" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577045549211" />
+    <state width="629" height="199" key="GridCell.Tab.0.left" timestamp="1577045549211">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="199" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577045308679" />
-    <state width="629" height="199" key="GridCell.Tab.0.right" timestamp="1577045308679">
+    <state width="629" height="199" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577045549211" />
+    <state width="629" height="199" key="GridCell.Tab.0.right" timestamp="1577045549211">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="199" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577045308679" />
+    <state width="629" height="199" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577045549211" />
     <state x="167" y="36" key="SettingsEditor" timestamp="1576876340706">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
