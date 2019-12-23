@@ -64,7 +64,7 @@ class MainWindow():
         # TODO: Create contextual menu. Edit and delete job
         self.popup_menu = Menu(self.root, tearoff=0)
         self.popup_menu.add_command(label="Delete job", command=self.deleteJob)
-        self.popup_menu.add_command(label="Edit job...", command=self.editJob)
+        self.popup_menu.add_command(label="Edit job...", command=self.editJob, state='disable')
 
         self.root.bind("<Button-3>", self.showPopupMenu)  # Button-2 on Aqua
 
@@ -103,7 +103,7 @@ class MainWindow():
         self.jobMenu = Menu(self.root, tearoff=0)
         self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
         self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
-        self.jobMenu.add_command(label="Edit job...", command=self.editJob)
+        self.jobMenu.add_command(label="Edit job...", command=self.editJob, state='disable')
         self.menubar.add_cascade(label="Job", menu=self.jobMenu)
 
         self.root.config(menu=self.menubar)
@@ -189,7 +189,6 @@ class MainWindow():
         for child_id in list(self.detached_children.keys()): #avoid the dictionary changed size during iteration error
             for value in self.detached_children[child_id]:
                 if filterText.get() in str(value):
-                    print(child_id)
                     self.jobsTableTree.reattach(child_id,'',int(child_id[1:])-1) #reattach in the same original position
                     del self.detached_children[child_id]
                     break
