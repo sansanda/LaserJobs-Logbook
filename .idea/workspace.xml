@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6b174aa-296f-44c8-b5f4-ab69864c786b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Gui/FilterJobsOptionsWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/laserJobs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Data/laserJobs.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/GuiController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/GuiController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,11 +32,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Gui" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\David\software_development\LaserJobs-Manager\Gui" />
       <recent name="C:\Users\David\software_development\LaserJobs-Manager\Data" />
     </key>
   </component>
@@ -101,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577045611812</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="disabled editJod option &#10;deleted some xls files">
+      <created>1577107272590</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1577107272590</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,37 +132,38 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented:&#10;&#10;basic sorting &#10;adapt size of main window to computer screen size&#10;&#10;v1.0" />
     <MESSAGE value="added version to main window title" />
-    <option name="LAST_COMMIT_MESSAGE" value="added version to main window title" />
+    <MESSAGE value="disabled editJod option &#10;deleted some xls files" />
+    <option name="LAST_COMMIT_MESSAGE" value="disabled editJod option &#10;deleted some xls files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="397" y="19" key="#LaserJobs_Manager" timestamp="1576876315892">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="397" y="19" key="#LaserJobs_Manager/0.0.1280.800@0.0.1280.800" timestamp="1576876315892" />
-    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1577045610263">
+    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1577107261532">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577045610263" />
+    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577107261532" />
     <state x="423" y="159" key="FileChooserDialogImpl" timestamp="1576876166545">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="423" y="159" key="FileChooserDialogImpl/0.0.1280.800@0.0.1280.800" timestamp="1576876166545" />
-    <state width="629" height="198" key="GridCell.Tab.0.bottom" timestamp="1577106978087">
+    <state width="629" height="198" key="GridCell.Tab.0.bottom" timestamp="1577445487048">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577106978087" />
-    <state width="629" height="198" key="GridCell.Tab.0.center" timestamp="1577106978087">
+    <state width="629" height="198" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
+    <state width="629" height="198" key="GridCell.Tab.0.center" timestamp="1577445487048">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577106978087" />
-    <state width="629" height="198" key="GridCell.Tab.0.left" timestamp="1577106978086">
+    <state width="629" height="198" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
+    <state width="629" height="198" key="GridCell.Tab.0.left" timestamp="1577445487048">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577106978086" />
-    <state width="629" height="198" key="GridCell.Tab.0.right" timestamp="1577106978087">
+    <state width="629" height="198" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
+    <state width="629" height="198" key="GridCell.Tab.0.right" timestamp="1577445487048">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577106978087" />
+    <state width="629" height="198" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
     <state x="167" y="36" key="SettingsEditor" timestamp="1577047611730">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -159,9 +172,9 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="236" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1577045877183" />
-    <state x="357" y="229" key="com.intellij.ide.util.TipDialog" timestamp="1577106807267">
+    <state x="357" y="229" key="com.intellij.ide.util.TipDialog" timestamp="1577433503861">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="357" y="229" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1577106807267" />
+    <state x="357" y="229" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1577433503861" />
   </component>
 </project>

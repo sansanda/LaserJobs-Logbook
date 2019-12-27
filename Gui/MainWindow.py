@@ -52,7 +52,8 @@ class MainWindow():
         self.filter_bar_frame = Frame(self.root)
         self.filter_bar_frame.grid(row=0, column=0, columnspan=6, sticky=W + E + N + S)
         Label(self.filter_bar_frame, text='Filter:', anchor=W, width=20, padx=10, pady=10).grid(row=0, column=0)
-        # Username entry
+
+        # Filter text entry
         self.filterText = StringVar(self.filter_bar_frame)
         self.filterText.trace("w", lambda name, index, mode, sv=self.filterText: self.filterTreeView(self.filterText))
 
@@ -96,6 +97,7 @@ class MainWindow():
     def create_menu_bar(self):
 
         self.menubar = Menu(self.root)
+
         self.fileMenu = Menu(self.root, tearoff=0)
         self.fileMenu.add_command(label="Exit", command=self.close)
         self.menubar.add_cascade(label="File", menu=self.fileMenu)
@@ -105,6 +107,10 @@ class MainWindow():
         self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
         self.jobMenu.add_command(label="Edit job...", command=self.editJob, state='disable')
         self.menubar.add_cascade(label="Job", menu=self.jobMenu)
+
+        self.filterMenu = Menu(self.root, tearoff=0)
+        self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showFilterJobsOptionsWindow)
+        self.menubar.add_cascade(label="View", menu=self.filterMenu)
 
         self.root.config(menu=self.menubar)
 
@@ -185,11 +191,20 @@ class MainWindow():
         # TODO: implements filtering of the tree view (at level of LaserJobs_Book)
         # The idea is to use two data structures one for the filter matching jobs and the other for the not filter matching jobs
 
+        caseSensitive_Option = self.guiController.logicController.filterOptions['Casesensitive']
+        and_Option = self.guiController.logicController.filterOptions['And']
+
+        filterTextCS = filterText.get()
+        if not caseSensitive_Option:
+            filterTextCS = str.upper(filterText.get())
+
         #reatach
         for child_id in list(self.detached_children.keys()): #avoid the dictionary changed size during iteration error
             for value in self.detached_children[child_id]:
+
                 if filterText.get() in str(value):
-                    self.jobsTableTree.reattach(child_id,'',int(child_id[1:])-1) #reattach in the same original position
+                    #TODO: reorder the list does not work very well
+                    self.jobsTableTree.reattach(child_id,'',int(child_id[1:],16)-1) #reattach in the same original position
                     del self.detached_children[child_id]
                     break
 
@@ -198,18 +213,25 @@ class MainWindow():
             matched = False
             child_values = self.jobsTableTree.item(child_id)['values']
             for value in child_values:
-                if filterText.get() in str(value):
+                valueCS = str(value)
+                if not caseSensitive_Option:
+                    valueCS = str.upper(str(value))
+
+                if filterTextCS in valueCS:
                     matched = True
                     break
+
             if not matched:
                 self.detached_children[child_id] = child_values
                 self.jobsTableTree.detach(child_id)
 
 
     # part of the Observer design pattern implementation
-    # The object
+    # values could be a list of dicts which contains updated jobs data
     def notify(self, values):
-        # first clear the treeview
-        self.jobsTableTree.delete(*self.jobsTableTree.get_children())
-        # after reload the data
-        self.loadJobsData(values)
+
+        if isinstance(values, list):
+            # first clear the treeview
+            self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+            # after reload the data
+            self.loadJobsData(values)

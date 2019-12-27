@@ -24,10 +24,13 @@ class LogicController(Publisher):
         self.laserJobsBook = LaserJobs_Book()
         self.laserJobsPath = laserJobsPath
         self.laserJobsFileName = laserJobsFileName
+        self.filterOptions = {'Casesensitive':True, 'And':True}
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
         self.guiController.setLogicController(self)
+        #add the main window as observer
+        self.addObserver(self.guiController.actualWindow)
 
     def getGuiController(self):
         return self.guiController
@@ -84,7 +87,10 @@ class LogicController(Publisher):
         self.laserJobsBook.updateJob(updatedJobData)
 
 
-
+    def saveFilterOptions(self,filterOptions):
+        print('saving filter options')
+        self.filterOptions = filterOptions
+        print(filterOptions)
 
     def start(self):
         self.guiController.start()

@@ -8,6 +8,7 @@ David SAnchez Sanchez
 """
 from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
+from Gui.FilterJobsOptionsWindow import FilterJobsOptionsWindow
 
 class GuiController():
 
@@ -24,7 +25,7 @@ class GuiController():
         self.windowsStack.append(self.actualWindow)
 
     def closeWindow(self,window):
-        if isinstance(window,NewJobWindow):
+        if isinstance(window,NewJobWindow) or isinstance(window,FilterJobsOptionsWindow):
             window.root.destroy()
             self.actualWindow = self.windowsStack.pop()
             self.actualWindow.enable(True)
@@ -38,6 +39,12 @@ class GuiController():
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow = NewJobWindow(600,300,self,None)
+        self.actualWindow.show()
+
+    def showFilterJobsOptionsWindow(self):
+        self.actualWindow.enable(False)
+        self.windowsStack.append(self.actualWindow)
+        self.actualWindow = FilterJobsOptionsWindow(300, 100, self, self.logicController.filterOptions)
         self.actualWindow.show()
 
     def newJob(self,newJobData):
@@ -60,6 +67,10 @@ class GuiController():
         print('Editing job ...')
         self.logicController.editJob(jobId)
 
+    #filterOptions is a dict
+    def saveFilterOptions(self, filterOptions):
+        print("saving filter options")
+        self.logicController.saveFilterOptions(filterOptions)
 
     def start(self):
         self.actualWindow.show()

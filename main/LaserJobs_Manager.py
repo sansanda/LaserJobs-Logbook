@@ -30,8 +30,6 @@ def main():
     gc.setActualWindow(mw)
 
     lc.setGuiController(gc)
-    #add a observer
-    lc.addObserver(gc.actualWindow)
     lc.loadJobsFromExcel()
     lc.start()
 
