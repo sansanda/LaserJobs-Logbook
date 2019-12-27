@@ -2,18 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6b174aa-296f-44c8-b5f4-ab69864c786b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Gui/FilterJobsOptionsWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logic/Filter/IFilter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logic/Filter/TextFilter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logic/Filter/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Logic/LaserJob.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/laserJobs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Data/laserJobs.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/GuiController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/GuiController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/NewJobWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/LaserJobs_Book.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LaserJobs_Book.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -113,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577107272590</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="working on filter options">
+      <created>1577445533489</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1577445533489</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,37 +150,38 @@
     <MESSAGE value="Implemented:&#10;&#10;basic sorting &#10;adapt size of main window to computer screen size&#10;&#10;v1.0" />
     <MESSAGE value="added version to main window title" />
     <MESSAGE value="disabled editJod option &#10;deleted some xls files" />
-    <option name="LAST_COMMIT_MESSAGE" value="disabled editJod option &#10;deleted some xls files" />
+    <MESSAGE value="working on filter options" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on filter options" />
   </component>
   <component name="WindowStateProjectService">
     <state x="397" y="19" key="#LaserJobs_Manager" timestamp="1576876315892">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="397" y="19" key="#LaserJobs_Manager/0.0.1280.800@0.0.1280.800" timestamp="1576876315892" />
-    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1577107261532">
+    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1577445531773">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577107261532" />
+    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1577445531773" />
     <state x="423" y="159" key="FileChooserDialogImpl" timestamp="1576876166545">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="423" y="159" key="FileChooserDialogImpl/0.0.1280.800@0.0.1280.800" timestamp="1576876166545" />
-    <state width="629" height="198" key="GridCell.Tab.0.bottom" timestamp="1577445487048">
+    <state width="1259" height="198" key="GridCell.Tab.0.bottom" timestamp="1577486546996">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
-    <state width="629" height="198" key="GridCell.Tab.0.center" timestamp="1577445487048">
+    <state width="1259" height="198" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577486546996" />
+    <state width="1259" height="198" key="GridCell.Tab.0.center" timestamp="1577486546996">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
-    <state width="629" height="198" key="GridCell.Tab.0.left" timestamp="1577445487048">
+    <state width="1259" height="198" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577486546996" />
+    <state width="1259" height="198" key="GridCell.Tab.0.left" timestamp="1577486546996">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
-    <state width="629" height="198" key="GridCell.Tab.0.right" timestamp="1577445487048">
+    <state width="1259" height="198" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577486546996" />
+    <state width="1259" height="198" key="GridCell.Tab.0.right" timestamp="1577486546996">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="629" height="198" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577445487048" />
+    <state width="1259" height="198" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577486546996" />
     <state x="167" y="36" key="SettingsEditor" timestamp="1577047611730">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -172,9 +190,24 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="236" y="137" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1577045877183" />
-    <state x="357" y="229" key="com.intellij.ide.util.TipDialog" timestamp="1577433503861">
+    <state x="357" y="229" key="com.intellij.ide.util.TipDialog" timestamp="1577467183941">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="357" y="229" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1577433503861" />
+    <state x="357" y="229" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1577467183941" />
+    <state x="303" y="121" width="672" height="678" key="search.everywhere.popup" timestamp="1577478267056">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="303" y="121" width="672" height="678" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1577478267056" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Logic/LogicController.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

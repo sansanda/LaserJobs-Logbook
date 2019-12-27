@@ -9,8 +9,9 @@ David SAnchez Sanchez
 import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
+from Logic.LaserJob import LaserJob
+from Logic.Filter.TextFilter import TextFilter
 from Logic.LaserJobs_Book import LaserJobs_Book
-
 
 class MainWindow():
 
@@ -35,6 +36,7 @@ class MainWindow():
         self.state = NORMAL
 
         # self.root.resizable(0,0)
+        self.laserJobs_Book = None
 
     def setGuiController(self, guiController):
         self.guiController = guiController
@@ -46,6 +48,23 @@ class MainWindow():
         self.create_tool_bar()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
+        self.createTextFilter()
+
+    def createTextFilter(self):
+        self.textFilter = TextFilter(list(),True,True)
+
+
+    def updateTextFilterOptions(self,textFilter):
+        self.textFilter = TextFilter(self.filterText.get().split(';'),
+                                     textFilter.caseSensitiveOption,
+                                     textFilter.andOption)
+        print(self.laserJobs_Book.filterJobs(self.textFilter))
+
+    def updateTextFilterList(self):
+        self.textFilter = TextFilter(self.filterText.get().split(';'),
+                                     self.textFilter.caseSensitiveOption,
+                                     self.textFilter.andOption)
+        print(self.laserJobs_Book.filterJobs(self.textFilter))
 
     def create_filter_bar(self):
 
@@ -55,7 +74,7 @@ class MainWindow():
 
         # Filter text entry
         self.filterText = StringVar(self.filter_bar_frame)
-        self.filterText.trace("w", lambda name, index, mode, sv=self.filterText: self.filterTreeView(self.filterText))
+        self.filterText.trace("w", lambda name, index, mode, sv=self.filterText: self.updateTextFilterList())
 
         self.filter_entry = Entry(self.filter_bar_frame, textvariable=self.filterText)
         self.filter_entry.config(width=30)
@@ -151,12 +170,10 @@ class MainWindow():
     # jobs is a list of dictionaries
     # each jobData is a dictionary
 
-    def loadJobsData(self, jobs):
-        for jobData in jobs:
-            jobDataAsList = LaserJobs_Book.getJobDataAsList(jobData)
-            self.jobsTableTree.insert("", 'end', text=str(jobDataAsList[0]), values=jobDataAsList[1:])
-        self.detached_children = {}
-        self.filterTreeView(self.filterText)
+    def loadJobsData(self, laserJobs):
+        for laserJob in laserJobs:
+            laserJobAsList = LaserJob.getJobDataAsList(laserJob)
+            self.jobsTableTree.insert("", 'end', text=str(laserJobAsList[0]), values=laserJobAsList[1:])
 
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
@@ -201,15 +218,15 @@ class MainWindow():
         #reatach
         for child_id in list(self.detached_children.keys()): #avoid the dictionary changed size during iteration error
             for value in self.detached_children[child_id]:
-
                 if filterText.get() in str(value):
                     #TODO: reorder the list does not work very well
-                    self.jobsTableTree.reattach(child_id,'',int(child_id[1:],16)-1) #reattach in the same original position
+                    self.jobsTableTree.reattach(child_id,'',int(child_id[1:],16)) #reattach in the same original position
                     del self.detached_children[child_id]
                     break
 
         #detach
         for child_id in self.jobsTableTree.get_children():
+            #print(filterText.get(), child_id[:], int(str.lower(child_id[1:]),16))
             matched = False
             child_values = self.jobsTableTree.item(child_id)['values']
             for value in child_values:
@@ -228,10 +245,17 @@ class MainWindow():
 
     # part of the Observer design pattern implementation
     # values could be a list of dicts which contains updated jobs data
-    def notify(self, values):
+    def notify(self, value):
 
-        if isinstance(values, list):
+        if isinstance(value, LaserJobs_Book):
             # first clear the treeview
             self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+            #update the copy of laser jobs book
+            self.laserJobs_Book = value
             # after reload the data
-            self.loadJobsData(values)
+            self.loadJobsData(value)
+            #self.detached_children = {}
+            #self.filterTreeView(self.filterText)
+
+        if isinstance(value, TextFilter):
+            self.updateTextFilterOptions(value)

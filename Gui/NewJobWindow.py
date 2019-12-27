@@ -10,10 +10,11 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from datetime import date
+from Logic.LaserJob import LaserJob
 
 class NewJobWindow():
 
-    def __init__(self, w, h, guiController, jobData):
+    def __init__(self, w, h, guiController, laserJob):
 
         # pixels of the window
         self.width = w
@@ -162,20 +163,20 @@ class NewJobWindow():
 
     def newJob(self):
         print('Adding job...')
-        newJobdata = {}
-        newJobdata['Username'] = self.username_entry.get()
-        newJobdata['Date'] = self.date_entry.get()
-        newJobdata['Material'] = self.material_entry.get()
-        newJobdata['Cut_Raster'] = self.jobType.get()
-        newJobdata['Speed'] = self.speed_entry.get()
-        newJobdata['Power'] = self.power_entry.get()
-        newJobdata['DPI'] = self.dpi_entry.get()
-        newJobdata['Freq'] = self.freq_entry.get()
-        newJobdata['Passes'] = self.nPasses_entry.get()
-        newJobdata['RasterDepth'] = self.rasterDepth_entry.get()
-        newJobdata['Others'] = self.others_entry.get()
+        laserJob = LaserJob(1,
+                            self.username_entry.get(),
+                            self.date_entry.get(),
+                            self.material_entry.get(),
+                            self.jobType.get(),
+                            self.speed_entry.get(),
+                            self.power_entry.get(),
+                            self.dpi_entry.get(),
+                            self.freq_entry.get(),
+                            self.nPasses_entry.get(),
+                            self.rasterDepth_entry.get(),
+                            self.others_entry.get())
 
-        self.guiController.newJob(newJobdata)
+        self.guiController.newJob(laserJob)
 
     def show(self):
         self.enable(True)

@@ -7,68 +7,62 @@ David SAnchez Sanchez
 
 """
 
+from Logic.Filter.IFilter import IFilter
 
 class LaserJobs_Book(list):
-
-    jobAtributes = dict()
-    jobAtributes['jobId'] = 'jobId'
-    jobAtributes['Username'] = 'Username'
-    jobAtributes['Date'] = 'Date'
-    jobAtributes['Material'] = 'Material'
-    jobAtributes['Cut_Raster'] = 'Cut_Raster'
-    jobAtributes['Speed'] = 'Speed'
-    jobAtributes['Power'] = 'Power'
-    jobAtributes['DPI'] = 'DPI'
-    jobAtributes['Freq'] = 'Freq'
-    jobAtributes['Passes'] = 'Passes'
-    jobAtributes['RasterDepth'] = 'RasterDepth'
-    jobAtributes['Others'] = 'Others'
 
     def __init__(self):
         list.__init__(self)
 
+    def filterJobs(self,IFilter):
+        laserJobsFiltered = list()
+        for laserJob in self:
+            if IFilter.satisfies(laserJob):
+                laserJobsFiltered.append(laserJob)
+        return laserJobsFiltered
+
     # Job CRUD
 
     # newjobData as dictionary
-    def newJob(self, newJobData):
-        if self.existJob(int(newJobData['jobId'])) == -1:
-            self.append(newJobData)
+    def newJob(self, laserJob):
+        if self.existJob(int(laserJob['jobId'])) == -1:
+            self.append(laserJob)
         else:
-            raise Exception('The job dat with Id=' + str(newJobData['jobId']) + ' already exists!!!!')
+            raise Exception('The job dat with Id=' + str(laserJob['jobId']) + ' already exists!!!!')
 
     # return jobData as dictionary with Id equals to jobId
     # jobId could be a integer or a str castable to integer
 
-    def getJob(self, jobId):
-        jobIdIndex = self.existJob(int(jobId))
-        if not jobIdIndex == -1:
-            return self[jobIdIndex]
+    def getJob(self, laserJobId):
+        laserJobIdIndex = self.existJob(int(laserJobId))
+        if not laserJobIdIndex == -1:
+            return self[laserJobIdIndex]
         else:
-            raise Exception('The job dat with Id=' + jobId + ' does not exists!!!!')
+            raise Exception('The job dat with Id=' + str(laserJobId) + ' does not exists!!!!')
 
-    # updatedJobData as dictionary without Id
-    def updateJob(self, updatedJobData):
-        self.deleteJob(updatedJobData)
-        self.newJob(updatedJobData)
+    # updatedLaserJob as dictionary without Id
+    def updateJob(self, updatedLaserJob):
+        self.deleteJob(updatedLaserJob)
+        self.newJob(updatedLaserJob)
 
-    # delete job indicated by jobId
-    def deleteJob(self, jobId):
-        jobDataIndex = self.existJob(jobId)
+    # delete job indicated by laserJobId
+    def deleteJob(self, laserJobId):
+        jobDataIndex = self.existJob(laserJobId)
         if not jobDataIndex == -1:
             del self[jobDataIndex]
         else:
-            raise Exception('The job dat with Id=' + jobId + ' already exists!!!!')
+            raise Exception('The job dat with Id=' + str(laserJobId) + ' already exists!!!!')
 
     #jobList Ids are 1 based.
     def getFirstFreeId(self):
-        lastJobId = 0
-        for jobIndex,job in enumerate(self):
-            actualJobId = int(job[LaserJobs_Book.jobAtributes['jobId']])
-            if (actualJobId-lastJobId)>1:
+        lastLaserJobId = 0
+        for laserJobIndex,laserJob in enumerate(self):
+            actualLaserJobId = laserJob['jobId']
+            if (actualLaserJobId-lastLaserJobId)>1:
                 #We have a free id in between
-                return jobIndex + 1
+                return laserJobIndex + 1
             else:
-                lastJobId = actualJobId
+                lastLaserJobId = actualLaserJobId
 
         #empty book case
         return (len(self)+1) #+1 because list is zero referenced.
@@ -78,31 +72,11 @@ class LaserJobs_Book(list):
 
     # jobId could be an integer or an str parseable to int
     # return the index of the job if the job exists. -1 otherwise
-    def existJob(self, jobId):
-        jobIndex = -1
+    def existJob(self, laserJobId):
+        laserJobIndex = -1
         for index in range(len(self)):
-            if int(self[index]['jobId']) == int(jobId):
+            if int(self[index]['jobId']) == int(laserJobId):
                 exists = True
-                jobIndex = index
+                laserJobIndex = index
                 break
-        return jobIndex
-
-    #jobData is a dict
-    @classmethod
-    def getJobDataAsList(cls,jobData):
-        jobDataAsList = list()
-        jobDataAsList.append(jobData[cls.jobAtributes['jobId']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Username']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Date']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Material']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Cut_Raster']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Speed']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Power']])
-        jobDataAsList.append(jobData[cls.jobAtributes['DPI']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Freq']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Passes']])
-        jobDataAsList.append(jobData[cls.jobAtributes['RasterDepth']])
-        jobDataAsList.append(jobData[cls.jobAtributes['Others']])
-        return jobDataAsList
-
-    #TODO: Create jobData class
+        return laserJobIndex

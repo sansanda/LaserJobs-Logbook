@@ -14,6 +14,7 @@ from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import deleteRowInExcel
 
 from Logic.DesignPatterns.ObserverPattern import Publisher
 from tkinter import messagebox
+from Logic.Filter.TextFilter import TextFilter
 
 class LogicController(Publisher):
 
@@ -45,12 +46,12 @@ class LogicController(Publisher):
         elif deleteJob==True:
             deleteRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
 
-    def newJob(self,newJobData):
+    def newJob(self,laserJob):
         try:
             jobId = self.laserJobsBook.getFirstFreeId()
-            newJobData['jobId'] = jobId
-            self.updateExcel(newJobData)
-            self.laserJobsBook.newJob(newJobData)
+            laserJob['jobId'] = jobId
+            self.updateExcel(laserJob)
+            self.laserJobsBook.newJob(laserJob)
             self.laserJobsBook.sort(key=lambda k: k['jobId'])
             self.notify(self.laserJobsBook)
         except PermissionError as pe:
@@ -89,7 +90,8 @@ class LogicController(Publisher):
 
     def saveFilterOptions(self,filterOptions):
         print('saving filter options')
-        self.filterOptions = filterOptions
+        textFilter = TextFilter(list(),filterOptions['Casesensitive'],filterOptions['And'])
+        self.notify(textFilter)
         print(filterOptions)
 
     def start(self):
