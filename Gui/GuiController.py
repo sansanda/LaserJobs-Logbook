@@ -8,7 +8,7 @@ David SAnchez Sanchez
 """
 from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
-from Gui.FilterJobsOptionsWindow import FilterJobsOptionsWindow
+from Gui.TextFilterOptionsWindow import TextFilterOptionsWindow
 
 class GuiController():
 
@@ -25,7 +25,7 @@ class GuiController():
         self.windowsStack.append(self.actualWindow)
 
     def closeWindow(self,window):
-        if isinstance(window,NewJobWindow) or isinstance(window,FilterJobsOptionsWindow):
+        if isinstance(window,NewJobWindow) or isinstance(window, TextFilterOptionsWindow):
             window.root.destroy()
             self.actualWindow = self.windowsStack.pop()
             self.actualWindow.enable(True)
@@ -41,11 +41,17 @@ class GuiController():
         self.actualWindow = NewJobWindow(600,300,self,None)
         self.actualWindow.show()
 
-    def showFilterJobsOptionsWindow(self):
+    def showTextFilterOptionsWindow(self):
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
-        self.actualWindow = FilterJobsOptionsWindow(300, 100, self, self.logicController.filterOptions)
+        self.actualWindow = TextFilterOptionsWindow(300, 120, self, self.logicController.filter)
         self.actualWindow.show()
+
+    def updateTextFilterList(self,sv):
+        self.logicController.updateTextFilterList(sv)
+
+    def updateTextFilterOptions(self,cs_option,and_option,wholeword_option):
+        self.logicController.updateTextFilterOptions(cs_option,and_option,wholeword_option)
 
     def newJob(self,newJobData):
         print('Adding new job ...')

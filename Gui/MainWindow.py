@@ -36,7 +36,6 @@ class MainWindow():
         self.state = NORMAL
 
         # self.root.resizable(0,0)
-        self.laserJobs_Book = None
 
     def setGuiController(self, guiController):
         self.guiController = guiController
@@ -48,23 +47,9 @@ class MainWindow():
         self.create_tool_bar()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
-        self.createTextFilter()
 
-    def createTextFilter(self):
-        self.textFilter = TextFilter(list(),True,True)
-
-
-    def updateTextFilterOptions(self,textFilter):
-        self.textFilter = TextFilter(self.filterText.get().split(';'),
-                                     textFilter.caseSensitiveOption,
-                                     textFilter.andOption)
-        print(self.laserJobs_Book.filterJobs(self.textFilter))
-
-    def updateTextFilterList(self):
-        self.textFilter = TextFilter(self.filterText.get().split(';'),
-                                     self.textFilter.caseSensitiveOption,
-                                     self.textFilter.andOption)
-        print(self.laserJobs_Book.filterJobs(self.textFilter))
+    def updateTextFilterList(self,fT):
+        self.guiController.updateTextFilterList(fT.get())
 
     def create_filter_bar(self):
 
@@ -74,8 +59,7 @@ class MainWindow():
 
         # Filter text entry
         self.filterText = StringVar(self.filter_bar_frame)
-        self.filterText.trace("w", lambda name, index, mode, sv=self.filterText: self.updateTextFilterList())
-
+        self.filterText.trace("w", lambda name, index, mode, fT=self.filterText: self.updateTextFilterList(fT))
         self.filter_entry = Entry(self.filter_bar_frame, textvariable=self.filterText)
         self.filter_entry.config(width=30)
         self.filter_entry.grid(row=0, column=1, sticky=W)
@@ -128,7 +112,7 @@ class MainWindow():
         self.menubar.add_cascade(label="Job", menu=self.jobMenu)
 
         self.filterMenu = Menu(self.root, tearoff=0)
-        self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showFilterJobsOptionsWindow)
+        self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showTextFilterOptionsWindow)
         self.menubar.add_cascade(label="View", menu=self.filterMenu)
 
         self.root.config(menu=self.menubar)
@@ -247,15 +231,12 @@ class MainWindow():
     # values could be a list of dicts which contains updated jobs data
     def notify(self, value):
 
-        if isinstance(value, LaserJobs_Book):
+        if isinstance(value, list): #list of jobs
             # first clear the treeview
             self.jobsTableTree.delete(*self.jobsTableTree.get_children())
             #update the copy of laser jobs book
-            self.laserJobs_Book = value
+            #self.laserJobs_Book = value
             # after reload the data
             self.loadJobsData(value)
             #self.detached_children = {}
             #self.filterTreeView(self.filterText)
-
-        if isinstance(value, TextFilter):
-            self.updateTextFilterOptions(value)

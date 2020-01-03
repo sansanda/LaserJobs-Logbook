@@ -6,7 +6,11 @@ from tkinter import Tk
 def main():
     laserJobsPath = '..\\Data\\'
     laserJobsFileName = 'laserJobs.xlsx'
-    lc = LogicController(laserJobsPath, laserJobsFileName)
+    filterOptionsPath = '..\\persistence\\config\\'
+    filterOptionsFileName = 'config.json'
+
+    lc = LogicController(laserJobsPath, laserJobsFileName, filterOptionsPath,filterOptionsFileName)
+
     gc = GuiController()
 
 
@@ -28,6 +32,8 @@ def main():
     mw.setGuiController(gc)
     mw.populate(headers)
     gc.setActualWindow(mw)
+
+
 
     lc.setGuiController(gc)
     lc.loadJobsFromExcel()
