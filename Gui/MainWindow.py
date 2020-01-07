@@ -65,7 +65,6 @@ class MainWindow():
         self.filter_entry.grid(row=0, column=1, sticky=W)
 
     def create_contextual_menu(self):
-        # TODO: Create contextual menu. Edit and delete job
         self.popup_menu = Menu(self.root, tearoff=0)
         self.popup_menu.add_command(label="Delete job", command=self.deleteJob)
         self.popup_menu.add_command(label="Edit job...", command=self.editJob, state='disable')
@@ -159,6 +158,13 @@ class MainWindow():
             laserJobAsList = LaserJob.getJobDataAsList(laserJob)
             self.jobsTableTree.insert("", 'end', text=str(laserJobAsList[0]), values=laserJobAsList[1:])
 
+        childrenTuple = self.jobsTableTree.get_children()
+        if len(childrenTuple)>0:
+
+            child_id = childrenTuple[-1] # the last element of the tuple
+            self.jobsTableTree.focus(child_id)
+            self.jobsTableTree.selection_set(child_id)
+
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
         if len(selectedJob) == 0:
@@ -187,45 +193,6 @@ class MainWindow():
     def show(self):
         self.enable(True)
         self.root.mainloop()
-
-    def filterTreeView(self, filterText):
-        # TODO: implements filtering of the tree view (at level of LaserJobs_Book)
-        # The idea is to use two data structures one for the filter matching jobs and the other for the not filter matching jobs
-
-        caseSensitive_Option = self.guiController.logicController.filterOptions['Casesensitive']
-        and_Option = self.guiController.logicController.filterOptions['And']
-
-        filterTextCS = filterText.get()
-        if not caseSensitive_Option:
-            filterTextCS = str.upper(filterText.get())
-
-        #reatach
-        for child_id in list(self.detached_children.keys()): #avoid the dictionary changed size during iteration error
-            for value in self.detached_children[child_id]:
-                if filterText.get() in str(value):
-                    #TODO: reorder the list does not work very well
-                    self.jobsTableTree.reattach(child_id,'',int(child_id[1:],16)) #reattach in the same original position
-                    del self.detached_children[child_id]
-                    break
-
-        #detach
-        for child_id in self.jobsTableTree.get_children():
-            #print(filterText.get(), child_id[:], int(str.lower(child_id[1:]),16))
-            matched = False
-            child_values = self.jobsTableTree.item(child_id)['values']
-            for value in child_values:
-                valueCS = str(value)
-                if not caseSensitive_Option:
-                    valueCS = str.upper(str(value))
-
-                if filterTextCS in valueCS:
-                    matched = True
-                    break
-
-            if not matched:
-                self.detached_children[child_id] = child_values
-                self.jobsTableTree.detach(child_id)
-
 
     # part of the Observer design pattern implementation
     # values could be a list of dicts which contains updated jobs data

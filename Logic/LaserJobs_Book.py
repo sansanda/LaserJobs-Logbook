@@ -8,6 +8,7 @@ David SAnchez Sanchez
 """
 
 from Logic.Filter.IFilter import IFilter
+from Logic.LaserJob import LaserJob
 
 class LaserJobs_Book(list):
 
@@ -20,6 +21,12 @@ class LaserJobs_Book(list):
             if IFilter.satisfies(laserJob):
                 laserJobsFiltered.append(laserJob)
         return laserJobsFiltered
+
+    @classmethod
+    def updateStatistics(cls, laserJob):
+        #TODO: implement method
+        print(laserJob)
+
 
     # Job CRUD
 
@@ -67,9 +74,6 @@ class LaserJobs_Book(list):
         #empty book case
         return (len(self)+1) #+1 because list is zero referenced.
 
-    def deleteAllJobs(self):
-        self.clear()
-
     # jobId could be an integer or an str parseable to int
     # return the index of the job if the job exists. -1 otherwise
     def existJob(self, laserJobId):
@@ -80,3 +84,14 @@ class LaserJobs_Book(list):
                 laserJobIndex = index
                 break
         return laserJobIndex
+
+    #overriding for controlling the append method. Specially statistics
+    def append(self, object: LaserJob) -> None:
+        LaserJobs_Book.updateStatistics(object)
+        super(LaserJobs_Book, self).append(object)  # append the item to itself (the list)
+
+
+    #overriding for controlling the del method. Specially statistics
+    def __delitem__(self, key):
+        LaserJobs_Book.updateStatistics(self[key])
+        super(LaserJobs_Book, self).__delitem__(key)  # remove the item from list

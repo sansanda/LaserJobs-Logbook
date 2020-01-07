@@ -42,7 +42,7 @@ class LogicController(Publisher):
     def createTextFilter(self):
         with open(self.filterOptionsPath + self.filterOptionsFileName) as f:
             data = json.load(f)
-        self.filter =  TextFilter(list(),
+        self.filter =  TextFilter([''],
                                   data['textFilterOptions']['caseSensitive'],
                                   data['textFilterOptions']['and'],
                                   data['textFilterOptions']['wholeWord']
@@ -108,6 +108,7 @@ class LogicController(Publisher):
         self.filter.wholeWordOption = wholeword_option
         self.notify(self.laserJobsBook.filterJobs(self.filter))
 
+        #TODO: create method in TextFilter for getting the data as a dict
         #save changes to file
         data = dict()
         data['textFilterOptions'] = dict()

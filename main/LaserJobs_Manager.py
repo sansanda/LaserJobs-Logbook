@@ -4,7 +4,7 @@ from Gui.MainWindow import MainWindow
 from tkinter import Tk
 
 def main():
-    laserJobsPath = '..\\Data\\'
+    laserJobsPath = '..\\persistence\\data\\'
     laserJobsFileName = 'laserJobs.xlsx'
     filterOptionsPath = '..\\persistence\\config\\'
     filterOptionsFileName = 'config.json'

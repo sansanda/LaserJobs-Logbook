@@ -181,4 +181,5 @@ class NewJobWindow():
     def show(self):
         self.enable(True)
         self.root.focus_force()
+        self.username_entry.focus_force()
         self.root.mainloop()
