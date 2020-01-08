@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Logic/LaserJobs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/laserJobs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/data/laserJobs.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/NewJobWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/LaserJobs_Book.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LaserJobs_Book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/config/config.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,6 +126,14 @@
       <option name="presentableId" value="Default" />
       <updated>1577962265776</updated>
     </task>
+    <task id="LOCAL-00001" summary="Working on statistics&#10;&#10;Done:&#10;&#10;Enhanced focus&#10;Enhanced deleting&#10;Sumarizing: Usability of the operativity">
+      <created>1578410625661</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1578410625661</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,5 +148,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Working on statistics&#10;&#10;Done:&#10;&#10;Enhanced focus&#10;Enhanced deleting&#10;Sumarizing: Usability of the operativity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on statistics&#10;&#10;Done:&#10;&#10;Enhanced focus&#10;Enhanced deleting&#10;Sumarizing: Usability of the operativity" />
   </component>
 </project>
