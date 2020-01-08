@@ -30,22 +30,31 @@ class LaserJobs_Book(list):
         nVectorJobs, nRasterJobs, nCombinedJobs = 0,0,0
         #TODO: implement method
         for laserJob in laserJobs:
+
+            if isinstance(laserJob, CombinedJob): #combinedJob first because is isntance of vector and raster
+                nCombinedJobs = nCombinedJobs + 1 #we don't want to count double
+                continue
+
             if isinstance(laserJob, VectorJob):
-                nVectorJobs += nVectorJobs
+                nVectorJobs = nVectorJobs + 1
+                continue
+
             if isinstance(laserJob, RasterJob):
-                nRasterJobs += nRasterJobs
-            if isinstance(laserJob, CombinedJob):
-                nCombinedJobs += nCombinedJobs
+                nRasterJobs = nRasterJobs + 1
+                continue
+
         return nVectorJobs, nRasterJobs, nCombinedJobs
 
     # Job CRUD
 
     # newjobData as dictionary
     def newJob(self, laserJob):
+
         if self.existJob(int(laserJob['jobId'])) == -1:
             self.append(laserJob)
         else:
             raise Exception('The job dat with Id=' + str(laserJob['jobId']) + ' already exists!!!!')
+
 
     # return jobData as dictionary with Id equals to jobId
     # jobId could be a integer or a str castable to integer
@@ -94,14 +103,3 @@ class LaserJobs_Book(list):
                 laserJobIndex = index
                 break
         return laserJobIndex
-
-    # #overriding for controlling the append method. Specially statistics
-    # def append(self, object: LaserJob) -> None:
-    #     LaserJobs_Book.updateStatistics(object)
-    #     super(LaserJobs_Book, self).append(object)  # append the item to itself (the list)
-    #
-    #
-    # #overriding for controlling the del method. Specially statistics
-    # def __delitem__(self, key):
-    #     LaserJobs_Book.updateStatistics(self[key])
-    #     super(LaserJobs_Book, self).__delitem__(key)  # remove the item from list

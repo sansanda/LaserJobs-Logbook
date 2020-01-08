@@ -1,4 +1,5 @@
 from Logic.Filter.IFilter import IFilter
+from Logic.LaserJobs import LaserJob
 
 class TextFilter(IFilter):
 

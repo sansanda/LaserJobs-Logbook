@@ -69,6 +69,7 @@ class LogicController(Publisher):
             self.laserJobsBook.sort(key=lambda k: k['jobId'])
             filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
             filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+            print(filteredJobs_Count)
             self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
         except PermissionError as pe:

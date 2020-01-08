@@ -46,22 +46,85 @@ class LaserJob(dict):
     def getJobDataAsList(self):
 
         jobDataAsList = list()
-        for key in self.keys():
-            jobDataAsList.append(self[key])
+
+        jobDataAsList.append(self['jobId'])
+        jobDataAsList.append(self['Username'])
+        jobDataAsList.append(self['Date'])
+        jobDataAsList.append(self['Material'])
+        jobDataAsList.append(self['JobType'])
+        jobDataAsList.append(self['Speed'])
+        jobDataAsList.append(self['Power'])
+        jobDataAsList.append(self['DPI'])
+        jobDataAsList.append(self['Frequency'])
+        jobDataAsList.append(self['Passes'])
+        jobDataAsList.append(self['Depth'])
+        jobDataAsList.append(self['EngraveDirection'])
+        jobDataAsList.append(self['ImageDithering'])
+        jobDataAsList.append(self['VectorSorting'])
+        jobDataAsList.append(self['FrequencyAutomatic'])
+        jobDataAsList.append(self['Others'])
+
         return jobDataAsList
 
-    def getJobDataAsStrRepresentation(self):
+    @classmethod
+    def createLaserJobFromDict(cls, laserJobDataAsDict):
 
-        jobDataAsList = list()
-        for key in self.keys():
-            jobDataAsList.append(str(key) + ':' + str(self[key]))
-        return jobDataAsList
+        laserJob = None
 
+        if laserJobDataAsDict['JobType']==LaserJob.vectorType:
+            laserJob = VectorJob(
+                laserJobDataAsDict['jobId'],
+                laserJobDataAsDict['Username'],
+                laserJobDataAsDict['Date'],
+                laserJobDataAsDict['Material'],
+                laserJobDataAsDict['Speed'],
+                laserJobDataAsDict['Power'],
+                laserJobDataAsDict['DPI'],
+                laserJobDataAsDict['Frequency'],
+                laserJobDataAsDict['Passes'],
+                laserJobDataAsDict['Depth'],
+                laserJobDataAsDict['Others'],
+                laserJobDataAsDict['VectorSorting'],
+                laserJobDataAsDict['FrequencyAutomatic']
+            )
 
-    def __str__(self):
-        """Devuelve una cadena representativa al LaserJob"""
+        if laserJobDataAsDict['JobType']==LaserJob.rasterType:
+            laserJob = RasterJob(
+                laserJobDataAsDict['jobId'],
+                laserJobDataAsDict['Username'],
+                laserJobDataAsDict['Date'],
+                laserJobDataAsDict['Material'],
+                laserJobDataAsDict['Speed'],
+                laserJobDataAsDict['Power'],
+                laserJobDataAsDict['DPI'],
+                laserJobDataAsDict['Frequency'],
+                laserJobDataAsDict['Passes'],
+                laserJobDataAsDict['Depth'],
+                laserJobDataAsDict['Others'],
+                laserJobDataAsDict['EngraveDirection'],
+                laserJobDataAsDict['ImageDithering']
+            )
 
-        return "Job Parameters: %s" % self.getJobDataAsStrRepresentation()
+        if laserJobDataAsDict['JobType']==LaserJob.combinedType:
+            laserJob = CombinedJob(
+                laserJobDataAsDict['jobId'],
+                laserJobDataAsDict['Username'],
+                laserJobDataAsDict['Date'],
+                laserJobDataAsDict['Material'],
+                laserJobDataAsDict['Speed'],
+                laserJobDataAsDict['Power'],
+                laserJobDataAsDict['DPI'],
+                laserJobDataAsDict['Frequency'],
+                laserJobDataAsDict['Passes'],
+                laserJobDataAsDict['Depth'],
+                laserJobDataAsDict['Others'],
+                laserJobDataAsDict['EngraveDirection'],
+                laserJobDataAsDict['ImageDithering'],
+                laserJobDataAsDict['VectorSorting'],
+                laserJobDataAsDict['FrequencyAutomatic']
+            )
+
+        return laserJob
 
 class RasterJob(LaserJob):
 
@@ -74,7 +137,7 @@ class RasterJob(LaserJob):
         self['JobType'] = 'Raster'
         self['EngraveDirection'] = engraveDirection
         self['ImageDithering'] = imageDithering
-        self['VectorSorting'] = 'None'
+        self['VectorSorting'] = None
         self['FrequencyAutomatic'] = None
 
 

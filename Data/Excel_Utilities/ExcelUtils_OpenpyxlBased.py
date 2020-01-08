@@ -3,16 +3,19 @@ import openpyxl
 from Logic.LaserJobs import LaserJob
 
 
+
 def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
     workbook = openpyxl.load_workbook(os.path.join(laserJobsPath, laserJobsFileName))
     worksheet = workbook.get_sheet_by_name('LaserJobs')
 
     columnsName = readRowValues(worksheet, 1, 1,None)  # read the header.  The row where we stock the name of the column
+
     # tronsform every row of the worksheet into a  dict
     for row_index in range(1,worksheet.max_row ):
         columnValues = readRowValues(worksheet, row_index+1, 1, None)  # read the other rows
-        elm = dict(zip(columnsName, columnValues))
-        laserJobsBook.append(elm)
+        newJobData = dict(zip(columnsName, columnValues))
+
+        laserJobsBook.newJob(LaserJob.createLaserJobFromDict(newJobData))
 
 def insertRowInExcel(jobData, laserJobsPath, laserJobsFileName):  # updatedJobData is a dictionary
 

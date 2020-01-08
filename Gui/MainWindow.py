@@ -15,9 +15,10 @@ class MainWindow():
 
     def __init__(self, w_scale, h_scale):
 
+        self.version = 1.1
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.root.title('Laser-Jobs Manager. Main Window. v1.0')
+        self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
         self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
 
         self.width = int(self.root.winfo_screenwidth() * w_scale)
@@ -156,6 +157,7 @@ class MainWindow():
         self.n_combined_jobs.set(1)
 
     def updateStatistics(self, nVectorJobs, nRasterJobs, nCombinedJobs):
+        print(nVectorJobs, nRasterJobs, nCombinedJobs)
         self.n_total_jobs.set(nVectorJobs + nRasterJobs + nCombinedJobs)
         self.n_vector_jobs.set(nVectorJobs)
         self.n_raster_jobs.set(nRasterJobs)
@@ -245,8 +247,6 @@ class MainWindow():
         # first clear the treeview
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
         self.loadJobsData(value[0])
-        for job in value[0]:
-            print(type(job))
         self.updateStatistics(value[1],value[2],value[3])
 
     #Window management
