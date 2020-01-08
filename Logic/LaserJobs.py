@@ -1,7 +1,11 @@
 class LaserJob(dict):
 
+    vectorType = 'Vector'
+    rasterType = 'Raster'
+    combinedType = 'Combined'
+
     def __init__(self,id=1,username='username',date='01/01/2000',material='PMMA',
-                 speed=100,power=100,dpi=1200,nPasses=1,others='Other data of interest'):
+                 speed=100,power=100,dpi=1200,freq = 5000, nPasses=1, depth=1, others='Other data of interest'):
         self['jobId'] = id
         self['Username'] = username
         self['Date'] = date
@@ -9,7 +13,9 @@ class LaserJob(dict):
         self['Speed'] = speed
         self['Power'] = power
         self['DPI'] = dpi
+        self['Frequency'] = freq
         self['Passes'] = nPasses
+        self['Depth'] = depth
         self['Others'] = others
         self['JobType'] = 'Not defined'
 
@@ -57,51 +63,59 @@ class LaserJob(dict):
 
         return "Job Parameters: %s" % self.getJobDataAsStrRepresentation()
 
-class Raster(LaserJob):
+class RasterJob(LaserJob):
 
-    def __init__(self,id=1,username='username',date='01/01/2000',material='PMMA',
-                 speed=100,power=100,dpi=1200,nPasses=1,depth=1,others='Other data of interest',
+    def __init__(self, id=1, username='username', date='01/01/2000', material='PMMA',
+                 speed=100, power=100, dpi=1200,freq = -1, nPasses=1, depth=1, others='Other data of interest',
                  engraveDirection='Top-Down', imageDithering='Standard'):
 
-        LaserJob.__init__(self,id,username,date,material,speed,power,dpi,nPasses,others)
+        LaserJob.__init__(self,id,username,date,material,speed,power,dpi,-1, nPasses, depth, others)
 
         self['JobType'] = 'Raster'
-        self['Depth'] = depth
         self['EngraveDirection'] = engraveDirection
         self['ImageDithering'] = imageDithering
+        self['VectorSorting'] = 'None'
+        self['FrequencyAutomatic'] = None
 
 
-class Vector(LaserJob):
+class VectorJob(LaserJob):
 
     def __init__(self,id=1,username='username',date='01/01/2000',material='PMMA',
-                 speed=100,power=100,dpi=1200,nPasses=1,others='Other data of interest',
+                 speed=100,power=100,dpi=1200,freq=5000, nPasses=1, depth=-1, others='Other data of interest',
                  vectorSorting='Optimize', frequencyAutomatic=False):
 
-        LaserJob.__init__(self,id,username,date,material,speed,power,dpi,nPasses,others)
+        LaserJob.__init__(self,id,username,date,material,speed,power,dpi,freq, nPasses, -1, others)
 
         self['JobType'] = 'Vector'
+        self['EngraveDirection'] = None
+        self['ImageDithering'] = None
         self['VectorSorting'] = vectorSorting
         self['FrequencyAutomatic'] = frequencyAutomatic
 
-class Combined(Raster,Vector):
+class CombinedJob(RasterJob, VectorJob):
 
     def __init__(self,id=1,username='username',date='01/01/2000',material='PMMA',
-                 speed=100,power=100,dpi=1200,nPasses=1,depth=1,others='Other data of interest',
+                 speed=100,power=100,dpi=1200, freq=5000, nPasses=1,depth=1,others='Other data of interest',
                  engraveDirection='Top-Down', imageDithering='Standard',
                  vectorSorting='Optimize', frequencyAutomatic=False):
 
-        Raster.__init__(self, id, username, date, material, speed, power, dpi, nPasses, depth, others,engraveDirection,imageDithering)
-        Vector.__init__(self, id, username, date, material, speed, power, dpi, nPasses, others,vectorSorting,frequencyAutomatic)
+        RasterJob.__init__(self, id, username, date, material, speed, power, dpi, freq, nPasses, depth, others, engraveDirection, imageDithering)
+        VectorJob.__init__(self, id, username, date, material, speed, power, dpi, freq, nPasses, depth, others, vectorSorting, frequencyAutomatic)
 
         self['JobType'] = 'Combined'
-
+        self['Frequency'] = freq
+        self['Depth'] = depth
+        self['EngraveDirection'] = engraveDirection
+        self['ImageDithering'] = imageDithering
+        self['VectorSorting'] = vectorSorting
+        self['FrequencyAutomatic'] = frequencyAutomatic
 
 def main():
-    v = Vector(1,'sansanda','01/01/2010','PMMA',100,100,1200,1,'others','Optimize',False)
+    v = VectorJob(1, 'sansanda', '01/01/2010', 'PMMA', 100, 100, 1200, 5000,  1, 'others', 'Optimize', False)
     print(v)
-    r = Raster(1, 'sansanda', '01/01/2010', 'PMMA', 100, 100, 1200, 1, 1.2, 'others', 'Top-Down', 'Special')
+    r = RasterJob(1, 'sansanda', '01/01/2010', 'PMMA', 100, 100, 1200, 1, 1.2, 'others', 'Top-Down', 'Special')
     print(r)
-    c = Combined(1, 'sansanda', '01/01/2010', 'PMMA', 100, 100, 1200, 1, 1.2, 'others', 'Top-Down', 'Special', 'Optimize',False)
+    c = CombinedJob(1, 'sansanda', '01/01/2010', 'PMMA', 100, 100, 1200, 4000, 1, 1.2, 'others', 'Top-Down', 'Special', 'Optimize', False)
     print(c)
 
 

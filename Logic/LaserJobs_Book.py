@@ -8,7 +8,9 @@ David SAnchez Sanchez
 """
 
 from Logic.Filter.IFilter import IFilter
-from Logic.LaserJob import LaserJob
+from Logic.LaserJobs import VectorJob
+from Logic.LaserJobs import RasterJob
+from Logic.LaserJobs import CombinedJob
 
 class LaserJobs_Book(list):
 
@@ -23,10 +25,18 @@ class LaserJobs_Book(list):
         return laserJobsFiltered
 
     @classmethod
-    def updateStatistics(cls, laserJob):
-        #TODO: implement method
-        print(laserJob)
+    def countJobs(cls, laserJobs):
 
+        nVectorJobs, nRasterJobs, nCombinedJobs = 0,0,0
+        #TODO: implement method
+        for laserJob in laserJobs:
+            if isinstance(laserJob, VectorJob):
+                nVectorJobs += nVectorJobs
+            if isinstance(laserJob, RasterJob):
+                nRasterJobs += nRasterJobs
+            if isinstance(laserJob, CombinedJob):
+                nCombinedJobs += nCombinedJobs
+        return nVectorJobs, nRasterJobs, nCombinedJobs
 
     # Job CRUD
 
@@ -85,13 +95,13 @@ class LaserJobs_Book(list):
                 break
         return laserJobIndex
 
-    #overriding for controlling the append method. Specially statistics
-    def append(self, object: LaserJob) -> None:
-        LaserJobs_Book.updateStatistics(object)
-        super(LaserJobs_Book, self).append(object)  # append the item to itself (the list)
-
-
-    #overriding for controlling the del method. Specially statistics
-    def __delitem__(self, key):
-        LaserJobs_Book.updateStatistics(self[key])
-        super(LaserJobs_Book, self).__delitem__(key)  # remove the item from list
+    # #overriding for controlling the append method. Specially statistics
+    # def append(self, object: LaserJob) -> None:
+    #     LaserJobs_Book.updateStatistics(object)
+    #     super(LaserJobs_Book, self).append(object)  # append the item to itself (the list)
+    #
+    #
+    # #overriding for controlling the del method. Specially statistics
+    # def __delitem__(self, key):
+    #     LaserJobs_Book.updateStatistics(self[key])
+    #     super(LaserJobs_Book, self).__delitem__(key)  # remove the item from list

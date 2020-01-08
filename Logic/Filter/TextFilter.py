@@ -1,5 +1,4 @@
 from Logic.Filter.IFilter import IFilter
-from Logic.LaserJob import LaserJob
 
 class TextFilter(IFilter):
 
@@ -20,6 +19,13 @@ class TextFilter(IFilter):
 
     def getName(self):
         return 'TextFilter'
+
+    def getTextFilterOptions(self):
+        textFilterOptions = dict()
+        textFilterOptions['caseSensitive'] = self.caseSensitiveOption
+        textFilterOptions['and'] = self.andOption
+        textFilterOptions['wholeWord'] = self.wholeWordOption
+        return textFilterOptions
 
     #auxiliar methods
     def __allTextAreInLaserJob(self, laserJob):

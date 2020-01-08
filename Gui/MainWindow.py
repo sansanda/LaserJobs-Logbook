@@ -9,9 +9,7 @@ David SAnchez Sanchez
 import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
-from Logic.LaserJob import LaserJob
-from Logic.Filter.TextFilter import TextFilter
-from Logic.LaserJobs_Book import LaserJobs_Book
+from Logic.LaserJobs import LaserJob
 
 class MainWindow():
 
@@ -45,11 +43,12 @@ class MainWindow():
         self.create_filter_bar()
         self.create_jobsTable_frame(jobsTableHeaders)
         self.create_tool_bar()
+        self.createSeparator(row=3,minsize=self.width)
+        self.initializeStatisticVariables()
+        self.create_statistics_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
 
-    def updateTextFilterList(self,fT):
-        self.guiController.updateTextFilterList(fT.get())
 
     def create_filter_bar(self):
 
@@ -64,57 +63,9 @@ class MainWindow():
         self.filter_entry.config(width=30)
         self.filter_entry.grid(row=0, column=1, sticky=W)
 
-    def create_contextual_menu(self):
-        self.popup_menu = Menu(self.root, tearoff=0)
-        self.popup_menu.add_command(label="Delete job", command=self.deleteJob)
-        self.popup_menu.add_command(label="Edit job...", command=self.editJob, state='disable')
+    def updateTextFilterList(self,fT):
+        self.guiController.updateTextFilterList(fT.get())
 
-        self.root.bind("<Button-3>", self.showPopupMenu)  # Button-2 on Aqua
-
-    def showPopupMenu(self, event):
-        try:
-            self.popup_menu.tk_popup(event.x_root, event.y_root, 0)
-        finally:
-            self.popup_menu.grab_release()
-
-    def create_tool_bar(self):
-
-        self.tool_bar_frame = Frame(self.root)
-        self.tool_bar_frame.grid(row=2, column=0, columnspan=6, sticky=W + E + N + S)
-        addRegisterIcon = PhotoImage(file='../Gui/icons/addRegisterIcon_30x30.gif')
-        deleteRegisterIcon = PhotoImage(file='../Gui/icons/deleteRegisterIcon_30x30.gif')
-        self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon,
-                                      command=self.guiController.showNewJobWindow)
-        self.addNewJobButton.image = addRegisterIcon
-        self.addNewJobButton.grid(row=1, column=0, padx=5, pady=2)
-        self.deleteJobButton = Button(self.tool_bar_frame, image=deleteRegisterIcon, command=self.deleteJob)
-        self.deleteJobButton.image = deleteRegisterIcon
-        self.deleteJobButton.grid(row=1, column=1, padx=5, pady=2)
-
-    def create_Command_Shortcuts(self):
-        # create command shortcuts
-        self.root.bind('<Delete>', lambda e: self.deleteJob())
-        self.root.bind('<Insert>', lambda e: self.guiController.showNewJobWindow())
-
-    def create_menu_bar(self):
-
-        self.menubar = Menu(self.root)
-
-        self.fileMenu = Menu(self.root, tearoff=0)
-        self.fileMenu.add_command(label="Exit", command=self.close)
-        self.menubar.add_cascade(label="File", menu=self.fileMenu)
-
-        self.jobMenu = Menu(self.root, tearoff=0)
-        self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
-        self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
-        self.jobMenu.add_command(label="Edit job...", command=self.editJob, state='disable')
-        self.menubar.add_cascade(label="Job", menu=self.jobMenu)
-
-        self.filterMenu = Menu(self.root, tearoff=0)
-        self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showTextFilterOptionsWindow)
-        self.menubar.add_cascade(label="View", menu=self.filterMenu)
-
-        self.root.config(menu=self.menubar)
 
     def create_jobsTable_frame(self, jobsTableHeaders):
 
@@ -150,7 +101,109 @@ class MainWindow():
 
         self.detached_children = {}
 
-    # jobs is a list of dictionaries
+    def create_tool_bar(self):
+
+        self.tool_bar_frame = Frame(self.root)
+        self.tool_bar_frame.grid(row=2, column=0, columnspan=6, sticky=W + E + N + S)
+        addRegisterIcon = PhotoImage(file='../Gui/icons/addRegisterIcon_30x30.gif')
+        deleteRegisterIcon = PhotoImage(file='../Gui/icons/deleteRegisterIcon_30x30.gif')
+        self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon,
+                                      command=self.guiController.showNewJobWindow)
+        self.addNewJobButton.image = addRegisterIcon
+        self.addNewJobButton.grid(row=1, column=0, padx=5, pady=2)
+        self.deleteJobButton = Button(self.tool_bar_frame, image=deleteRegisterIcon, command=self.deleteJob)
+        self.deleteJobButton.image = deleteRegisterIcon
+        self.deleteJobButton.grid(row=1, column=1, padx=5, pady=2)
+
+    def createSeparator(self, row=0, minsize=300):
+
+        sepFrame = Frame(self.root)
+        sepFrame.grid(row=row, column=0, sticky="ew")
+        sepFrame.grid_columnconfigure(0, minsize=minsize)
+        sepFrame.grid_rowconfigure(0, pad=20)
+
+        self.line_style = ttk.Style()
+        self.line_style.configure("Line.TSeparator", background="#000000", color='red')
+        self.sep = ttk.Separator(sepFrame, orient="horizontal", style="Line.TSeparator").grid(row=0, column=0, sticky="ew")
+
+
+    def create_statistics_frame(self):
+
+        self.statistics_frame = Frame(self.root)
+        self.statistics_frame.grid(row=4, column=0, columnspan=1, sticky=W + E + N + S)
+
+        Label(self.statistics_frame, text='Total Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=0)
+        Label(self.statistics_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold", anchor=W, width=5, padx=1, pady=5).grid(row=0, column=1)
+
+        Label(self.statistics_frame, text='Vector Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=2)
+        Label(self.statistics_frame, textvariable=self.n_vector_jobs, fg="black",font="Calibri 10 bold", anchor=W, width=5, padx=1, pady=5).grid(row=0, column=3)
+
+        Label(self.statistics_frame, text='Raster Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=4)
+        Label(self.statistics_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold", anchor=W,width=5, padx=1, pady=5).grid(row=0, column=5)
+
+        Label(self.statistics_frame, text='Combined Jobs:', anchor=W, width=15, padx=10, pady=5).grid(row=0, column=6)
+        Label(self.statistics_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold", anchor=W,width=5, padx=1, pady=5).grid(row=0, column=7)
+
+    def initializeStatisticVariables(self):
+
+        self.n_total_jobs = IntVar()
+        self.n_total_jobs.set(1)
+        self.n_vector_jobs = IntVar()
+        self.n_vector_jobs.set(1)
+        self.n_raster_jobs = IntVar()
+        self.n_raster_jobs.set(1)
+        self.n_combined_jobs = IntVar()
+        self.n_combined_jobs.set(1)
+
+    def updateStatistics(self, nVectorJobs, nRasterJobs, nCombinedJobs):
+        self.n_total_jobs.set(nVectorJobs + nRasterJobs + nCombinedJobs)
+        self.n_vector_jobs.set(nVectorJobs)
+        self.n_raster_jobs.set(nRasterJobs)
+        self.n_combined_jobs.set(nCombinedJobs)
+
+    #Menus
+
+    def create_menu_bar(self):
+
+        self.menubar = Menu(self.root)
+
+        self.fileMenu = Menu(self.root, tearoff=0)
+        self.fileMenu.add_command(label="Exit", command=self.close)
+        self.menubar.add_cascade(label="File", menu=self.fileMenu)
+
+        self.jobMenu = Menu(self.root, tearoff=0)
+        self.jobMenu.add_command(label="New job...", command=self.guiController.showNewJobWindow)
+        self.jobMenu.add_command(label="Delete job", command=self.deleteJob)
+        self.jobMenu.add_command(label="Edit job...", command=self.editJob, state='disable')
+        self.menubar.add_cascade(label="Job", menu=self.jobMenu)
+
+        self.filterMenu = Menu(self.root, tearoff=0)
+        self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showTextFilterOptionsWindow)
+        self.menubar.add_cascade(label="View", menu=self.filterMenu)
+
+        self.root.config(menu=self.menubar)
+
+    def create_contextual_menu(self):
+        self.popup_menu = Menu(self.root, tearoff=0)
+        self.popup_menu.add_command(label="Delete job", command=self.deleteJob)
+        self.popup_menu.add_command(label="Edit job...", command=self.editJob, state='disable')
+
+        self.root.bind("<Button-3>", self.showPopupMenu)
+
+    def showPopupMenu(self, event):
+        try:
+            self.popup_menu.tk_popup(event.x_root, event.y_root, 0)
+        finally:
+            self.popup_menu.grab_release()
+
+    def create_Command_Shortcuts(self):
+        # create command shortcuts
+        self.root.bind('<Delete>', lambda e: self.deleteJob())
+        self.root.bind('<Insert>', lambda e: self.guiController.showNewJobWindow())
+
+    #Jobs Management
+
+    # laserJobs is a list of dictionaries
     # each jobData is a dictionary
 
     def loadJobsData(self, laserJobs):
@@ -159,6 +212,7 @@ class MainWindow():
             self.jobsTableTree.insert("", 'end', text=str(laserJobAsList[0]), values=laserJobAsList[1:])
 
         childrenTuple = self.jobsTableTree.get_children()
+
         if len(childrenTuple)>0:
 
             child_id = childrenTuple[-1] # the last element of the tuple
@@ -183,6 +237,20 @@ class MainWindow():
             selectedJob_jobId = self.jobsTableTree.item(selectedJob, 'text')
             self.guiController.editJob(selectedJob_jobId)
 
+    # part of the Observer design pattern implementation
+    # value is a tuple with a (list of jobs, nVectorJobs, nRasterJobs, nCombinedJobs) could be a list of dicts which contains updated jobs data
+
+    def notify(self, value):
+
+        # first clear the treeview
+        self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+        self.loadJobsData(value[0])
+        for job in value[0]:
+            print(type(job))
+        self.updateStatistics(value[1],value[2],value[3])
+
+    #Window management
+
     def close(self):
         print('Exiting...')
         self.guiController.closeWindow(self)
@@ -193,17 +261,3 @@ class MainWindow():
     def show(self):
         self.enable(True)
         self.root.mainloop()
-
-    # part of the Observer design pattern implementation
-    # values could be a list of dicts which contains updated jobs data
-    def notify(self, value):
-
-        if isinstance(value, list): #list of jobs
-            # first clear the treeview
-            self.jobsTableTree.delete(*self.jobsTableTree.get_children())
-            #update the copy of laser jobs book
-            #self.laserJobs_Book = value
-            # after reload the data
-            self.loadJobsData(value)
-            #self.detached_children = {}
-            #self.filterTreeView(self.filterText)

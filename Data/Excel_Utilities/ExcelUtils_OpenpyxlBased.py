@@ -1,6 +1,6 @@
 import os
 import openpyxl
-
+from Logic.LaserJobs import LaserJob
 
 
 def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
@@ -69,6 +69,7 @@ def _getRowIndexByJobId(worksheet, jobIdToFind):
 
 def _insertRowAtSheet(worksheet, rowToInsert, jobData):
     columnNames = readRowValues(worksheet, 1, 1, None)
+    print(type(jobData))
     worksheet.insert_rows(idx=rowToInsert)
     for columnName_Index, columnName in enumerate(columnNames):
         worksheet.cell(row=rowToInsert, column=columnName_Index+1).value = jobData[columnName]

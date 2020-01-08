@@ -19,7 +19,7 @@ import json
 
 class LogicController(Publisher):
 
-    #TODO: Refocus at main window after close a secondary window
+
     def __init__(self, laserJobsPath, laserJobsFileName, filterOptionsPath, filterOptionsFileName):
         Publisher.__init__(self)
         self.guiController = None
@@ -50,7 +50,9 @@ class LogicController(Publisher):
 
     def loadJobsFromExcel(self):
         loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
-        self.notify(self.laserJobsBook)
+        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
     def updateExcel(self, updatedJobData, deleteJob=False):
         if deleteJob==False:
@@ -65,7 +67,10 @@ class LogicController(Publisher):
             self.updateExcel(laserJob)
             self.laserJobsBook.newJob(laserJob)
             self.laserJobsBook.sort(key=lambda k: k['jobId'])
-            self.notify(self.laserJobsBook.filterJobs(self.filter))
+            filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+            filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
 
@@ -82,7 +87,9 @@ class LogicController(Publisher):
             jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
             self.updateExcel(jobData,deleteJob=True)
             self.laserJobsBook.deleteJob(jobId)
-            self.notify(self.laserJobsBook.filterJobs(self.filter))
+            filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+            filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -95,30 +102,30 @@ class LogicController(Publisher):
 
     def updateJob(self,updatedJobData):
         self.laserJobsBook.updateJob(updatedJobData)
-        self.notify(self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
 
     def updateTextFilterList(self,sv):
         self.filter.textList = str.split(sv,';')
-        self.notify(self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
     def updateTextFilterOptions(self, cs_option, and_option, wholeword_option):
         self.filter.caseSensitiveOption = cs_option
         self.filter.andOption = and_option
         self.filter.wholeWordOption = wholeword_option
-        self.notify(self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
+        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
-        #TODO: create method in TextFilter for getting the data as a dict
         #save changes to file
         data = dict()
-        data['textFilterOptions'] = dict()
-        data['textFilterOptions']['caseSensitive'] = self.filter.caseSensitiveOption
-        data['textFilterOptions']['and'] = self.filter.andOption
-        data['textFilterOptions']['wholeWord'] = self.filter.wholeWordOption
-
+        data['textFilterOptions'] = self.filter.getTextFilterOptions()
         with open(self.filterOptionsPath + self.filterOptionsFileName, 'w') as f:
             json.dump(data, f)
-
 
 
     def start(self):
