@@ -78,8 +78,4 @@ def _insertRowAtSheet(worksheet, rowToInsert, jobData):
         worksheet.cell(row=rowToInsert, column=columnName_Index+1).value = jobData[columnName]
 
 def _deleteRowAtSheet(worksheet, rowToDelete_Index):
-    # TODO: Implements the deleteRowAtSheet function in ExcelUtils
-    # perhaps using the openpyxl library.
-    # if we use the openpyxl library the try to convert the other functions for using that new library and forget the xlwt
-
     worksheet.delete_rows(rowToDelete_Index, amount=1)

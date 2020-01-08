@@ -5,6 +5,7 @@ from tkinter import Tk
 
 def main():
 
+    #TODO: create standalone exe and liberate it
     laserJobsPath = '..\\persistence\\data\\'
     laserJobsFileName = 'laserJobs.xlsx'
     filterOptionsPath = '..\\persistence\\config\\'
@@ -21,7 +22,7 @@ def main():
                             ('#1', 'Username', 6),
                             ('#2', 'Date', 6),
                             ('#3', 'Material', 5),
-                            ('#4', 'V-R-C', 5),
+                            ('#4', 'V-R-C', 6),
                             ('#5', 'Speed', 5),
                             ('#6', 'Power', 5),
                             ('#7', 'DPI', 5),
@@ -32,7 +33,7 @@ def main():
                             ('#12','FreqAuto',5),
                             ('#13','EngraveDir',6),
                             ('#14','ImageDith',6),
-                            ('#15', 'Others', 30))
+                            ('#15', 'Others', 29))
 
     mw = MainWindow(0.95, 0.85)
     mw.setGuiController(gc)

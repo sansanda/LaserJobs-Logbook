@@ -28,7 +28,7 @@ class LaserJobs_Book(list):
     def countJobs(cls, laserJobs):
 
         nVectorJobs, nRasterJobs, nCombinedJobs = 0,0,0
-        #TODO: implement method
+
         for laserJob in laserJobs:
 
             if isinstance(laserJob, CombinedJob): #combinedJob first because is isntance of vector and raster

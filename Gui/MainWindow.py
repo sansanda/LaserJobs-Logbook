@@ -157,7 +157,7 @@ class MainWindow():
         self.n_combined_jobs.set(1)
 
     def updateStatistics(self, nVectorJobs, nRasterJobs, nCombinedJobs):
-        print(nVectorJobs, nRasterJobs, nCombinedJobs)
+
         self.n_total_jobs.set(nVectorJobs + nRasterJobs + nCombinedJobs)
         self.n_vector_jobs.set(nVectorJobs)
         self.n_raster_jobs.set(nRasterJobs)

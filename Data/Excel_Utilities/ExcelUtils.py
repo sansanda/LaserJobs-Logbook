@@ -45,7 +45,6 @@ def insertRowInExcel(jobData, laserJobsPath, laserJobsFileName):  # updatedJobDa
     jobIdToFind_RowIndex = _getRowIndexByJobId(sheet, jobData['jobId'])  # 0 is the column index of the jobId
     _insertRowAtSheet(sheet, writable_sheet, jobIdToFind_RowIndex, jobData)
     writable_workbook.save(os.path.join(laserJobsPath, laserJobsFileName))
-    #TODO: Reorder the excel after inserting a new job. Or at least, try to insert in the correct position
 
 def insertRowInExcelByOpenpyxl(jobData, laserJobsPath, laserJobsFileName):  # updatedJobData is a dictionary
 
