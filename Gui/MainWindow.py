@@ -47,7 +47,6 @@ class MainWindow():
         self.create_separator(row=3,minsize=self.width)
         self.initialize_statisticVariables()
         self.create_statistics_frame()
-        self.create_scrollbar_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
 
@@ -68,12 +67,11 @@ class MainWindow():
     def updateTextFilterList(self,fT):
         self.guiController.updateTextFilterList(fT.get())
 
-
     def create_jobsTable(self, jobsTableHeaders):
 
 
         rowHeight = 20  # pixels
-        nRows = 30
+        nRows = 20
         style = ttk.Style(self.root)
         nColumns = 0
 
@@ -81,49 +79,51 @@ class MainWindow():
         # un texto y una anchura que será un porcentaje de la anchura total de la main window
         jobsTableHeaders2 = []
         for num, key in enumerate(LaserJob.keys):
-            jobsTableHeaders2.append(['#' + str(num), key, 4.5])
-        jobsTableHeaders2[-1][2] = 32.5
+            jobsTableHeaders2.append(['#' + str(num+1), key, 5.5])
+
+        jobsTableHeaders2[0][2] = 4   # reduce the width of the jobId column
+        jobsTableHeaders2[5][2] = 4  # reduce the width of the Speed column
+        jobsTableHeaders2[6][2] = 4  # reduce the width of the Power column
+        jobsTableHeaders2[7][2] = 4  # reduce the width of the DPI column
+        jobsTableHeaders2[9][2] = 4  # reduce the width of the Passes column
+        jobsTableHeaders2[10][2] = 4  # reduce the width of the Depth column
+        jobsTableHeaders2[-1][2] = 25  # give the rest to the vertical scroll bar
+
         nColumns = len(jobsTableHeaders2)
         ##############################################################
-
-
-        self.root.grid_columnconfigure(0, weight=1)
-        self.root.grid_columnconfigure(1, weight=0)
-        self.root.grid_rowconfigure(1, weight=1)
 
         self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=0, width=200)
         self.jobsTable_Frame.grid(row=1, column=0, sticky=W + N + S)
 
-
         style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
-        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns)  # height in rows
+        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns, show=['headings'])  # height in rows
         self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
 
-        jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders2)
-        print(jobsTableHeaders_Order)
-        jobsTableHeaders_Text = tuple(x[1] for x in jobsTableHeaders2)
-        jobsTableHeaders_WidthInPercent = tuple(x[2] for x in jobsTableHeaders2)
+        columnsNumber = tuple(x[0] for x in jobsTableHeaders2)
+        columnsHeaderText = tuple(x[1] for x in jobsTableHeaders2)
+        columnsWidth = tuple(x[2] for x in jobsTableHeaders2) #in % of window width
 
-        self.jobsTableTree["columns"] = jobsTableHeaders_Order  # creamos las columnas
-        self.jobsTableTree.column('#16', width=0)
+        self.jobsTableTree["columns"] = columnsNumber  # creamos las columnas
 
         # Configuramos el texto del encabezado de cada columna
-        for order, text in zip(jobsTableHeaders_Order, jobsTableHeaders_Text):
-            self.jobsTableTree.heading(order, text=text, anchor=W)
+        for columnNumber, columnText in zip(columnsNumber, columnsHeaderText):
+            self.jobsTableTree.heading(columnNumber, text=columnText, anchor=W)
 
         # Configuramos la anchura de las columnas
-        for order, w in zip(jobsTableHeaders_Order, jobsTableHeaders_WidthInPercent):
-            self.jobsTableTree.column(order, width=int((w / 100.0) * self.width),
-                                      minwidth=int((w / 100.0) * self.width), stretch=True)
+        for columnNumber, columnWidth in zip(columnsNumber, columnsWidth):
+            self.jobsTableTree.column(columnNumber, width=int((columnWidth / 100.0) * self.width),
+                                      minwidth=int((columnWidth / 100.0) * self.width), stretch=False)
 
         # Adding scroll bars
-        self.scrollbar_Frame = Frame(self.root, highlightbackground='black', highlightthickness=1)
-        self.scrollbar_Frame.grid(row=1, column=1, sticky=N + S)
-
-        ysb = Scrollbar(self.scrollbar_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
-        ysb.grid(row=0, column=0, sticky=N+S)
+        ysb = Scrollbar(self.jobsTable_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
+        ysb.grid(row=0, column=1, sticky=N+S)
         self.jobsTableTree.configure(yscroll=ysb.set)
+
+        xsb = Scrollbar(self.jobsTable_Frame, orient=HORIZONTAL, command=self.jobsTableTree.xview)
+        xsb.grid(row=1, column=0, sticky=W + E)
+        self.jobsTableTree.configure(xscroll=xsb.set)
+
 
     def create_tool_bar(self):
 
@@ -186,8 +186,6 @@ class MainWindow():
         self.n_raster_jobs.set(nRasterJobs)
         self.n_combined_jobs.set(nCombinedJobs)
 
-    def create_scrollbar_frame(self):
-        pass
     #Menus
 
     def create_menu_bar(self):
@@ -234,9 +232,14 @@ class MainWindow():
     # each jobData is a dictionary
 
     def loadJobsData(self, laserJobs):
+
+        self.enable(False)
+
         for laserJob in laserJobs:
             laserJobAsList = LaserJob.getJobDataAsList(laserJob)
-            self.jobsTableTree.insert("", 'end', text=str(laserJobAsList[0]), values=laserJobAsList[1:])
+            self.jobsTableTree.insert("", 'end', values=laserJobAsList[:])
+            self.jobsTableTree.column('#16', width=int((len(laserJobAsList[-1])*0.6 / 100.0) * self.width),
+                                      minwidth=int((len(laserJobAsList[-1])*0.6 / 100.0) * self.width), stretch=False)
 
         childrenTuple = self.jobsTableTree.get_children()
 
@@ -246,13 +249,15 @@ class MainWindow():
             self.jobsTableTree.focus(child_id)
             self.jobsTableTree.selection_set(child_id)
 
+        self.enable(True)
+
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
         if len(selectedJob) == 0:
             messagebox.showerror("No job have been selected!!!!!",
                                  "Please, first select the job you want to delete!!!!!")
         else:
-            selectedJob_jobId = self.jobsTableTree.item(selectedJob, 'text')
+            selectedJob_jobId = self.jobsTableTree.item(selectedJob, 'values')[0]
             self.guiController.deleteJob(selectedJob_jobId)
 
     def editJob(self):
