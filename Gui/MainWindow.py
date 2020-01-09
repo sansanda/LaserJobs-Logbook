@@ -71,6 +71,8 @@ class MainWindow():
 
     def create_jobsTable(self, jobsTableHeaders):
 
+        print('hola')
+
         # Creamos el header de la tabla asignado un numero a cada uno,
         # un texto y una anchura que será un porcentaje de la anchura total de la main window
         jobsTableHeaders2 = []
