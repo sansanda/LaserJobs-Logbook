@@ -42,11 +42,12 @@ class MainWindow():
     def populate(self, jobsTableHeaders):
         self.create_menu_bar()
         self.create_filter_bar()
-        self.create_jobsTable_frame(jobsTableHeaders)
+        self.create_jobsTable(jobsTableHeaders)
         self.create_tool_bar()
-        self.createSeparator(row=3,minsize=self.width)
-        self.initializeStatisticVariables()
+        self.create_separator(row=3,minsize=self.width)
+        self.initialize_statisticVariables()
         self.create_statistics_frame()
+        self.create_scrollbar_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
 
@@ -68,20 +69,35 @@ class MainWindow():
         self.guiController.updateTextFilterList(fT.get())
 
 
-    def create_jobsTable_frame(self, jobsTableHeaders):
+    def create_jobsTable(self, jobsTableHeaders):
+
+        # Creamos el header de la tabla asignado un numero a cada uno,
+        # un texto y una anchura que será un porcentaje de la anchura total de la main window
+        jobsTableHeaders2 = []
+        for num, key in enumerate(LaserJob.keys):
+            jobsTableHeaders2.append(['#' + str(num), key, 4.5])
+        jobsTableHeaders2[-1][2] = 32.5
+        ##############################################################
+
 
         rowHeight = 20  # pixels
         nRows = 25
         style = ttk.Style(self.root)
 
-        style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
-        self.jobsTableTree = ttk.Treeview(self.root, height=nRows)  # height in rows
-        self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
-        self.jobsTableTree.grid(row=1, column=0, columnspan=6, sticky=W + E + N + S)
+        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=2, width=20)
+        self.jobsTable_Frame.grid(row=1, column=0, sticky=W + E + N + S)
 
-        jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders)
-        jobsTableHeaders_Text = tuple(x[1] for x in jobsTableHeaders)
-        jobsTableHeaders_WidthInPercent = tuple(x[2] for x in jobsTableHeaders)
+        style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
+        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows)  # height in rows
+        self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
+        self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
+        #self.jobsTableTree.place(x=0, y=0, height=nRows * rowHeight, width=800)  # number of rows x rowheight
+
+
+        jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders2)
+        print(jobsTableHeaders_Order)
+        jobsTableHeaders_Text = tuple(x[1] for x in jobsTableHeaders2)
+        jobsTableHeaders_WidthInPercent = tuple(x[2] for x in jobsTableHeaders2)
 
         self.jobsTableTree["columns"] = jobsTableHeaders_Order  # creamos las columnas
 
@@ -95,12 +111,13 @@ class MainWindow():
                                       minwidth=int((w / 100.0) * self.width), stretch=True)
 
         # Adding scroll bars
-        ysb = Scrollbar(self.root, orient=VERTICAL, command=self.jobsTableTree.yview)
-        ysb.grid(row=0, column=0, sticky='ns')
-        ysb.place(x=self.width - 20, y=20, height=nRows * rowHeight, width=20)  # number of rows x rowheight
-        self.jobsTableTree.configure(yscroll=ysb.set)
+        self.scrollbar_Frame = Frame(self.root, highlightbackground='black', highlightthickness=2)
+        self.scrollbar_Frame.grid(row=1, column=1, sticky=W + E + N + S)
 
-        self.detached_children = {}
+        ysb = Scrollbar(self.scrollbar_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
+        ysb.grid(row=0, column=0, sticky=N+S)
+        ysb.place(x=0, y=0, height=nRows * rowHeight, width=20)  # number of rows x rowheight
+        self.jobsTableTree.configure(yscroll=ysb.set)
 
     def create_tool_bar(self):
 
@@ -116,7 +133,7 @@ class MainWindow():
         self.deleteJobButton.image = deleteRegisterIcon
         self.deleteJobButton.grid(row=1, column=1, padx=5, pady=2)
 
-    def createSeparator(self, row=0, minsize=300):
+    def create_separator(self, row=0, minsize=300):
 
         sepFrame = Frame(self.root)
         sepFrame.grid(row=row, column=0, sticky="ew")
@@ -145,7 +162,7 @@ class MainWindow():
         Label(self.statistics_frame, text='Combined Jobs:', anchor=W, width=15, padx=10, pady=5).grid(row=0, column=6)
         Label(self.statistics_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold", anchor=W,width=5, padx=1, pady=5).grid(row=0, column=7)
 
-    def initializeStatisticVariables(self):
+    def initialize_statisticVariables(self):
 
         self.n_total_jobs = IntVar()
         self.n_total_jobs.set(1)
@@ -163,6 +180,8 @@ class MainWindow():
         self.n_raster_jobs.set(nRasterJobs)
         self.n_combined_jobs.set(nCombinedJobs)
 
+    def create_scrollbar_frame(self):
+        pass
     #Menus
 
     def create_menu_bar(self):

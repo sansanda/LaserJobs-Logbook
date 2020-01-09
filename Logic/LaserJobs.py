@@ -3,6 +3,7 @@ class LaserJob(dict):
     vectorType = 'Vector'
     rasterType = 'Raster'
     combinedType = 'Combined'
+    keys = ['jobId', 'Username', 'Date', 'Material', 'JobType', 'Speed', 'Power', 'DPI', 'Frequency', 'Passes', 'Depth', 'VectorSorting', 'FrequencyAutomatic', 'EngraveDirection', 'ImageDithering', 'Others']
 
     def __init__(self,id=1,username='username',date='01/01/2000',material='PMMA',
                  speed=100,power=100,dpi=1200,freq = 5000, nPasses=1, depth=1, others='Other data of interest'):
@@ -43,26 +44,12 @@ class LaserJob(dict):
 
         return matched
 
-    def getJobDataAsList(self):
+    @classmethod
+    def getJobDataAsList(cls, laserJob):
 
         jobDataAsList = list()
-
-        jobDataAsList.append(self['jobId'])
-        jobDataAsList.append(self['Username'])
-        jobDataAsList.append(self['Date'])
-        jobDataAsList.append(self['Material'])
-        jobDataAsList.append(self['JobType'])
-        jobDataAsList.append(self['Speed'])
-        jobDataAsList.append(self['Power'])
-        jobDataAsList.append(self['DPI'])
-        jobDataAsList.append(self['Frequency'])
-        jobDataAsList.append(self['Passes'])
-        jobDataAsList.append(self['Depth'])
-        jobDataAsList.append(self['EngraveDirection'])
-        jobDataAsList.append(self['ImageDithering'])
-        jobDataAsList.append(self['VectorSorting'])
-        jobDataAsList.append(self['FrequencyAutomatic'])
-        jobDataAsList.append(self['Others'])
+        for key in cls.keys:
+            jobDataAsList.append(laserJob[key])
 
         return jobDataAsList
 
