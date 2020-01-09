@@ -72,24 +72,31 @@ class MainWindow():
     def create_jobsTable(self, jobsTableHeaders):
 
 
+        rowHeight = 20  # pixels
+        nRows = 30
+        style = ttk.Style(self.root)
+        nColumns = 0
+
         # Creamos el header de la tabla asignado un numero a cada uno,
         # un texto y una anchura que será un porcentaje de la anchura total de la main window
         jobsTableHeaders2 = []
         for num, key in enumerate(LaserJob.keys):
             jobsTableHeaders2.append(['#' + str(num), key, 4.5])
         jobsTableHeaders2[-1][2] = 32.5
+        nColumns = len(jobsTableHeaders2)
         ##############################################################
 
 
-        rowHeight = 20  # pixels
-        nRows = 25
-        style = ttk.Style(self.root)
+        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_columnconfigure(1, weight=0)
+        self.root.grid_rowconfigure(1, weight=1)
 
-        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=1)
-        self.jobsTable_Frame.grid(row=1, column=0, sticky=W + E + N + S)
+        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=0, width=200)
+        self.jobsTable_Frame.grid(row=1, column=0, sticky=W + N + S)
+
 
         style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
-        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows)  # height in rows
+        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns)  # height in rows
         self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
 
@@ -99,6 +106,7 @@ class MainWindow():
         jobsTableHeaders_WidthInPercent = tuple(x[2] for x in jobsTableHeaders2)
 
         self.jobsTableTree["columns"] = jobsTableHeaders_Order  # creamos las columnas
+        self.jobsTableTree.column('#16', width=0)
 
         # Configuramos el texto del encabezado de cada columna
         for order, text in zip(jobsTableHeaders_Order, jobsTableHeaders_Text):
@@ -110,9 +118,11 @@ class MainWindow():
                                       minwidth=int((w / 100.0) * self.width), stretch=True)
 
         # Adding scroll bars
-        ysb = Scrollbar(self.jobsTable_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
+        self.scrollbar_Frame = Frame(self.root, highlightbackground='black', highlightthickness=1)
+        self.scrollbar_Frame.grid(row=1, column=1, sticky=N + S)
+
+        ysb = Scrollbar(self.scrollbar_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
         ysb.grid(row=0, column=0, sticky=N+S)
-        ysb.place(x=self.width-20, y=0, height=nRows * rowHeight, width=20)  # number of rows x rowheight
         self.jobsTableTree.configure(yscroll=ysb.set)
 
     def create_tool_bar(self):
