@@ -71,7 +71,6 @@ class MainWindow():
 
     def create_jobsTable(self, jobsTableHeaders):
 
-        print('hola en master')
 
         # Creamos el header de la tabla asignado un numero a cada uno,
         # un texto y una anchura que será un porcentaje de la anchura total de la main window
@@ -86,15 +85,13 @@ class MainWindow():
         nRows = 25
         style = ttk.Style(self.root)
 
-        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=2, width=20)
+        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=1)
         self.jobsTable_Frame.grid(row=1, column=0, sticky=W + E + N + S)
 
         style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
         self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows)  # height in rows
         self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
-        #self.jobsTableTree.place(x=0, y=0, height=nRows * rowHeight, width=800)  # number of rows x rowheight
-
 
         jobsTableHeaders_Order = tuple(x[0] for x in jobsTableHeaders2)
         print(jobsTableHeaders_Order)
@@ -113,12 +110,9 @@ class MainWindow():
                                       minwidth=int((w / 100.0) * self.width), stretch=True)
 
         # Adding scroll bars
-        self.scrollbar_Frame = Frame(self.root, highlightbackground='black', highlightthickness=2)
-        self.scrollbar_Frame.grid(row=1, column=1, sticky=W + E + N + S)
-
-        ysb = Scrollbar(self.scrollbar_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
+        ysb = Scrollbar(self.jobsTable_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
         ysb.grid(row=0, column=0, sticky=N+S)
-        ysb.place(x=0, y=0, height=nRows * rowHeight, width=20)  # number of rows x rowheight
+        ysb.place(x=self.width-20, y=0, height=nRows * rowHeight, width=20)  # number of rows x rowheight
         self.jobsTableTree.configure(yscroll=ysb.set)
 
     def create_tool_bar(self):

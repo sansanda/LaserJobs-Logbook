@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -112,8 +113,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.LaserJobs_Manager" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.LaserJobs" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.LaserJobs_Manager" />
@@ -155,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578580767599</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="version 1.1&#10;&#10;working on master">
+      <created>1578581752676</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1578581752676</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -178,7 +186,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -197,12 +205,17 @@
             <list>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="origin/master" />
+                  <option value="master" />
                 </option>
               </RecentGroup>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="master" />
+                  <option value="VerticalScrollBar" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
                 </option>
               </RecentGroup>
             </list>
@@ -219,6 +232,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="version 1.1&#10;&#10;implemented laser jobs statistics&#10;improve some methods from LaserJobs and LaserJobsBook" />
     <MESSAGE value="version 1.1&#10;&#10;working on vertical scroll bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.1&#10;&#10;working on vertical scroll bar" />
+    <MESSAGE value="version 1.1&#10;&#10;working on master" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.1&#10;&#10;working on master" />
   </component>
 </project>
