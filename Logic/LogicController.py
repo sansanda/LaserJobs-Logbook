@@ -16,6 +16,7 @@ from Logic.DesignPatterns.ObserverPattern import Publisher
 from tkinter import messagebox
 from Logic.Filter.TextFilter import TextFilter
 import json
+from threading import Timer
 
 class LogicController(Publisher):
 
@@ -49,6 +50,7 @@ class LogicController(Publisher):
                                   )
 
     def loadJobsFromExcel(self):
+        print('hola')
         loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
@@ -129,4 +131,10 @@ class LogicController(Publisher):
 
 
     def start(self):
+
+        # first time we load the laser jobs
+        # we give time to guicontroller for creating the main window before load the laser jobs
+        t = Timer(2.0, self.loadJobsFromExcel)
+        t.start()
+
         self.guiController.start()

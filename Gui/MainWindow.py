@@ -35,7 +35,6 @@ class MainWindow():
         )
 
         self.state = NORMAL
-
         # self.root.resizable(0,0)
 
     def setGuiController(self, guiController):
@@ -233,6 +232,7 @@ class MainWindow():
         self.root.bind('<Delete>', lambda e: self.deleteJob())
         self.root.bind('<Insert>', lambda e: self.guiController.showNewJobWindow())
 
+
     #Jobs Management
 
     # laserJobs is a list of dictionaries
@@ -254,10 +254,11 @@ class MainWindow():
             laserJobAsList = LaserJob.getJobDataAsList(laserJob)
             self.jobsTableTree.insert("", 'end', values=laserJobAsList[:])
 
-            try:
+            try: #try because len(laserJobAsList[-1]) could result into a None type
 
                 if int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width) > minColumnWidth:
                     columnWidth = minColumnWidth = int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width)
+
 
             except TypeError:
                 continue
@@ -299,7 +300,6 @@ class MainWindow():
     # value is a tuple with a (list of jobs, nVectorJobs, nRasterJobs, nCombinedJobs) could be a list of dicts which contains updated jobs data
 
     def notify(self, value):
-
         # first clear the treeview
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
         self.loadJobsData(value[0])
