@@ -30,7 +30,7 @@ def main():
 
 
     lc.setGuiController(gc)
-    lc.loadJobsFromExcel()
+    MainWindow.showLoadingJobsWindow()
     lc.start()
 
 
