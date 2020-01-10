@@ -7,9 +7,11 @@ David SAnchez Sanchez
 
 """
 import tkinter
+import time
 from tkinter import *
 from tkinter import ttk, messagebox
 from Logic.LaserJobs import LaserJob
+from tkinter import messagebox
 
 class MainWindow():
 
@@ -26,10 +28,10 @@ class MainWindow():
 
 
         # Gets both half the screen width/height and window width/height
-        positionRight = int(self.width*(1-w_scale))
-        positionDown = int(self.height*(1-h_scale))
+        self.positionRight = int(self.width*(1-w_scale))
+        self.positionDown = int(self.height*(1-h_scale))
         self.root.geometry(
-            str(self.width) + 'x' + str(self.height) + "+" + str(positionRight) + "+" + str(positionDown)
+            str(self.width) + 'x' + str(self.height) + "+" + str(self.positionRight) + "+" + str(self.positionDown)
         )
 
         self.state = NORMAL
@@ -92,25 +94,30 @@ class MainWindow():
         nColumns = len(jobsTableHeaders2)
         ##############################################################
 
-        self.jobsTable_Frame = Frame(self.root, highlightbackground='black', highlightthickness=0, width=200)
-        self.jobsTable_Frame.grid(row=1, column=0, sticky=W + N + S)
+        # create and position the Frame that will contains the jobs table (TreeView)
+        self.jobsTable_Frame = Frame(self.root, highlightbackground='gray', highlightthickness=2)
+        self.jobsTable_Frame.grid(row=1, column=0, sticky=W + N + S, padx=10)
 
+        # configure and position the table inside the frame created in the last step
         style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
         self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns, show=['headings'])  # height in rows
         self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
 
+
+        # extract the information about the headers of every column of the table
         columnsNumber = tuple(x[0] for x in jobsTableHeaders2)
         columnsHeaderText = tuple(x[1] for x in jobsTableHeaders2)
         columnsWidth = tuple(x[2] for x in jobsTableHeaders2) #in % of window width
 
-        self.jobsTableTree["columns"] = columnsNumber  # creamos las columnas
+        # create the columns
+        self.jobsTableTree["columns"] = columnsNumber
 
-        # Configuramos el texto del encabezado de cada columna
+        # Configure the text of every column header
         for columnNumber, columnText in zip(columnsNumber, columnsHeaderText):
             self.jobsTableTree.heading(columnNumber, text=columnText, anchor=W)
 
-        # Configuramos la anchura de las columnas
+        # Configure the width of every column
         for columnNumber, columnWidth in zip(columnsNumber, columnsWidth):
             self.jobsTableTree.column(columnNumber, width=int((columnWidth / 100.0) * self.width),
                                       minwidth=int((columnWidth / 100.0) * self.width), stretch=False)
@@ -233,14 +240,33 @@ class MainWindow():
 
     def loadJobsData(self, laserJobs):
 
+        #while this operation is performed the window will be disable, the user won't interact with the window
+
         self.enable(False)
 
+        # fill the table with the laser jobs
+
+        columnWidth = 300 # in pixels
+        minColumnWidth = 300 # in pixels
+
         for laserJob in laserJobs:
+
             laserJobAsList = LaserJob.getJobDataAsList(laserJob)
             self.jobsTableTree.insert("", 'end', values=laserJobAsList[:])
-            self.jobsTableTree.column('#16', width=int((len(laserJobAsList[-1])*0.6 / 100.0) * self.width),
-                                      minwidth=int((len(laserJobAsList[-1])*0.6 / 100.0) * self.width), stretch=False)
 
+            try:
+
+                if int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width) > minColumnWidth:
+                    columnWidth = minColumnWidth = int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width)
+
+            except TypeError:
+                continue
+
+
+            self.jobsTableTree.column('#16', width=columnWidth,
+                                      minwidth=minColumnWidth, stretch=False)
+
+        # focus on the last element of the table if exists
         childrenTuple = self.jobsTableTree.get_children()
 
         if len(childrenTuple)>0:
@@ -286,8 +312,19 @@ class MainWindow():
         self.guiController.closeWindow(self)
 
     def enable(self, enable):
+
         self.root.attributes('-disabled', not enable)
 
     def show(self):
         self.enable(True)
         self.root.mainloop()
+
+    #class methods
+    @classmethod
+    def showLoadingJobsWindow(cls):
+
+        infoWindow = Toplevel()
+        infoWindow.title('Loading laser jobs. \n Be patient.')
+        infoWindow.geometry("%dx%d+%d+%d" % (300, 100, 100, 100))
+        Message(infoWindow, text='Loading laser jobs. \n\n Be patient.', padx=20, pady=20, width=200).pack()
+        infoWindow.after(2000, infoWindow.destroy)
