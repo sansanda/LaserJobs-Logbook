@@ -134,7 +134,7 @@ class LogicController(Publisher):
 
         # first time we load the laser jobs
         # we give time to guicontroller for creating the main window before load the laser jobs
-        t = Timer(2.0, self.loadJobsFromExcel)
+        t = Timer(1.0, self.loadJobsFromExcel)
         t.start()
 
         self.guiController.start()

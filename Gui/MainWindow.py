@@ -81,12 +81,12 @@ class MainWindow():
         for num, key in enumerate(LaserJob.keys):
             jobsTableHeaders2.append(['#' + str(num+1), key, 5.5])
 
-        jobsTableHeaders2[0][2] = 4   # reduce the width of the jobId column
-        jobsTableHeaders2[5][2] = 4  # reduce the width of the Speed column
-        jobsTableHeaders2[6][2] = 4  # reduce the width of the Power column
-        jobsTableHeaders2[7][2] = 4  # reduce the width of the DPI column
-        jobsTableHeaders2[9][2] = 4  # reduce the width of the Passes column
-        jobsTableHeaders2[10][2] = 4  # reduce the width of the Depth column
+        #jobsTableHeaders2[0][2] = 4   # reduce the width of the jobId column
+        #jobsTableHeaders2[5][2] = 4  # reduce the width of the Speed column
+        #jobsTableHeaders2[6][2] = 4  # reduce the width of the Power column
+        #jobsTableHeaders2[7][2] = 4  # reduce the width of the DPI column
+        #jobsTableHeaders2[9][2] = 4  # reduce the width of the Passes column
+        #jobsTableHeaders2[10][2] = 4  # reduce the width of the Depth column
         jobsTableHeaders2[-1][2] = 25  # give the rest to the vertical scroll bar
 
         nColumns = len(jobsTableHeaders2)
