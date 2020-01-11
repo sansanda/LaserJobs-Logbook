@@ -1,1 +1,3 @@
-{"textFilterOptions": {"caseSensitive": true, "and": false, "wholeWord": false}}
+{
+  "textFilterOptions": {"caseSensitive": true, "and": false, "wholeWord": false},
+}

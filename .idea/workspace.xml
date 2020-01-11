@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/examples/gui/treeview/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/gui/treeview/listbox2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/GuiController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/GuiController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/persistence/data/laserJobs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/data/laserJobs.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/config/config.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,14 +39,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logic/LogicController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="138" column="46" selection-start-line="138" selection-start-column="46" selection-end-line="138" selection-end-column="46" />
+            <state relative-caret-position="1366">
+              <caret line="145" column="34" lean-forward="true" selection-start-line="145" selection-start-column="34" selection-end-line="145" selection-end-column="34" />
               <folding>
                 <element signature="e#113#143#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/gui/treeview/listbox2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="e#618#638#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/persistence/config/config.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="81" lean-forward="true" selection-start-line="1" selection-start-column="81" selection-end-line="1" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -98,6 +117,8 @@
         <option value="$PROJECT_DIR$/Gui/MainWindow.py" />
         <option value="$PROJECT_DIR$/Gui/GuiController.py" />
         <option value="$PROJECT_DIR$/Logic/LogicController.py" />
+        <option value="$PROJECT_DIR$/examples/gui/treeview/listbox2.py" />
+        <option value="$PROJECT_DIR$/persistence/config/config.json" />
       </list>
     </option>
   </component>
@@ -124,6 +145,24 @@
             <path>
               <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
               <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="treeview" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
               <item name="Gui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -141,6 +180,17 @@
               <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
               <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaserJobs-Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaserJobs-Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -169,7 +219,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.LaserJobs_Manager">
+  <component name="RunManager" selected="Python.listbox2">
     <configuration name="LaserJobs" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LaserJobs-Manager" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -212,7 +262,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="frame" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="listbox2" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LaserJobs-Manager" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -220,11 +270,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/gui" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/gui/treeview" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/gui/frame.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/gui/treeview/listbox2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -277,11 +327,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.listbox2" />
         <item itemvalue="Python.LaserJobs_Manager" />
         <item itemvalue="Python.treeview" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.LaserJobs" />
-        <item itemvalue="Python.frame" />
       </list>
     </recent_temporary>
   </component>
@@ -341,26 +391,33 @@
       <option name="project" value="LOCAL" />
       <updated>1578695941453</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="version 1.2 &#10;&#10;done: some minor arrangements like&#10;&#10;columns width&#10;change who call loadJobsFromExcel&#10;change who call loadingsJobs window">
+      <created>1578755355095</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1578755355095</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="5" y="11" width="1260" height="720" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20785597" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20785597" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32993197" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49590835" visible="true" weight="0.32993197" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49509" visible="true" weight="0.32993197" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32993197" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49590835" weight="0.32993197" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49509" weight="0.32993197" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5040917" side_tool="true" visible="true" weight="0.32993197" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50491" side_tool="true" visible="true" weight="0.32993197" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -378,17 +435,6 @@
               </option>
               <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
                 <collection />
-              </option>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="VerticalScrollBar" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
               </option>
               <option name="COLUMN_ORDER">
                 <list>
@@ -450,7 +496,8 @@
     <MESSAGE value="version 1.1&#10;&#10;working on master" />
     <MESSAGE value="version 1.2" />
     <MESSAGE value="version 1.2 &#10;&#10;done: some minor arrangements" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.2 &#10;&#10;done: some minor arrangements" />
+    <MESSAGE value="version 1.2 &#10;&#10;done: some minor arrangements like&#10;&#10;columns width&#10;change who call loadJobsFromExcel&#10;change who call loadingsJobs window" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.2 &#10;&#10;done: some minor arrangements like&#10;&#10;columns width&#10;change who call loadJobsFromExcel&#10;change who call loadingsJobs window" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Logic/DesignPatterns/ObserverPattern.py">
@@ -533,11 +580,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logic/LogicController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="138" column="46" selection-start-line="138" selection-start-column="46" selection-end-line="138" selection-end-column="46" />
+        <state relative-caret-position="1366">
+          <caret line="145" column="34" lean-forward="true" selection-start-line="145" selection-start-column="34" selection-end-line="145" selection-end-column="34" />
           <folding>
             <element signature="e#113#143#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/gui/treeview/listbox2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#618#638#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/persistence/config/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="81" lean-forward="true" selection-start-line="1" selection-start-column="81" selection-end-line="1" selection-end-column="81" />
         </state>
       </provider>
     </entry>
