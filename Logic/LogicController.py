@@ -6,17 +6,22 @@ David Sanchez Sanchez
 
 
 """
+from tkinter import messagebox
 
-from Logic.LaserJobs_Book import LaserJobs_Book
+
 from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import loadJobsFromExcel
 from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import insertRowInExcel
 from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import deleteRowInExcel
 
+from Logic.LaserJobs_Book import LaserJobs_Book
 from Logic.DesignPatterns.ObserverPattern import Publisher
-from tkinter import messagebox
 from Logic.Filter.TextFilter import TextFilter
-import json
+
+from Gui.GuiController import GuiController
+
 from threading import Timer
+
+import json
 
 class LogicController(Publisher):
 
@@ -50,7 +55,6 @@ class LogicController(Publisher):
                                   )
 
     def loadJobsFromExcel(self):
-        print('hola')
         loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
@@ -132,9 +136,11 @@ class LogicController(Publisher):
 
     def start(self):
 
+        delay = 2000
+        GuiController.showLoadingJobsWindow(delay)
         # first time we load the laser jobs
         # we give time to guicontroller for creating the main window before load the laser jobs
-        t = Timer(1.0, self.loadJobsFromExcel)
+        t = Timer(delay/1000, self.loadJobsFromExcel)
         t.start()
 
         self.guiController.start()

@@ -10,13 +10,13 @@ import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
 from Logic.LaserJobs import LaserJob
-from tkinter import messagebox
+
 
 class MainWindow():
 
     def __init__(self, w_scale, h_scale):
 
-        self.version = 1.1
+        self.version = 1.2
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
@@ -25,12 +25,11 @@ class MainWindow():
         self.width = int(self.root.winfo_screenwidth() * w_scale)
         self.height = int(self.root.winfo_screenheight() * h_scale)
 
-
         # Gets both half the screen width/height and window width/height
-        self.positionRight = int(self.width*(1-w_scale))
-        self.positionDown = int(self.height*(1-h_scale))
+        self.xPosition = int(self.width * (1 - w_scale))
+        self.yPosition = int(self.height * (1 - h_scale))
         self.root.geometry(
-            str(self.width) + 'x' + str(self.height) + "+" + str(self.positionRight) + "+" + str(self.positionDown)
+            str(self.width) + 'x' + str(self.height) + "+" + str(self.xPosition) + "+" + str(self.yPosition)
         )
 
         self.state = NORMAL
@@ -44,12 +43,11 @@ class MainWindow():
         self.create_filter_bar()
         self.create_jobsTable(jobsTableHeaders)
         self.create_tool_bar()
-        self.create_separator(row=3,minsize=self.width)
+        self.create_separator(row=3, minsize=self.width)
         self.initialize_statisticVariables()
         self.create_statistics_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
-
 
     def create_filter_bar(self):
 
@@ -64,11 +62,10 @@ class MainWindow():
         self.filter_entry.config(width=30)
         self.filter_entry.grid(row=0, column=1, sticky=W)
 
-    def updateTextFilterList(self,fT):
+    def updateTextFilterList(self, fT):
         self.guiController.updateTextFilterList(fT.get())
 
     def create_jobsTable(self, jobsTableHeaders):
-
 
         rowHeight = 20  # pixels
         nRows = 20
@@ -79,15 +76,9 @@ class MainWindow():
         # un texto y una anchura que será un porcentaje de la anchura total de la main window
         jobsTableHeaders2 = []
         for num, key in enumerate(LaserJob.keys):
-            jobsTableHeaders2.append(['#' + str(num+1), key, 5.5])
+            jobsTableHeaders2.append(['#' + str(num + 1), key, 5]) #75% of total width of window
 
-        #jobsTableHeaders2[0][2] = 4   # reduce the width of the jobId column
-        #jobsTableHeaders2[5][2] = 4  # reduce the width of the Speed column
-        #jobsTableHeaders2[6][2] = 4  # reduce the width of the Power column
-        #jobsTableHeaders2[7][2] = 4  # reduce the width of the DPI column
-        #jobsTableHeaders2[9][2] = 4  # reduce the width of the Passes column
-        #jobsTableHeaders2[10][2] = 4  # reduce the width of the Depth column
-        jobsTableHeaders2[-1][2] = 25  # give the rest to the vertical scroll bar
+        jobsTableHeaders2[-1][2] = 20  # give the rest to the vertical scroll bar
 
         nColumns = len(jobsTableHeaders2)
         ##############################################################
@@ -98,15 +89,15 @@ class MainWindow():
 
         # configure and position the table inside the frame created in the last step
         style.configure('Treeview', rowheight=rowHeight)  # rowheight in pixels
-        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns, show=['headings'])  # height in rows
+        self.jobsTableTree = ttk.Treeview(self.jobsTable_Frame, height=nRows, columns=nColumns,
+                                          show=['headings'])  # height in rows
         self.jobsTableTree.configure(selectmode="browse")  # configure the tree view for only select one row at time
         self.jobsTableTree.grid(row=0, column=0, sticky=W + E + N + S)
-
 
         # extract the information about the headers of every column of the table
         columnsNumber = tuple(x[0] for x in jobsTableHeaders2)
         columnsHeaderText = tuple(x[1] for x in jobsTableHeaders2)
-        columnsWidth = tuple(x[2] for x in jobsTableHeaders2) #in % of window width
+        columnsWidth = tuple(x[2] for x in jobsTableHeaders2)  # in % of window width
 
         # create the columns
         self.jobsTableTree["columns"] = columnsNumber
@@ -122,13 +113,12 @@ class MainWindow():
 
         # Adding scroll bars
         ysb = Scrollbar(self.jobsTable_Frame, orient=VERTICAL, command=self.jobsTableTree.yview)
-        ysb.grid(row=0, column=1, sticky=N+S)
+        ysb.grid(row=0, column=1, sticky=N + S)
         self.jobsTableTree.configure(yscroll=ysb.set)
 
         xsb = Scrollbar(self.jobsTable_Frame, orient=HORIZONTAL, command=self.jobsTableTree.xview)
         xsb.grid(row=1, column=0, sticky=W + E)
         self.jobsTableTree.configure(xscroll=xsb.set)
-
 
     def create_tool_bar(self):
 
@@ -153,8 +143,8 @@ class MainWindow():
 
         self.line_style = ttk.Style()
         self.line_style.configure("Line.TSeparator", background="#000000", color='red')
-        self.sep = ttk.Separator(sepFrame, orient="horizontal", style="Line.TSeparator").grid(row=0, column=0, sticky="ew")
-
+        self.sep = ttk.Separator(sepFrame, orient="horizontal", style="Line.TSeparator").grid(row=0, column=0,
+                                                                                              sticky="ew")
 
     def create_statistics_frame(self):
 
@@ -162,16 +152,20 @@ class MainWindow():
         self.statistics_frame.grid(row=4, column=0, columnspan=1, sticky=W + E + N + S)
 
         Label(self.statistics_frame, text='Total Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=0)
-        Label(self.statistics_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold", anchor=W, width=5, padx=1, pady=5).grid(row=0, column=1)
+        Label(self.statistics_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+              width=5, padx=1, pady=5).grid(row=0, column=1)
 
         Label(self.statistics_frame, text='Vector Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=2)
-        Label(self.statistics_frame, textvariable=self.n_vector_jobs, fg="black",font="Calibri 10 bold", anchor=W, width=5, padx=1, pady=5).grid(row=0, column=3)
+        Label(self.statistics_frame, textvariable=self.n_vector_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+              width=5, padx=1, pady=5).grid(row=0, column=3)
 
         Label(self.statistics_frame, text='Raster Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=4)
-        Label(self.statistics_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold", anchor=W,width=5, padx=1, pady=5).grid(row=0, column=5)
+        Label(self.statistics_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+              width=5, padx=1, pady=5).grid(row=0, column=5)
 
         Label(self.statistics_frame, text='Combined Jobs:', anchor=W, width=15, padx=10, pady=5).grid(row=0, column=6)
-        Label(self.statistics_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold", anchor=W,width=5, padx=1, pady=5).grid(row=0, column=7)
+        Label(self.statistics_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+              width=5, padx=1, pady=5).grid(row=0, column=7)
 
     def initialize_statisticVariables(self):
 
@@ -191,7 +185,7 @@ class MainWindow():
         self.n_raster_jobs.set(nRasterJobs)
         self.n_combined_jobs.set(nCombinedJobs)
 
-    #Menus
+    # Menus
 
     def create_menu_bar(self):
 
@@ -231,37 +225,35 @@ class MainWindow():
         self.root.bind('<Delete>', lambda e: self.deleteJob())
         self.root.bind('<Insert>', lambda e: self.guiController.showNewJobWindow())
 
-
-    #Jobs Management
+    # Jobs Management
 
     # laserJobs is a list of dictionaries
     # each jobData is a dictionary
 
     def loadJobsData(self, laserJobs):
 
-        #while this operation is performed the window will be disable, the user won't interact with the window
+        # while this operation is performed the window will be disable, the user won't interact with the window
 
         self.enable(False)
 
         # fill the table with the laser jobs
 
-        columnWidth = 300 # in pixels
-        minColumnWidth = 300 # in pixels
+        columnWidth = minColumnWidth = 100  # in pixels
+        maxColumnWidth = 250  # in pixels
 
         for laserJob in laserJobs:
 
             laserJobAsList = LaserJob.getJobDataAsList(laserJob)
             self.jobsTableTree.insert("", 'end', values=laserJobAsList[:])
 
-            try: #try because len(laserJobAsList[-1]) could result into a None type
-
-                if int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width) > minColumnWidth:
-                    columnWidth = minColumnWidth = int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width)
+            try:  # try because len(laserJobAsList[-1]) could result into a None type
+                width = int((len(laserJobAsList[-1]) * 0.5 / 100.0) * self.width)
+                if width > minColumnWidth:
+                    columnWidth = minColumnWidth = width
 
 
             except TypeError:
                 continue
-
 
             self.jobsTableTree.column('#16', width=columnWidth,
                                       minwidth=minColumnWidth, stretch=False)
@@ -269,9 +261,8 @@ class MainWindow():
         # focus on the last element of the table if exists
         childrenTuple = self.jobsTableTree.get_children()
 
-        if len(childrenTuple)>0:
-
-            child_id = childrenTuple[-1] # the last element of the tuple
+        if len(childrenTuple) > 0:
+            child_id = childrenTuple[-1]  # the last element of the tuple
             self.jobsTableTree.focus(child_id)
             self.jobsTableTree.selection_set(child_id)
 
@@ -302,9 +293,9 @@ class MainWindow():
         # first clear the treeview
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
         self.loadJobsData(value[0])
-        self.updateStatistics(value[1],value[2],value[3])
+        self.updateStatistics(value[1], value[2], value[3])
 
-    #Window management
+    # Window management
 
     def close(self):
         print('Exiting...')
@@ -318,12 +309,4 @@ class MainWindow():
         self.enable(True)
         self.root.mainloop()
 
-    #class methods
-    @classmethod
-    def showLoadingJobsWindow(cls):
-
-        infoWindow = Toplevel()
-        infoWindow.title('Loading laser jobs. \n Be patient.')
-        infoWindow.geometry("%dx%d+%d+%d" % (300, 100, 100, 100))
-        Message(infoWindow, text='Loading laser jobs. \n\n Be patient.', padx=20, pady=20, width=200).pack()
-        infoWindow.after(2000, infoWindow.destroy)
+    # class methods

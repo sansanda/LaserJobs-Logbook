@@ -22,15 +22,12 @@ def main():
     # 10 es el procentaje de ancho de la columna (del total de MainWindow)
 
 
-    mw = MainWindow(0.95, 0.7)
+    mw = MainWindow(0.9, 0.7)
     mw.setGuiController(gc)
     mw.populate(LaserJob.keys)
     gc.setActualWindow(mw)
 
-
-
     lc.setGuiController(gc)
-    MainWindow.showLoadingJobsWindow()
     lc.start()
 
 

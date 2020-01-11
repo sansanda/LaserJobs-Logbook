@@ -9,6 +9,7 @@ David SAnchez Sanchez
 from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
 from Gui.TextFilterOptionsWindow import TextFilterOptionsWindow
+from tkinter import Toplevel, Message
 
 class GuiController():
 
@@ -47,6 +48,7 @@ class GuiController():
         self.actualWindow = TextFilterOptionsWindow(300, 120, self, self.logicController.filter)
         self.actualWindow.show()
 
+
     def updateTextFilterList(self,sv):
         self.logicController.updateTextFilterList(sv)
 
@@ -81,3 +83,11 @@ class GuiController():
     def start(self):
         self.actualWindow.show()
 
+    @classmethod
+    def showLoadingJobsWindow(cls, destroyTime):
+
+        infoWindow = Toplevel()
+        infoWindow.title('Loading laser jobs. \n Be patient.')
+        infoWindow.geometry("%dx%d+%d+%d" % (300, 100, 100, 100))
+        Message(infoWindow, text='Loading laser jobs. \n\n Be patient.', padx=20, pady=20, width=200).pack()
+        infoWindow.after(destroyTime, infoWindow.destroy)
