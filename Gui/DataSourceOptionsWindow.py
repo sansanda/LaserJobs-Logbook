@@ -8,10 +8,12 @@ David SAnchez Sanchez
 """
 import tkinter
 from tkinter import *
+from tkinter import filedialog
 
-class TextFilterOptionsWindow():
 
-    def __init__(self, w, h, guiController, textFilter):
+class DataSourceOptionsWindow():
+
+    def __init__(self, w, h, guiController, laserJobsPath, laserJobsFileName):
 
 
         # pixels of the window
@@ -19,19 +21,21 @@ class TextFilterOptionsWindow():
         self.height = h
 
         self.guiController = guiController
-        self.root = tkinter.Tk(className='TextFilterOptionsWindow')
+        self.root = tkinter.Tk(className='DataSourceOptionsWindow')
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
-        self.root.title('Laser-Jobs Manager. Filter Jobs Options.')
+        self.root.title('Laser-Jobs Manager. Data Source Options.')
         self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
 
         # Gets both half the screen width/height and window width/height
         positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)
         positionDown = int(self.root.winfo_screenheight() / 2 - self.height / 2)
 
-        self.textFilter = textFilter
+        self.laserJobsPath = StringVar(self.root)
+        self.laserJobsFileName = StringVar(self.root)
+
         self.root.geometry(str(self.width) + 'x' + str(self.height) + "+" +str(positionRight) + "+" + str(positionDown))
-        self.root.resizable(0, 0)
+        self.root.resizable(1, 1)
         self.populate()
 
     def populate(self):
@@ -49,39 +53,41 @@ class TextFilterOptionsWindow():
 
     def createLabelsAndEntries(self):
 
-        filterJobsOptions_frame = Frame(self.root)
-        filterJobsOptions_frame.config(height=self.height-25, width=self.width)
-        filterJobsOptions_frame.grid(row=0, columnspan=12, rowspan=10, padx=5, pady=5, sticky=W + E + N + S)
+        dataSourceOptions_frame = Frame(self.root)
+        dataSourceOptions_frame.config(height=self.height-25, width=self.width)
+        dataSourceOptions_frame.grid(row=0, columnspan=12, rowspan=10, padx=5, pady=5, sticky=W + E + N + S)
 
-        Label(filterJobsOptions_frame, text='Case sensitive?',anchor=W, width=20).grid(row=0, column=0)
-        Label(filterJobsOptions_frame, text='And?',anchor=W, width=20).grid(row=1, column=0)
-        Label(filterJobsOptions_frame, text='Whole word?', anchor=W, width=20).grid(row=2, column=0)
 
-        #case sensitive check button
-        self.case_sensitive_option = BooleanVar(filterJobsOptions_frame)
-        self.case_sensitive_option.set(self.textFilter.caseSensitiveOption)
-        self.case_sensitive_checkbutton = Checkbutton(filterJobsOptions_frame,variable=self.case_sensitive_option)
-        self.case_sensitive_checkbutton.config(width=15)
-        self.case_sensitive_checkbutton.grid(row=0, column=1, sticky=W)
+        self.pathLabel = Label(dataSourceOptions_frame, text='Data source path')
+        self.pathLabel.config(width=20)
+        self.pathLabel.grid(row=0, column=0, sticky=W)
 
-        #and check button
-        self.and_option = BooleanVar(filterJobsOptions_frame)
-        self.and_option.set(self.textFilter.andOption)
-        self.and_checkbutton = Checkbutton(filterJobsOptions_frame, variable=self.and_option)
-        self.and_checkbutton.config(width=15)
-        self.and_checkbutton.grid(row=1, column=1, sticky=W)
+        self.pathEntry = Entry(dataSourceOptions_frame, textvariable=self.laserJobsPath)
+        self.pathEntry.grid(row=0, column=1, sticky=W)
+        self.pathEntry.config(width=20)
+        self.pathEntry.config(state='normal')
 
-        # whole word check button
-        self.wholeword_option = BooleanVar(filterJobsOptions_frame)
-        self.wholeword_option.set(self.textFilter.wholeWordOption)
-        self.wholeword_checkbutton = Checkbutton(filterJobsOptions_frame, variable=self.wholeword_option)
-        self.wholeword_checkbutton.config(width=15)
-        self.wholeword_checkbutton.grid(row=2, column=1, sticky=W)
+        Button(dataSourceOptions_frame, text="Browse", command=self.browsePathLabel)\
+            .grid(row=0, column=2, sticky=W)
+
+        self.filenameLabel = Label(dataSourceOptions_frame, text='Data source filename')
+        self.filenameLabel.config(width=20)
+        self.filenameLabel.grid(row=1, column=0, sticky=W)
+
+        self.filenameEntry = Entry(dataSourceOptions_frame, textvariable=self.laserJobsFileName)
+        self.filenameEntry.grid(row=0, column=1, sticky=W)
+        self.filenameEntry.config(width=20)
+        self.filenameEntry.config(state='normal')
+
+
+        Button(dataSourceOptions_frame, text="Browse", command=self.browseFilename)\
+            .grid(row=1, column=2, sticky=W)
+
 
     def createOKAndCancelButtons(self):
         okAndCancelButtons_frame = Frame(self.root)
         okAndCancelButtons_frame.config(width= self.width)
-        okAndCancelButtons_frame.grid(row=10, column=0, columnspan=2, sticky=W + E + N + S)
+        okAndCancelButtons_frame.grid(row=2, column=0, columnspan=2, sticky=W + E + N + S)
         self.okButton = Button(okAndCancelButtons_frame, command=self.updateTextFilterOptions, text='OK', width=10)
         self.okButton.grid(row=0, column=0, padx=5, pady=2, sticky=E)
         self.cancelButton = Button(okAndCancelButtons_frame, command= lambda: self.guiController.closeWindow(self), text='Cancel', width=10)
@@ -98,6 +104,14 @@ class TextFilterOptionsWindow():
         print('Applying filter options...')
         self.guiController.updateTextFilterOptions(self.case_sensitive_option.get(),self.and_option.get(),self.wholeword_option.get())
         self.close()
+
+    def browsePathLabel(self):
+        self.laserJobsPath = filedialog.askopenfilename()
+
+    def browseFilename(self):
+        self.laserJobsFileName = filedialog.askopenfilename()
+
+
 
     def show(self):
         self.enable(True)

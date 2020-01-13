@@ -205,6 +205,10 @@ class MainWindow():
         self.filterMenu.add_command(label="Filter Jobs Options", command=self.guiController.showTextFilterOptionsWindow)
         self.menubar.add_cascade(label="View", menu=self.filterMenu)
 
+        self.dataSourceMenu = Menu(self.root, tearoff=0)
+        self.dataSourceMenu.add_command(label="Source...", command=self.guiController.showDataSourceOptionsWindow)
+        self.menubar.add_cascade(label="Data", menu=self.dataSourceMenu)
+
         self.root.config(menu=self.menubar)
 
     def create_contextual_menu(self):

@@ -25,7 +25,7 @@ class NewJobWindow():
         self.height = h
 
         self.guiController = guiController
-        self.root = tkinter.Tk()
+        self.root = tkinter.Tk(className='NewJobWindow')
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
         self.root.title('Laser-Jobs Manager. New Job Window.')

@@ -9,6 +9,7 @@ David SAnchez Sanchez
 from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
 from Gui.TextFilterOptionsWindow import TextFilterOptionsWindow
+from Gui.DataSourceOptionsWindow import DataSourceOptionsWindow
 from tkinter import Toplevel, Message
 
 class GuiController():
@@ -46,6 +47,13 @@ class GuiController():
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow = TextFilterOptionsWindow(300, 120, self, self.logicController.filter)
+        self.actualWindow.show()
+
+    def showDataSourceOptionsWindow(self):
+        self.actualWindow.enable(False)
+        self.windowsStack.append(self.actualWindow)
+        self.actualWindow = DataSourceOptionsWindow(500, 150, self, self.logicController.laserJobsPath,
+                                                    self.logicController.laserJobsFileName)
         self.actualWindow.show()
 
 
