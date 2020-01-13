@@ -132,3 +132,5 @@ dmypy.json
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/tasks.xml
+.idea/LaserJobs-Manager.iml
+.idea/misc.xml
