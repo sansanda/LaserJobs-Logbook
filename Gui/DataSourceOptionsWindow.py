@@ -77,7 +77,6 @@ class DataSourceOptionsWindow():
                                    text='Cancel', width=10)
         self.cancelButton.grid(row=0, column=1, padx=5, pady=2, sticky=E)
 
-
     def updateLaserJobsFileLocation(self):
         print('Updating the laser jobs file location...')
         self.guiController.updateLaserJobsFileLocation(os.path.split(self.laserJobsLocation.get())[0]+'/',

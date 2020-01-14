@@ -8,11 +8,6 @@ David Sanchez Sanchez
 """
 from tkinter import messagebox
 
-
-from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import loadJobsFromExcel
-from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import insertRowInExcel
-from Data.Excel_Utilities.ExcelUtils_OpenpyxlBased import deleteRowInExcel
-
 from Logic.LaserJobs_Book import LaserJobs_Book
 from Logic.DesignPatterns.ObserverPattern import Publisher
 from Logic.Filter.TextFilter import TextFilter
@@ -63,25 +58,14 @@ class LogicController(Publisher):
             data = json.load(f)
         return data['laserJobsFileLocation']['laserJobsFilePath'],data['laserJobsFileLocation']['laserJobsFileName']
 
-
-    def loadJobsFromExcel(self):
-        self.laserJobsBook.deleteAllJobs()
-        loadJobsFromExcel(self.laserJobsBook, self.laserJobsFilepath, self.laserJobsFilename)
-        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
-
-    def updateExcel(self, updatedJobData, deleteJob=False):
-        if deleteJob==False:
-            insertRowInExcel(updatedJobData, self.laserJobsFilepath, self.laserJobsFilename)
-        elif deleteJob==True:
-            deleteRowInExcel(updatedJobData, self.laserJobsFilepath, self.laserJobsFilename)
+    def loadJobsFromSource(self, laserJobsFilepath, laserJobsFilename, filter):
+        self.notify(self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, filter))
 
     def newJob(self,laserJob):
         try:
             jobId = self.laserJobsBook.getFirstFreeId()
             laserJob['jobId'] = jobId
-            self.updateExcel(laserJob)
+            self.laserJobsBook.updateJobsSource(self.laserJobsFilepath,self.laserJobsFilename,laserJob)
             self.laserJobsBook.newJob(laserJob)
             self.laserJobsBook.sort(key=lambda k: k['jobId'])
             filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
@@ -102,7 +86,7 @@ class LogicController(Publisher):
 
         try:
             jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
-            self.updateExcel(jobData,deleteJob=True)
+            self.laserJobsBook.updateJobsSource(self.laserJobsFilepath,self.laserJobsFilename,jobData,deleteJob=True)
             self.laserJobsBook.deleteJob(jobId)
             filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
             filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
@@ -119,6 +103,8 @@ class LogicController(Publisher):
 
     def updateJob(self,updatedJobData):
         self.laserJobsBook.updateJob(updatedJobData)
+        self.laserJobsBook.updateJobsSource(self.laserJobsFilepath, self.laserJobsFilename, updatedJobData)
+        self.laserJobsBook.sort(key=lambda k: k['jobId'])
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
         self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
@@ -143,8 +129,8 @@ class LogicController(Publisher):
     def updateLaserJobsFileLocation(self, laserJobsFilepath, laserJobsFilename):
         self.laserJobsFilepath = laserJobsFilepath
         self.laserJobsFilename = laserJobsFilename
-        self.loadJobsFromExcel()
         self.updateConfigFile()
+        self.notify(self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, self.filter))
 
     def updateConfigFile(self):
 
@@ -162,7 +148,7 @@ class LogicController(Publisher):
         GuiController.showLoadingJobsWindow(delay)
         # first time we load the laser jobs
         # we give time to guicontroller for creating the main window before load the laser jobs
-        t = Timer(delay/1000, self.loadJobsFromExcel)
+        t = Timer(delay/1000, self.loadJobsFromSource, [self.laserJobsFilepath, self.laserJobsFilename, self.filter])
         t.start()
 
         self.guiController.start()
