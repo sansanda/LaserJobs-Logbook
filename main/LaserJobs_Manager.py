@@ -2,18 +2,17 @@ from Gui.GuiController import GuiController
 from Logic.LogicController import LogicController
 from Gui.MainWindow import MainWindow
 from Logic.LaserJobs import LaserJob
+import os
 
 from tkinter import Tk
 
 def main():
 
     #TODO: create standalone exe and liberate it
-    laserJobsPath = '..\\persistence\\data\\'
-    laserJobsFileName = 'laserJobs.xlsx'
-    filterOptionsPath = '..\\persistence\\config\\'
-    filterOptionsFileName = 'config.json'
+    configFilePath = '..\\persistence\\config\\'
+    configFileName = 'config.json'
 
-    lc = LogicController(laserJobsPath, laserJobsFileName, filterOptionsPath,filterOptionsFileName)
+    lc = LogicController(configFilePath,configFileName)
 
     gc = GuiController()
 

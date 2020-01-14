@@ -27,7 +27,7 @@ class GuiController():
         self.windowsStack.append(self.actualWindow)
 
     def closeWindow(self,window):
-        if isinstance(window,NewJobWindow) or isinstance(window, TextFilterOptionsWindow):
+        if isinstance(window,NewJobWindow) or isinstance(window, TextFilterOptionsWindow) or isinstance(window, DataSourceOptionsWindow):
             window.root.destroy()
             self.actualWindow = self.windowsStack.pop()
             self.actualWindow.enable(True)
@@ -52,8 +52,8 @@ class GuiController():
     def showDataSourceOptionsWindow(self):
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
-        self.actualWindow = DataSourceOptionsWindow(500, 150, self, self.logicController.laserJobsPath,
-                                                    self.logicController.laserJobsFileName)
+        self.actualWindow = DataSourceOptionsWindow(500, 100, self, self.logicController.laserJobsFilepath,
+                                                    self.logicController.laserJobsFilename)
         self.actualWindow.show()
 
 
@@ -62,6 +62,9 @@ class GuiController():
 
     def updateTextFilterOptions(self,cs_option,and_option,wholeword_option):
         self.logicController.updateTextFilterOptions(cs_option,and_option,wholeword_option)
+
+    def updateLaserJobsFileLocation(self, laserJobsFilepath, laserJobsFilename):
+        self.logicController.updateLaserJobsFileLocation(laserJobsFilepath, laserJobsFilename)
 
     def newJob(self,newJobData):
         print('Adding new job ...')

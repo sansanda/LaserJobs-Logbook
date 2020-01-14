@@ -79,6 +79,9 @@ class LaserJobs_Book(list):
         else:
             raise Exception('The job dat with Id=' + str(laserJobId) + ' already exists!!!!')
 
+    def deleteAllJobs(self):
+        self.clear()
+
     #jobList Ids are 1 based.
     def getFirstFreeId(self):
         lastLaserJobId = 0
@@ -103,3 +106,4 @@ class LaserJobs_Book(list):
                 laserJobIndex = index
                 break
         return laserJobIndex
+

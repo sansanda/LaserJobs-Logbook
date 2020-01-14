@@ -5,6 +5,7 @@ from Logic.LaserJobs import LaserJob
 
 
 def loadJobsFromExcel(laserJobsBook, laserJobsPath, laserJobsFileName):
+
     workbook = openpyxl.load_workbook(os.path.join(laserJobsPath, laserJobsFileName))
     worksheet = workbook.get_sheet_by_name('LaserJobs')
 

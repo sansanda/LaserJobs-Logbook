@@ -22,19 +22,21 @@ from Gui.GuiController import GuiController
 from threading import Timer
 
 import json
+import os
 
 class LogicController(Publisher):
 
 
-    def __init__(self, laserJobsPath, laserJobsFileName, filterOptionsPath, filterOptionsFileName):
+    def __init__(self, configFilePath, configFileName):
         Publisher.__init__(self)
         self.guiController = None
         self.laserJobsBook = LaserJobs_Book()
-        self.laserJobsPath = laserJobsPath
-        self.laserJobsFileName = laserJobsFileName
-        self.filterOptionsPath = filterOptionsPath
-        self.filterOptionsFileName = filterOptionsFileName
-        self.createTextFilter()
+        self.configFilenamePath = configFilePath
+        self.configFilename = configFileName
+
+        self.laserJobsFilepath, self.laserJobsFilename = self.loadLaserJobsFileLocation(self.configFilenamePath+self.configFilename)
+        self.laserJobsFilepath = os.path.abspath(self.laserJobsFilepath ) + '/'
+        self.filter = self.loadFilter(self.configFilenamePath + self.configFilename)
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
@@ -45,26 +47,35 @@ class LogicController(Publisher):
     def getGuiController(self):
         return self.guiController
 
-    def createTextFilter(self):
-        with open(self.filterOptionsPath + self.filterOptionsFileName) as f:
+    def loadFilter(self, configFilename):
+        with open(configFilename) as f:
             data = json.load(f)
-        self.filter =  TextFilter([''],
-                                  data['textFilterOptions']['caseSensitive'],
-                                  data['textFilterOptions']['and'],
-                                  data['textFilterOptions']['wholeWord']
-                                  )
+        return TextFilter(
+            [''],
+            data['textFilterOptions']['caseSensitive'],
+            data['textFilterOptions']['and'],
+            data['textFilterOptions']['wholeWord']
+        )
+
+    def loadLaserJobsFileLocation(self, configFilename):
+
+        with open(configFilename) as f:
+            data = json.load(f)
+        return data['laserJobsFileLocation']['laserJobsFilePath'],data['laserJobsFileLocation']['laserJobsFileName']
+
 
     def loadJobsFromExcel(self):
-        loadJobsFromExcel(self.laserJobsBook, self.laserJobsPath, self.laserJobsFileName)
+        self.laserJobsBook.deleteAllJobs()
+        loadJobsFromExcel(self.laserJobsBook, self.laserJobsFilepath, self.laserJobsFilename)
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
         self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
     def updateExcel(self, updatedJobData, deleteJob=False):
         if deleteJob==False:
-            insertRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            insertRowInExcel(updatedJobData, self.laserJobsFilepath, self.laserJobsFilename)
         elif deleteJob==True:
-            deleteRowInExcel(updatedJobData, self.laserJobsPath, self.laserJobsFileName)
+            deleteRowInExcel(updatedJobData, self.laserJobsFilepath, self.laserJobsFilename)
 
     def newJob(self,laserJob):
         try:
@@ -127,12 +138,23 @@ class LogicController(Publisher):
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
         self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
 
-        #save changes to file
-        data = dict()
-        data['textFilterOptions'] = self.filter.getTextFilterOptions()
-        with open(self.filterOptionsPath + self.filterOptionsFileName, 'w') as f:
-            json.dump(data, f)
+        self.updateConfigFile()
 
+    def updateLaserJobsFileLocation(self, laserJobsFilepath, laserJobsFilename):
+        self.laserJobsFilepath = laserJobsFilepath
+        self.laserJobsFilename = laserJobsFilename
+        self.loadJobsFromExcel()
+        self.updateConfigFile()
+
+    def updateConfigFile(self):
+
+        # save changes to file
+        configData = dict()
+        configData['textFilterOptions'] = self.filter.getTextFilterOptions()
+        configData['laserJobsFileLocation'] = {'laserJobsFilePath':self.laserJobsFilepath,'laserJobsFileName':self.laserJobsFilename}
+
+        with open(self.configFilenamePath + self.configFilename, 'w') as f:
+            json.dump(configData, f)
 
     def start(self):
 
