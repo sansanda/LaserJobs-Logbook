@@ -94,6 +94,7 @@ class LaserJobs_Book(list):
         self.deleteAllJobs()
         loadJobsFromExcel(self, laserJobsFilepath, laserJobsFilename)
         filteredJobs = (self.filterJobs(filter))
+        filteredJobs.sort(key=lambda k: k['jobId'])
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
         return filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]
 

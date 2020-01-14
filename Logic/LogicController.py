@@ -68,11 +68,7 @@ class LogicController(Publisher):
             jobId = self.laserJobsBook.getFirstFreeId()
             laserJob['jobId'] = jobId
             self.laserJobsBook.updateJobsSource(self.laserJobsFilepath,self.laserJobsFilename,laserJob)
-            self.laserJobsBook.newJob(laserJob)
-            self.laserJobsBook.sort(key=lambda k: k['jobId'])
-            filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-            filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
+            self.loadJobsFromSource(self.laserJobsFilepath,self.laserJobsFilename,self.filter)
 
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -89,10 +85,7 @@ class LogicController(Publisher):
         try:
             jobData = self.laserJobsBook.getJob(jobId) #jobData is a dict
             self.laserJobsBook.updateJobsSource(self.laserJobsFilepath,self.laserJobsFilename,jobData,deleteJob=True)
-            self.laserJobsBook.deleteJob(jobId)
-            filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-            filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
+            self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -104,35 +97,26 @@ class LogicController(Publisher):
         return self.laserJobsBook.getJob(jobId)
 
     def updateJob(self,updatedJobData):
-        self.laserJobsBook.updateJob(updatedJobData)
+        #self.laserJobsBook.updateJob(updatedJobData)
         self.laserJobsBook.updateJobsSource(self.laserJobsFilepath, self.laserJobsFilename, updatedJobData)
-        self.laserJobsBook.sort(key=lambda k: k['jobId'])
-        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
-
+        self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
     def updateTextFilterList(self,sv):
         self.filter.textList = str.split(sv,';')
-        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
+        self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
     def updateTextFilterOptions(self, cs_option, and_option, wholeword_option):
         self.filter.caseSensitiveOption = cs_option
         self.filter.andOption = and_option
         self.filter.wholeWordOption = wholeword_option
-        filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
-        filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
-
         self.updateConfigFile()
+        self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
     def updateLaserJobsFileLocation(self, laserJobsFilepath, laserJobsFilename):
         self.laserJobsFilepath = laserJobsFilepath
         self.laserJobsFilename = laserJobsFilename
         self.updateConfigFile()
-        self.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, self.filter)
+        self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
     def updateConfigFile(self):
 

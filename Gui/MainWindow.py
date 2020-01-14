@@ -16,7 +16,7 @@ class MainWindow():
 
     def __init__(self, w_scale, h_scale):
 
-        self.version = 1.3
+        self.version = 1.4
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
@@ -315,6 +315,7 @@ class MainWindow():
     def notify(self, value):
         # first clear the treeview
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
+
         self.loadJobsData(value[0])
         self.updateStatistics(value[1], value[2], value[3])
         self.updateLaserJobsSource(value[4])
