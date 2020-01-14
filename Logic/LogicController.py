@@ -13,6 +13,7 @@ from Logic.DesignPatterns.ObserverPattern import Publisher
 from Logic.Filter.TextFilter import TextFilter
 
 from Gui.GuiController import GuiController
+from Gui.AuxiliarWindows import AuxiliarWindows
 
 from threading import Timer
 
@@ -22,7 +23,7 @@ import os
 class LogicController(Publisher):
 
 
-    def __init__(self, configFilePath, configFileName):
+    def __init__(self, configFilePath, configFileName, defaultLaserJobsFilePath, defaultLaserJobsFileName):
         Publisher.__init__(self)
         self.guiController = None
         self.laserJobsBook = LaserJobs_Book()
@@ -31,7 +32,27 @@ class LogicController(Publisher):
 
         self.laserJobsFilepath, self.laserJobsFilename = self.loadLaserJobsFileLocation(self.configFilenamePath+self.configFilename)
         self.laserJobsFilepath = os.path.abspath(self.laserJobsFilepath ) + '/'
+        self.defaultLaserJobsFilePath =  os.path.abspath(defaultLaserJobsFilePath ) + '/'
+        self.defaultLaserJobsFileName = defaultLaserJobsFileName
+
+        self.existsLaserJobsFile, self.existsConfigFile = self.checkExistenceOfNeededFiles(self.laserJobsFilepath + self.laserJobsFilename,
+                                                                                           self.configFilenamePath + self.configFilename)
+
+        if not self.existsConfigFile:
+            messagebox.showerror("Config File not found!!!!!",
+                                 "Please check that the config.json file is in the ./persistence/config/ folder !!!!!")
+            os.system(exit(-1))
+
         self.filter = self.loadFilter(self.configFilenamePath + self.configFilename)
+
+        if not self.existsLaserJobsFile:
+            #delay = 1000
+            #AuxiliarWindows.showProcessInfoWindow(delay, "Laser Jobs File not found!!!!!","Please, now proceding to use an empty default Laser Jobs File!!!!!")
+
+            self.laserJobsFilepath = self.defaultLaserJobsFilePath
+            self.laserJobsFilename = self.defaultLaserJobsFileName
+
+        self.updateConfigFile(self.configFilenamePath,self.configFilename)
 
     def setGuiController(self,guicontroller):
         self.guiController = guicontroller
@@ -53,7 +74,6 @@ class LogicController(Publisher):
         )
 
     def loadLaserJobsFileLocation(self, configFilename):
-
         with open(configFilename) as f:
             data = json.load(f)
         return data['laserJobsFileLocation']['laserJobsFilePath'],data['laserJobsFileLocation']['laserJobsFileName']
@@ -62,6 +82,9 @@ class LogicController(Publisher):
         jobsData = self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, filter)
         jobs, nVectorJobs, nRasterJobs, nCombinedJobs = jobsData[0:4]
         self.notify((jobs, nVectorJobs, nRasterJobs, nCombinedJobs, self.laserJobsFilepath+self.laserJobsFilename))
+
+    def checkExistenceOfNeededFiles(self, laserJobsFileLocation, configFilenameLocation):
+        return os.path.exists(laserJobsFileLocation), os.path.exists(configFilenameLocation)
 
     def newJob(self,laserJob):
         try:
@@ -109,29 +132,29 @@ class LogicController(Publisher):
         self.filter.caseSensitiveOption = cs_option
         self.filter.andOption = and_option
         self.filter.wholeWordOption = wholeword_option
-        self.updateConfigFile()
+        self.updateConfigFile(self.configFilenamePath, self.configFilename)
         self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
     def updateLaserJobsFileLocation(self, laserJobsFilepath, laserJobsFilename):
         self.laserJobsFilepath = laserJobsFilepath
         self.laserJobsFilename = laserJobsFilename
-        self.updateConfigFile()
+        self.updateConfigFile(self.configFilenamePath,self.configFilename)
         self.loadJobsFromSource(self.laserJobsFilepath, self.laserJobsFilename, self.filter)
 
-    def updateConfigFile(self):
+    def updateConfigFile(self, configFilenamePath, configFilename):
 
         # save changes to file
         configData = dict()
         configData['textFilterOptions'] = self.filter.getTextFilterOptions()
         configData['laserJobsFileLocation'] = {'laserJobsFilePath':self.laserJobsFilepath,'laserJobsFileName':self.laserJobsFilename}
 
-        with open(self.configFilenamePath + self.configFilename, 'w') as f:
+        with open(configFilenamePath + configFilename, 'w') as f:
             json.dump(configData, f)
 
     def start(self):
 
         delay = 2000
-        GuiController.showLoadingJobsWindow(delay)
+        AuxiliarWindows.showProcessInfoWindow(delay, 'Loading laser jobs. \n Be patient.', 'Loading laser jobs. \n\n Be patient.')
         # first time we load the laser jobs
         # we give time to guicontroller for creating the main window before load the laser jobs
         t = Timer(delay/1000, self.loadJobsFromSource, [self.laserJobsFilepath, self.laserJobsFilename, self.filter])

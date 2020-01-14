@@ -175,7 +175,7 @@ class MainWindow():
         Label(self.foot_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=7)
 
-        self.foot_frame.columnconfigure(8, minsize=int(self.width*0.35))
+        self.foot_frame.columnconfigure(8, minsize=int(self.width*0.25))
         Label(self.foot_frame, text='Laser Jobs Source:', width=15, padx=5, pady=5).grid(row=0, column=8, sticky=E)
 
         #control the maximun text length

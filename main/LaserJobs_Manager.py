@@ -11,8 +11,10 @@ def main():
     #TODO: create standalone exe and liberate it
     configFilePath = '..\\persistence\\config\\'
     configFileName = 'config.json'
+    defaultLaserJobsFilePath = '..\\persistence\\data\\'
+    defaultLaserJobsFileName = 'defaultLaserJobsFile.xlsx'
 
-    lc = LogicController(configFilePath,configFileName)
+    lc = LogicController(configFilePath,configFileName, defaultLaserJobsFilePath, defaultLaserJobsFileName)
 
     gc = GuiController()
 

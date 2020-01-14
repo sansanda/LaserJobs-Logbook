@@ -10,7 +10,6 @@ from Gui.MainWindow import MainWindow
 from Gui.NewJobWindow import NewJobWindow
 from Gui.TextFilterOptionsWindow import TextFilterOptionsWindow
 from Gui.DataSourceOptionsWindow import DataSourceOptionsWindow
-from tkinter import Toplevel, Message
 
 class GuiController():
 
@@ -93,12 +92,3 @@ class GuiController():
 
     def start(self):
         self.actualWindow.show()
-
-    @classmethod
-    def showLoadingJobsWindow(cls, destroyTime):
-
-        infoWindow = Toplevel()
-        infoWindow.title('Loading laser jobs. \n Be patient.')
-        infoWindow.geometry("%dx%d+%d+%d" % (300, 100, 100, 100))
-        Message(infoWindow, text='Loading laser jobs. \n\n Be patient.', padx=20, pady=20, width=200).pack()
-        infoWindow.after(destroyTime, infoWindow.destroy)
