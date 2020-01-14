@@ -59,7 +59,9 @@ class LogicController(Publisher):
         return data['laserJobsFileLocation']['laserJobsFilePath'],data['laserJobsFileLocation']['laserJobsFileName']
 
     def loadJobsFromSource(self, laserJobsFilepath, laserJobsFilename, filter):
-        self.notify(self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, filter))
+        jobsData = self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, filter)
+        jobs, nVectorJobs, nRasterJobs, nCombinedJobs = jobsData[0:4]
+        self.notify((jobs, nVectorJobs, nRasterJobs, nCombinedJobs, self.laserJobsFilepath+self.laserJobsFilename))
 
     def newJob(self,laserJob):
         try:
@@ -70,7 +72,7 @@ class LogicController(Publisher):
             self.laserJobsBook.sort(key=lambda k: k['jobId'])
             filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
             filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
 
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -90,7 +92,7 @@ class LogicController(Publisher):
             self.laserJobsBook.deleteJob(jobId)
             filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
             filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+            self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
 
         except PermissionError as pe:
             messagebox.showerror("Excel opened!!!!!", "The excel file must be closed if you want to add new jobs!!!!!")
@@ -107,14 +109,14 @@ class LogicController(Publisher):
         self.laserJobsBook.sort(key=lambda k: k['jobId'])
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
 
 
     def updateTextFilterList(self,sv):
         self.filter.textList = str.split(sv,';')
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
 
     def updateTextFilterOptions(self, cs_option, and_option, wholeword_option):
         self.filter.caseSensitiveOption = cs_option
@@ -122,7 +124,7 @@ class LogicController(Publisher):
         self.filter.wholeWordOption = wholeword_option
         filteredJobs = (self.laserJobsBook.filterJobs(self.filter))
         filteredJobs_Count = LaserJobs_Book.countJobs(filteredJobs)
-        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2]))
+        self.notify((filteredJobs, filteredJobs_Count[0], filteredJobs_Count[1], filteredJobs_Count[2], self.laserJobsFilepath+self.laserJobsFilename))
 
         self.updateConfigFile()
 
@@ -130,7 +132,7 @@ class LogicController(Publisher):
         self.laserJobsFilepath = laserJobsFilepath
         self.laserJobsFilename = laserJobsFilename
         self.updateConfigFile()
-        self.notify(self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, self.filter))
+        self.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, self.filter)
 
     def updateConfigFile(self):
 

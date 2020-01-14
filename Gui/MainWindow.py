@@ -16,7 +16,7 @@ class MainWindow():
 
     def __init__(self, w_scale, h_scale):
 
-        self.version = 1.2
+        self.version = 1.3
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
@@ -33,6 +33,13 @@ class MainWindow():
         )
 
         self.state = NORMAL
+
+        self.n_total_jobs = IntVar()
+        self.n_vector_jobs = IntVar()
+        self.n_raster_jobs = IntVar()
+        self.n_combined_jobs = IntVar()
+
+        self.laserJobsSourceFileLocation = StringVar()
         # self.root.resizable(0,0)
 
     def setGuiController(self, guiController):
@@ -44,15 +51,15 @@ class MainWindow():
         self.create_jobsTable(jobsTableHeaders)
         self.create_tool_bar()
         self.create_separator(row=3, minsize=self.width)
-        self.initialize_statisticVariables()
-        self.create_statistics_frame()
+        self.initialize_Variables()
+        self.create_foot_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
 
     def create_filter_bar(self):
 
         self.filter_bar_frame = Frame(self.root)
-        self.filter_bar_frame.grid(row=0, column=0, columnspan=6, sticky=W + E + N + S)
+        self.filter_bar_frame.grid(row=0, column=0, sticky=W + E + N + S)
         Label(self.filter_bar_frame, text='Filter:', anchor=W, width=20, padx=10, pady=10).grid(row=0, column=0)
 
         # Filter text entry
@@ -123,7 +130,7 @@ class MainWindow():
     def create_tool_bar(self):
 
         self.tool_bar_frame = Frame(self.root)
-        self.tool_bar_frame.grid(row=2, column=0, columnspan=6, sticky=W + E + N + S)
+        self.tool_bar_frame.grid(row=2, column=0, sticky=W + E + N + S)
         addRegisterIcon = PhotoImage(file='../Gui/icons/addRegisterIcon_30x30.gif')
         deleteRegisterIcon = PhotoImage(file='../Gui/icons/deleteRegisterIcon_30x30.gif')
         self.addNewJobButton = Button(self.tool_bar_frame, image=addRegisterIcon,
@@ -146,37 +153,46 @@ class MainWindow():
         self.sep = ttk.Separator(sepFrame, orient="horizontal", style="Line.TSeparator").grid(row=0, column=0,
                                                                                               sticky="ew")
 
-    def create_statistics_frame(self):
+    def create_foot_frame(self):
 
-        self.statistics_frame = Frame(self.root)
-        self.statistics_frame.grid(row=4, column=0, columnspan=1, sticky=W + E + N + S)
+        self.foot_frame = Frame(self.root, highlightbackground='gray', highlightthickness=0)
+        self.foot_frame.grid(row=4, column=0, sticky=W)
 
-        Label(self.statistics_frame, text='Total Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=0)
-        Label(self.statistics_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+        Label(self.foot_frame, text='Total Jobs:', width=10, padx=5, pady=5).grid(row=0, column=0)
+
+        Label(self.foot_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=1)
 
-        Label(self.statistics_frame, text='Vector Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=2)
-        Label(self.statistics_frame, textvariable=self.n_vector_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+        Label(self.foot_frame, text='Vector Jobs:', width=10, padx=5, pady=5).grid(row=0, column=2)
+        Label(self.foot_frame, textvariable=self.n_vector_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=3)
 
-        Label(self.statistics_frame, text='Raster Jobs:', anchor=W, width=10, padx=10, pady=5).grid(row=0, column=4)
-        Label(self.statistics_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+        Label(self.foot_frame, text='Raster Jobs:', width=10, padx=5, pady=5).grid(row=0, column=4)
+        Label(self.foot_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=5)
 
-        Label(self.statistics_frame, text='Combined Jobs:', anchor=W, width=15, padx=10, pady=5).grid(row=0, column=6)
-        Label(self.statistics_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold", anchor=W,
+        Label(self.foot_frame, text='Combined Jobs:', width=15, padx=5, pady=5).grid(row=0, column=6)
+        Label(self.foot_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=7)
 
-    def initialize_statisticVariables(self):
+        self.foot_frame.columnconfigure(8, minsize=int(self.width*0.35))
+        Label(self.foot_frame, text='Laser Jobs Source:', width=15, padx=5, pady=5).grid(row=0, column=8, sticky=E)
 
-        self.n_total_jobs = IntVar()
+        #control the maximun text length
+        textLen = len(self.laserJobsSourceFileLocation.get())
+        maxTextLen = int(self.width*0.03)
+        labelWidth = textLen if textLen < maxTextLen else maxTextLen
+        Label(self.foot_frame, textvariable=self.laserJobsSourceFileLocation, width = labelWidth, fg="black", font="Calibri 10 bold", anchor=W, padx=0, pady=5)\
+            .grid(row=0, column=9, sticky=W)
+
+
+    def initialize_Variables(self):
+
         self.n_total_jobs.set(1)
-        self.n_vector_jobs = IntVar()
         self.n_vector_jobs.set(1)
-        self.n_raster_jobs = IntVar()
         self.n_raster_jobs.set(1)
-        self.n_combined_jobs = IntVar()
         self.n_combined_jobs.set(1)
+        self.laserJobsSourceFileLocation.set('')
 
     def updateStatistics(self, nVectorJobs, nRasterJobs, nCombinedJobs):
 
@@ -184,6 +200,9 @@ class MainWindow():
         self.n_vector_jobs.set(nVectorJobs)
         self.n_raster_jobs.set(nRasterJobs)
         self.n_combined_jobs.set(nCombinedJobs)
+
+    def updateLaserJobsSource(self, laserJobsSourceLocation):
+        self.laserJobsSourceFileLocation.set(laserJobsSourceLocation)
 
     # Menus
 
@@ -298,6 +317,7 @@ class MainWindow():
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
         self.loadJobsData(value[0])
         self.updateStatistics(value[1], value[2], value[3])
+        self.updateLaserJobsSource(value[4])
 
     # Window management
 
