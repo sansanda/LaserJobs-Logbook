@@ -175,15 +175,12 @@ class MainWindow():
         Label(self.foot_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=7)
 
-        self.foot_frame.columnconfigure(8, minsize=int(self.width*0.25))
-        Label(self.foot_frame, text='Laser Jobs Source:', width=15, padx=5, pady=5).grid(row=0, column=8, sticky=E)
+        self.foot_frame2 = Frame(self.root, highlightbackground='gray', highlightthickness=0)
+        self.foot_frame2.grid(row=5, column=0, sticky=W)
 
-        #control the maximun text length
-        textLen = len(self.laserJobsSourceFileLocation.get())
-        maxTextLen = int(self.width*0.03)
-        labelWidth = textLen if textLen < maxTextLen else maxTextLen
-        Label(self.foot_frame, textvariable=self.laserJobsSourceFileLocation, width = labelWidth, fg="black", font="Calibri 10 bold", anchor=W, padx=0, pady=5)\
-            .grid(row=0, column=9, sticky=W)
+        Label(self.foot_frame2, text='Laser Jobs Source:', width=15, padx=5, pady=5).grid(row=0, column=0, sticky=E)
+        Label(self.foot_frame2, textvariable=self.laserJobsSourceFileLocation, fg="black", font="Calibri 10 bold", anchor=W, padx=0, pady=5)\
+            .grid(row=0, column=1, sticky=W)
 
 
     def initialize_Variables(self):

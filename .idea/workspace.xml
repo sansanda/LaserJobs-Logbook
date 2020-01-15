@@ -4,19 +4,23 @@
     <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="version 1.1&#10;&#10;working on master">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/COLLECT-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/COLLECT-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/LaserJobs_Manager.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/LaserJobs_Manager.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-01.toc" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-01.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/warn-LaserJobs_Manager.txt" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/warn-LaserJobs_Manager.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/xref-LaserJobs_Manager.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/build/LaserJobs_Manager/xref-LaserJobs_Manager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/Data/laserJobs.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Analysis-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/COLLECT-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/EXE-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/LaserJobs_Manager.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/LaserJobs_Manager.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.pkg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PKG-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.pyz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/PYZ-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/Tree-01.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/base_library.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/python38.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/socket.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/warn-LaserJobs_Manager.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/build/LaserJobs_Manager/xref-LaserJobs_Manager.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/Include/pyconfig.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/LaserJobs_Manager.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/LaserJobs_Manager.exe.manifest" beforeDir="false" />
@@ -1001,8 +1005,6 @@
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/tk86t.dll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/ucrtbase.dll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/dist/LaserJobs_Manager/unicodedata.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/config/config.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1227,7 +1229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579042962665</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="version 1.4&#10;&#10;changed the visualization of the laser jobs source file">
+      <created>1579043961029</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1579043961029</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1300,6 +1309,7 @@
     <MESSAGE value="version 1.1&#10;&#10;working on master" />
     <MESSAGE value="version 1.4&#10;&#10;solved the wrong laser jobs file source path. &#10;We have added a default laser jobs file path and a default laser jobs file xlxs &#10;&#10;Created an AuxiliarWindows class with class methods for showing process windows" />
     <MESSAGE value="version 1.4&#10;&#10;created standalone exe app" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.4&#10;&#10;created standalone exe app" />
+    <MESSAGE value="version 1.4&#10;&#10;changed the visualization of the laser jobs source file" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.4&#10;&#10;changed the visualization of the laser jobs source file" />
   </component>
 </project>
