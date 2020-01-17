@@ -69,14 +69,15 @@ class NewJobWindow():
         Label(newJobData_frame, text='Username:', anchor=W, width=20).grid(row=0, column=0)
         Label(newJobData_frame, text='Date:', anchor=W, width=20).grid(row=1, column=0)
         Label(newJobData_frame, text='Material:', anchor=W, width=20).grid(row=2, column=0)
-        Label(newJobData_frame, text='JobType:', anchor=W, width=20).grid(row=3, column=0)
-        Label(newJobData_frame, text='Speed(%):', anchor=W, width=20).grid(row=4, column=0)
-        Label(newJobData_frame, text='Power(%):', anchor=W, width=20).grid(row=5, column=0)
-        Label(newJobData_frame, text='DPI:', anchor=W, width=20).grid(row=6, column=0)
-        Label(newJobData_frame, text='Freq(Hz):', anchor=W, width=20).grid(row=7, column=0)
-        Label(newJobData_frame, text='#Passes (Cut/Raster):', anchor=W, width=20).grid(row=8, column=0)
-        Label(newJobData_frame, text='RasterDepth(mm):', anchor=W, width=20).grid(row=9, column=0)
-        Label(newJobData_frame, text='Others:', anchor=W, width=20).grid(row=10, column=0)
+        Label(newJobData_frame, text='Thickness(mm):', anchor=W, width=20).grid(row=3, column=0)
+        Label(newJobData_frame, text='JobType:', anchor=W, width=20).grid(row=4, column=0)
+        Label(newJobData_frame, text='Speed(%):', anchor=W, width=20).grid(row=5, column=0)
+        Label(newJobData_frame, text='Power(%):', anchor=W, width=20).grid(row=6, column=0)
+        Label(newJobData_frame, text='DPI:', anchor=W, width=20).grid(row=7, column=0)
+        Label(newJobData_frame, text='Freq(Hz):', anchor=W, width=20).grid(row=8, column=0)
+        Label(newJobData_frame, text='#Passes (Cut/Raster):', anchor=W, width=20).grid(row=9, column=0)
+        Label(newJobData_frame, text='RasterDepth(mm):', anchor=W, width=20).grid(row=10, column=0)
+        Label(newJobData_frame, text='Others:', anchor=W, width=20).grid(row=11, column=0)
 
         # Username entry
         self.username = StringVar(newJobData_frame)
@@ -98,56 +99,63 @@ class NewJobWindow():
         self.material_entry.config(width=15)
         self.material_entry.grid(row=2, column=1, sticky=W)
 
+        # Material Tchickness
+        self.materialThickness = IntVar(newJobData_frame)
+        self.materialThickness.set(1)
+        self.materialThickness_entry = Entry(newJobData_frame, textvariable=self.materialThickness)
+        self.materialThickness_entry.config(width=15)
+        self.materialThickness_entry.grid(row=3, column=1, sticky=W)
+
         # Dropdown list for job type
         self.jobType = StringVar(newJobData_frame)
         choices = (LaserJob.vectorType, LaserJob.rasterType, LaserJob.combinedType)
         self.jobType.set(choices[0])  # default value
         JobTypeMenu = OptionMenu(newJobData_frame, self.jobType, *choices)
         JobTypeMenu.config(width=8, anchor=W)
-        JobTypeMenu.grid(row=3, column=1, sticky=W)
+        JobTypeMenu.grid(row=4, column=1, sticky=W)
 
         # Speed Entry
         self.speed = IntVar(newJobData_frame, 90)
         self.speed_entry = Entry(newJobData_frame, textvariable=self.speed)
         self.speed_entry.config(width=15)
-        self.speed_entry.grid(row=4, column=1, sticky=W)
+        self.speed_entry.grid(row=5, column=1, sticky=W)
 
         # Power Entry
         self.power = IntVar(newJobData_frame, 90)
         self.power_entry = Entry(newJobData_frame, textvariable=self.power)
         self.power_entry.config(width=15)
-        self.power_entry.grid(row=5, column=1, sticky=W)
+        self.power_entry.grid(row=6, column=1, sticky=W)
 
         # dpi entry (dots per icnh)
         self.dpi = IntVar(newJobData_frame, 900)
         self.dpi_entry = Entry(newJobData_frame, textvariable=self.dpi)
         self.dpi_entry.config(width=15)
-        self.dpi_entry.grid(row=6, column=1, sticky=W)
+        self.dpi_entry.grid(row=7, column=1, sticky=W)
 
         # Frequency entry (in Hz)
         self.freq = IntVar(newJobData_frame, 5000)
         self.freq_entry = Entry(newJobData_frame, textvariable=self.freq)
         self.freq_entry.config(width=15)
-        self.freq_entry.grid(row=7, column=1, sticky=W)
+        self.freq_entry.grid(row=8, column=1, sticky=W)
 
         # Number of passes entry
         self.nPasses = IntVar(newJobData_frame, 1)
         self.nPasses_entry = Entry(newJobData_frame, textvariable=self.nPasses)
         self.nPasses_entry.config(width=15)
-        self.nPasses_entry.grid(row=8, column=1, sticky=W)
+        self.nPasses_entry.grid(row=9, column=1, sticky=W)
 
         # Raster depth entry (in mm)
         self.rasterDepth = IntVar(newJobData_frame, 1)
         self.rasterDepth_entry = Entry(newJobData_frame, textvariable=self.rasterDepth)
         self.rasterDepth_entry.config(width=15)
-        self.rasterDepth_entry.grid(row=9, column=1, sticky=W)
+        self.rasterDepth_entry.grid(row=10, column=1, sticky=W)
 
         # Observations entry
         self.others = StringVar(newJobData_frame, 'Enter here useful comments for the future')
         self.others_entry = Entry(newJobData_frame, textvariable=self.others)
         self.others_entry.bind('<FocusIn>', lambda event: self.others_entry.delete(0, END))
         self.others_entry.config(width=60)
-        self.others_entry.grid(row=10, column=1, sticky=W)
+        self.others_entry.grid(row=11, column=1, sticky=W)
 
     def createOKAndCancelButtons(self):
         okAndCancelButtons_frame = Frame(self.root)
@@ -177,6 +185,7 @@ class NewJobWindow():
                 username=self.username_entry.get(),
                 date=self.date_entry.get(),
                 material=self.material_entry.get(),
+                thickness=self.materialThickness_entry.get(),
                 speed=self.speed_entry.get(),
                 power=self.power_entry.get(),
                 dpi=self.dpi_entry.get(),
@@ -190,6 +199,7 @@ class NewJobWindow():
                 username=self.username_entry.get(),
                 date=self.date_entry.get(),
                 material=self.material_entry.get(),
+                thickness=self.materialThickness_entry.get(),
                 speed=self.speed_entry.get(),
                 power=self.power_entry.get(),
                 dpi=self.dpi_entry.get(),
@@ -203,6 +213,7 @@ class NewJobWindow():
                 username=self.username_entry.get(),
                 date=self.date_entry.get(),
                 material=self.material_entry.get(),
+                thickness=self.materialThickness_entry.get(),
                 speed=self.speed_entry.get(),
                 power=self.power_entry.get(),
                 dpi=self.dpi_entry.get(),

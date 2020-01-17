@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="version 1.4&#10;&#10;created standalone app">
-      <change beforePath="$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LaserJobs-Logbook.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/main/LaserJobs_Logbook.pyw" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/AuxiliarWindows.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/AuxiliarWindows.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/DataSourceOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/DataSourceOptionsWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/GuiController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/GuiController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/NewJobWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/TextFilterOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/TextFilterOptionsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/Copia_de_seguridad_de_icons.cdr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/addRegisterIcon.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/deleteRegisterIcon.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon2.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon3.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon4.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon5.ico" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/icons/icon5.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Logbook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/DataSourceOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/DataSourceOptionsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/NewJobWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/TextFilterOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/TextFilterOptionsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/Copia_de_seguridad_de_icons.cdr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/addRegisterIcon.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/deleteRegisterIcon.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon2.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon3.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon4.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon5.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/app/LaserJobs_Manager_v1.4.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/standalone app/persistence/data/defaultLaserJobsFile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/persistence/data/defaultLaserJobsFile.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/config/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/LaserJobs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LaserJobs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/persistence/data/defaultLaserJobsFile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/data/defaultLaserJobsFile.xlsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,9 +35,13 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/main" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\repos\LaserJobs-Logbook\main" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\software development\LaserJobs-Manager\persistence" />
     </key>
@@ -191,10 +167,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.LaserJobs_Manager" />
+        <item itemvalue="Python.LaserJobs" />
         <item itemvalue="Python.propagation" />
         <item itemvalue="Python.treeview" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.LaserJobs" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579121425677</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="version 1.4&#10;&#10;solved the insert window problem (main get unbloked after two succesive insert jobs withou close the insert window)&#10;block the main window until all jobs are loading for first time&#10;created standalone app 1.4">
+      <created>1579258798995</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1579258798995</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -350,6 +333,7 @@
     <MESSAGE value="version 1.4&#10;&#10;created standalone exe app" />
     <MESSAGE value="version 1.4&#10;&#10;changed the visualization of the laser jobs source file" />
     <MESSAGE value="version 1.4&#10;&#10;created standalone app" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.4&#10;&#10;created standalone app" />
+    <MESSAGE value="version 1.4&#10;&#10;solved the insert window problem (main get unbloked after two succesive insert jobs withou close the insert window)&#10;block the main window until all jobs are loading for first time&#10;created standalone app 1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.4&#10;&#10;solved the insert window problem (main get unbloked after two succesive insert jobs withou close the insert window)&#10;block the main window until all jobs are loading for first time&#10;created standalone app 1.4" />
   </component>
 </project>

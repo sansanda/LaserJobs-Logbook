@@ -16,7 +16,7 @@ class MainWindow():
 
     def __init__(self, w_scale, h_scale):
 
-        self.version = 1.4
+        self.version = 1.5
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Logbook. Main Window. v' + str(self.version))
@@ -52,7 +52,7 @@ class MainWindow():
         self.create_tool_bar()
         self.create_separator(row=3, minsize=self.width)
         self.initialize_Variables()
-        self.create_foot_frame()
+        self.create_status_frame()
         self.create_contextual_menu()
         self.create_Command_Shortcuts()
 
@@ -153,26 +153,26 @@ class MainWindow():
         self.sep = ttk.Separator(sepFrame, orient="horizontal", style="Line.TSeparator").grid(row=0, column=0,
                                                                                               sticky="ew")
 
-    def create_foot_frame(self):
+    def create_status_frame(self):
 
-        self.foot_frame = Frame(self.root, highlightbackground='gray', highlightthickness=0)
-        self.foot_frame.grid(row=4, column=0, sticky=W)
+        self.status_frame = Frame(self.root, highlightbackground='gray', highlightthickness=0)
+        self.status_frame.grid(row=4, column=0, sticky=W)
 
-        Label(self.foot_frame, text='Total Jobs:', width=10, padx=5, pady=5).grid(row=0, column=0)
+        Label(self.status_frame, text='Total Jobs:', width=10, padx=5, pady=5).grid(row=0, column=0)
 
-        Label(self.foot_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold",
+        Label(self.status_frame, textvariable=self.n_total_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=1)
 
-        Label(self.foot_frame, text='Vector Jobs:', width=10, padx=5, pady=5).grid(row=0, column=2)
-        Label(self.foot_frame, textvariable=self.n_vector_jobs, fg="black", font="Calibri 10 bold",
+        Label(self.status_frame, text='Vector Jobs:', width=10, padx=5, pady=5).grid(row=0, column=2)
+        Label(self.status_frame, textvariable=self.n_vector_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=3)
 
-        Label(self.foot_frame, text='Raster Jobs:', width=10, padx=5, pady=5).grid(row=0, column=4)
-        Label(self.foot_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold",
+        Label(self.status_frame, text='Raster Jobs:', width=10, padx=5, pady=5).grid(row=0, column=4)
+        Label(self.status_frame, textvariable=self.n_raster_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=5)
 
-        Label(self.foot_frame, text='Combined Jobs:', width=15, padx=5, pady=5).grid(row=0, column=6)
-        Label(self.foot_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold",
+        Label(self.status_frame, text='Combined Jobs:', width=15, padx=5, pady=5).grid(row=0, column=6)
+        Label(self.status_frame, textvariable=self.n_combined_jobs, fg="black", font="Calibri 10 bold",
               width=5, padx=1, pady=5).grid(row=0, column=7)
 
         self.foot_frame2 = Frame(self.root, highlightbackground='gray', highlightthickness=0)
@@ -276,7 +276,7 @@ class MainWindow():
             except TypeError:
                 continue
 
-            self.jobsTableTree.column('#16', width=columnWidth,
+            self.jobsTableTree.column('#17', width=columnWidth,
                                       minwidth=minColumnWidth, stretch=False)
 
         # focus on the last element of the table if exists
