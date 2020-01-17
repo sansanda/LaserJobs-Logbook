@@ -10,7 +10,7 @@ import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
 from Logic.LaserJobs import LaserJob
-
+from Gui.AuxiliarWindows import AuxiliarWindows
 
 class MainWindow():
 
@@ -19,8 +19,8 @@ class MainWindow():
         self.version = 1.4
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
-        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
+        self.root.title('Laser-Jobs Logbook. Main Window. v' + str(self.version))
+        self.root.iconbitmap('../Gui/icons/icon5.ico')
 
         self.width = int(self.root.winfo_screenwidth() * w_scale)
         self.height = int(self.root.winfo_screenheight() * h_scale)
@@ -254,6 +254,7 @@ class MainWindow():
 
         # while this operation is performed the window will be disable, the user won't interact with the window
 
+        print('loading jobs')
         self.enable(False)
 
         # fill the table with the laser jobs
@@ -287,6 +288,7 @@ class MainWindow():
             self.jobsTableTree.selection_set(child_id)
 
         self.enable(True)
+        print('end loading jobs')
 
     def deleteJob(self):
         selectedJob = self.jobsTableTree.selection()
@@ -310,6 +312,9 @@ class MainWindow():
     # value is a tuple with a (list of jobs, nVectorJobs, nRasterJobs, nCombinedJobs) could be a list of dicts which contains updated jobs data
 
     def notify(self, value):
+
+        infoWindow = AuxiliarWindows.showProcessInfoWindow('Loading laser jobs. \n Be patient.', 'Loading laser jobs. \n\n Be patient.')
+
         # first clear the treeview
         self.jobsTableTree.delete(*self.jobsTableTree.get_children())
 
@@ -317,11 +322,20 @@ class MainWindow():
         self.updateStatistics(value[1], value[2], value[3])
         self.updateLaserJobsSource(value[4])
 
+        infoWindow.destroy()
+
+        #after notify the MainWindows gets enable but the new job window still remains active (I don't know why).
+        #This line try solve this behaviour
+
+        if not isinstance(self.guiController.actualWindow,MainWindow): self.enable(False)
+
+
     # Window management
 
     def close(self):
         print('Exiting...')
         self.guiController.closeWindow(self)
+
 
     def enable(self, enable):
 

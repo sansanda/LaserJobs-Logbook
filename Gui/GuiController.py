@@ -37,6 +37,7 @@ class GuiController():
             window.root.destroy()
 
     def showNewJobWindow(self):
+        print(self.actualWindow)
         self.actualWindow.enable(False)
         self.windowsStack.append(self.actualWindow)
         self.actualWindow = NewJobWindow(600,300,self,None)

@@ -22,8 +22,8 @@ class TextFilterOptionsWindow():
         self.root = tkinter.Tk(className='TextFilterOptionsWindow')
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
-        self.root.title('Laser-Jobs Manager. Filter Jobs Options.')
-        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
+        self.root.title('Laser-Jobs Logbook. Filter Jobs Options.')
+        self.root.iconbitmap('../Gui/icons/icon5.ico')
 
         # Gets both half the screen width/height and window width/height
         positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)

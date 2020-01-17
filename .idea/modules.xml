@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" filepath="$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LaserJobs-Logbook.iml" filepath="$PROJECT_DIR$/.idea/LaserJobs-Logbook.iml" />
     </modules>
   </component>
 </project>

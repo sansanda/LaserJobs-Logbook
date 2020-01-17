@@ -20,7 +20,7 @@ class MainWindow():
         self.root = tkinter.Tk(className='MainWindow')  # we need this for identifying the
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.title('Laser-Jobs Manager. Main Window. v' + str(self.version))
-        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
+        self.root.iconbitmap('../Gui/icons/icon5.ico')
 
         self.width = int(self.root.winfo_screenwidth() * w_scale)
         self.height = int(self.root.winfo_screenheight() * h_scale)

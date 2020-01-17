@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="">
+    <list default="true" id="dca4bbb6-b9a0-4ef8-8577-4977b89c2173" name="Default Changelist" comment="version 1.4&#10;&#10;created standalone app">
+      <change beforePath="$PROJECT_DIR$/.idea/LaserJobs-Manager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LaserJobs-Logbook.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/AuxiliarWindows.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/AuxiliarWindows.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/DataSourceOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/DataSourceOptionsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/GuiController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/GuiController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/NewJobWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/TextFilterOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/TextFilterOptionsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/Copia_de_seguridad_de_icons.cdr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/addRegisterIcon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/deleteRegisterIcon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon2.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon3.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon4.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gui/icons/laserJobsManager_Icon5.ico" beforeDir="false" afterPath="$PROJECT_DIR$/Gui/icons/icon5.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/LogicController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/LogicController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/LaserJobs_Logbook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/LaserJobs_Manager.spec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/DataSourceOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/DataSourceOptionsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/NewJobWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/NewJobWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/TextFilterOptionsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/Gui/TextFilterOptionsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/Copia_de_seguridad_de_icons.cdr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/addRegisterIcon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/deleteRegisterIcon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon2.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon3.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon4.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/Gui/icons/laserJobsManager_Icon5.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/app/LaserJobs_Manager_v1.4.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/persistence/config/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/standalone app/persistence/data/defaultLaserJobsFile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/main/standalone app/persistence/data/defaultLaserJobsFile.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistence/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/config/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistence/data/defaultLaserJobsFile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/data/defaultLaserJobsFile.xlsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +84,7 @@
   </component>
   <component name="RunManager" selected="Python.LaserJobs_Manager">
     <configuration name="LaserJobs" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LaserJobs-Manager" />
+      <module name="LaserJobs-Logbook" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -71,7 +105,7 @@
       <method v="2" />
     </configuration>
     <configuration name="LaserJobs_Manager" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LaserJobs-Manager" />
+      <module name="LaserJobs-Logbook" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -82,7 +116,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/LaserJobs_Manager.py" />
+      <option name="SCRIPT_NAME" value="E:\repos\LaserJobs-Logbook\main\LaserJobs_Logbook.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -92,7 +126,7 @@
       <method v="2" />
     </configuration>
     <configuration name="propagation" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LaserJobs-Manager" />
+      <module name="LaserJobs-Logbook" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -113,7 +147,7 @@
       <method v="2" />
     </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LaserJobs-Manager" />
+      <module name="LaserJobs-Logbook" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -134,7 +168,7 @@
       <method v="2" />
     </configuration>
     <configuration name="treeview" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LaserJobs-Manager" />
+      <module name="LaserJobs-Logbook" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>

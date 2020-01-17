@@ -1,6 +1,6 @@
 """
 
-Creating a Logic Controller to control the logic part of the Laser Job Manager
+Creating a Logic Controller to control the logic part of the Laser Job Logbook
 
 David Sanchez Sanchez
 
@@ -11,9 +11,6 @@ from tkinter import messagebox
 from Logic.LaserJobs_Book import LaserJobs_Book
 from Logic.DesignPatterns.ObserverPattern import Publisher
 from Logic.Filter.TextFilter import TextFilter
-
-from Gui.GuiController import GuiController
-from Gui.AuxiliarWindows import AuxiliarWindows
 
 from threading import Timer
 
@@ -80,6 +77,7 @@ class LogicController(Publisher):
 
     def loadJobsFromSource(self, laserJobsFilepath, laserJobsFilename, filter):
         jobsData = self.laserJobsBook.loadJobsFromSource(laserJobsFilepath, laserJobsFilename, filter)
+
         jobs, nVectorJobs, nRasterJobs, nCombinedJobs = jobsData[0:4]
         self.notify((jobs, nVectorJobs, nRasterJobs, nCombinedJobs, self.laserJobsFilepath+self.laserJobsFilename))
 
@@ -153,11 +151,10 @@ class LogicController(Publisher):
 
     def start(self):
 
-        delay = 2000
-        AuxiliarWindows.showProcessInfoWindow(delay, 'Loading laser jobs. \n Be patient.', 'Loading laser jobs. \n\n Be patient.')
+        delay = 1000
         # first time we load the laser jobs
         # we give time to guicontroller for creating the main window before load the laser jobs
         t = Timer(delay/1000, self.loadJobsFromSource, [self.laserJobsFilepath, self.laserJobsFilename, self.filter])
         t.start()
-
+        #the line below will execute inmediatly after the t.start()
         self.guiController.start()

@@ -28,8 +28,8 @@ class NewJobWindow():
         self.root = tkinter.Tk(className='NewJobWindow')
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
-        self.root.title('Laser-Jobs Manager. New Job Window.')
-        self.root.iconbitmap('../Gui/icons/laserJobsManager_Icon5.ico')
+        self.root.title('Laser-Jobs Logbook. New Job Window.')
+        self.root.iconbitmap('../Gui/icons/icon5.ico')
 
         # Gets both half the screen width/height and window width/height
         positionRight = int(self.root.winfo_screenwidth() / 2 - self.width / 2)
@@ -213,6 +213,7 @@ class NewJobWindow():
             )
 
         self.guiController.newJob(laserJob)
+        #self.close()
 
     def show(self):
         self.enable(True)
